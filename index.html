@@ -1,9 +1,116 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My website</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Digital Lotus</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      color: #fbd9ff;
+      background:
+        radial-gradient(circle at center, #351450 0%, #140b28 45%, #05050d 100%);
+      font-family: Georgia, serif;
+    }
+
+    .scene {
+      text-align: center;
+      perspective: 800px;
+    }
+
+    h1 {
+      margin-bottom: 50px;
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: normal;
+      letter-spacing: 0.15em;
+      text-shadow: 0 0 25px #df70ff;
+    }
+
+    .lotus-container {
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .lotus {
+      margin: 0;
+      font-family: "Courier New", monospace;
+      font-size: clamp(8px, 1.25vw, 18px);
+      line-height: 1.05;
+      color: #ffb7f5;
+      text-shadow:
+        0 0 8px #ff65dc,
+        0 0 20px #c052ff,
+        0 0 45px #823cff;
+      animation: spin 14s linear infinite;
+      transform-origin: center;
+    }
+
+    .subtitle {
+      margin-top: 55px;
+      color: #bda7cf;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(-8px) scale(0.98);
+      }
+      50% {
+        transform: translateY(8px) scale(1.04);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .lotus,
+      .lotus-container {
+        animation: none;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Hello! My website is working.</h1>
+  <main class="scene">
+    <h1>DIGITAL LOTUS</h1>
+
+    <div class="lotus-container">
+      <pre class="lotus" aria-label="An animated ASCII lotus flower">
+                 .-.
+             .-'   `-.
+          .-'  .-.-.  `-.
+         /   .'     `.   \
+        ;   /  .- -.  \   ;
+        |  ;  /     \  ;  |
+     .--\  | |       | |  /--.
+   .'    `-\  \     /  /-'    `.
+  /  .-''-. `-`---'-' .-''-.   \
+ ;  /      `-.     .-'      \   ;
+  \ \         `-.-'         /  /
+   `.`-.       / \       .-'.'
+     `-.`----'     `----'.-'
+        `-------------'
+      </pre>
+    </div>
+
+    <p class="subtitle">Blooming in the machine</p>
+  </main>
 </body>
 </html>
