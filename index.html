@@ -3,2189 +3,300 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#071116">
-  <meta name="description" content="THE GARDEN — a living interface for four dormant environments.">
-  <meta property="og:title" content="THE GARDEN / SYSTEM INDEX">
-  <meta property="og:description" content="A living archive of memory, presence, nature and machine vision.">
-  <meta property="og:image" content="https://arvidscarff-ops.github.io/main/witness-frost-meadow.jpg">
-  <title>THE GARDEN / SYSTEM INDEX</title>
+  <meta name="theme-color" content="#f4f1eb">
+  <meta name="description" content="A clean starting surface for a new web project.">
+  <title>Hello World!</title>
   <style>
     :root {
-      --night: #04090c;
-      --deep: #071318;
-      --ink: #0a1a1e;
-      --milk: #edfff8;
-      --mist: #c8dedb;
-      --mint: #b9ffd8;
-      --cyan: #a9e8f4;
-      --violet: #cfb8ff;
-      --line: rgba(220, 255, 246, 0.22);
-      --line-strong: rgba(229, 255, 249, 0.62);
-      --glass: rgba(223, 255, 244, 0.075);
-      --mx: 50vw;
-      --my: 50vh;
+      --paper: #f4f1eb;
+      --ink: #11110f;
+      --soft-ink: rgba(17, 17, 15, .46);
+      --line: rgba(17, 17, 15, .22);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    html,
-    body {
+    html, body {
       width: 100%;
       min-height: 100%;
       margin: 0;
-      overflow: hidden;
-      background: var(--night);
-      color: var(--milk);
+      background: var(--paper);
+      color: var(--ink);
     }
 
     body {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      cursor: crosshair;
-      background:
-        radial-gradient(circle at 51% 8%, rgba(141, 205, 191, 0.16), transparent 34%),
-        radial-gradient(circle at 90% 90%, rgba(138, 104, 190, 0.09), transparent 28%),
-        linear-gradient(145deg, #071217, #020507 75%);
-    }
-
-    button,
-    a {
-      font: inherit;
-    }
-
-    button {
-      color: inherit;
-    }
-
-    button:focus-visible {
-      outline: 1px solid var(--mint);
-      outline-offset: 5px;
-    }
-
-    ::selection {
-      color: #07110f;
-      background: var(--mint);
-    }
-
-    .ambient,
-    .tether-canvas {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-    }
-
-    .ambient {
-      z-index: 0;
-      opacity: 0.75;
-      transition: opacity 1s ease;
-    }
-
-    body.seraphim-open .ambient {
-      opacity: 0;
-    }
-
-    .grain {
-      position: fixed;
-      inset: -70%;
-      z-index: 50;
-      pointer-events: none;
-      opacity: 0.13;
-      background-image:
-        repeating-radial-gradient(circle at 17% 32%, transparent 0 1px, rgba(255,255,255,.24) 1px 2px),
-        repeating-radial-gradient(circle at 71% 67%, transparent 0 1px, rgba(255,255,255,.16) 1px 2px);
-      background-size: 5px 5px, 7px 7px;
-      mix-blend-mode: soft-light;
-      animation: grain-shift 0.32s steps(2) infinite;
-    }
-
-    .cursor-aura {
-      position: fixed;
-      z-index: 49;
-      left: 0;
-      top: 0;
-      width: 360px;
-      height: 360px;
-      border-radius: 50%;
-      pointer-events: none;
-      background: radial-gradient(circle, rgba(210,255,241,.11), rgba(162,231,219,.035) 34%, transparent 69%);
-      filter: blur(8px);
-      transform: translate3d(calc(var(--mx) - 180px), calc(var(--my) - 180px), 0);
-      transition: width .5s ease, height .5s ease, opacity .5s ease;
-      mix-blend-mode: screen;
-    }
-
-    .screen {
-      position: fixed;
-      inset: 0;
-      z-index: 1;
+      min-height: 100svh;
       overflow: hidden;
-      opacity: 0;
-      visibility: hidden;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
       pointer-events: none;
-      transform: scale(1.025);
-      transition: opacity .85s ease, transform 1.25s cubic-bezier(.16,1,.3,1), visibility 0s linear .9s;
+      opacity: .28;
+      background:
+        radial-gradient(circle at 16% 22%, rgba(255,255,255,.9), transparent 26%),
+        radial-gradient(circle at 76% 70%, rgba(166,151,128,.14), transparent 34%);
+      mix-blend-mode: multiply;
     }
 
-    .screen.active {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-      transform: scale(1);
-      transition-delay: 0s;
-    }
-
-    .system-line {
-      position: absolute;
+    .system-note {
+      position: fixed;
       top: 24px;
-      left: 28px;
-      right: 28px;
-      z-index: 5;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      color: rgba(231,255,249,.56);
-      font-size: 10px;
+      left: 26px;
+      z-index: 3;
+      margin: 0;
+      color: var(--soft-ink);
+      font: 10px/1.25 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       letter-spacing: .16em;
       text-transform: uppercase;
     }
 
-    .system-id {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .live-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--mint);
-      box-shadow: 0 0 7px var(--mint), 0 0 22px rgba(164,255,211,.62);
-      animation: live-pulse 2.4s ease-in-out infinite;
-    }
-
-    .hub {
-      display: grid;
-      grid-template-rows: auto 1fr auto;
-      min-height: 100vh;
-      padding: clamp(68px, 9vh, 106px) clamp(22px, 5vw, 78px) clamp(22px, 4vh, 42px);
-    }
-
-    .hub-heading {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 30px;
-      margin-bottom: clamp(22px, 4vh, 42px);
-    }
-
-    .eyebrow {
-      margin: 0 0 10px;
-      color: rgba(220,255,244,.48);
-      font-size: 9px;
-      letter-spacing: .28em;
-      text-transform: uppercase;
-    }
-
-    h1 {
-      margin: 0;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      font-size: clamp(34px, 5.7vw, 86px);
-      font-weight: 300;
-      letter-spacing: -.055em;
-      line-height: .84;
-      text-shadow: 0 0 28px rgba(197,255,235,.16);
-    }
-
-    h1 span {
-      color: rgba(233,255,248,.3);
-    }
-
-    .hub-note {
-      max-width: 330px;
-      margin: 0 0 3px;
-      color: rgba(226,247,243,.48);
-      font-size: 10px;
-      line-height: 1.75;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-
-    .portal-grid {
-      position: relative;
-      z-index: 2;
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: clamp(8px, 1.2vw, 18px);
-      align-items: stretch;
-      min-height: 0;
-    }
-
-    .portal {
-      --tilt-x: 0deg;
-      --tilt-y: 0deg;
-      --glow-x: 50%;
-      --glow-y: 50%;
-      position: relative;
-      min-height: min(52vh, 580px);
-      padding: 0;
-      overflow: hidden;
-      border: 1px solid rgba(218,255,244,.13);
-      border-radius: 3px;
-      background:
-        radial-gradient(circle at var(--glow-x) var(--glow-y), rgba(216,255,244,.12), transparent 38%),
-        linear-gradient(165deg, rgba(212,255,241,.055), rgba(4,13,16,.26));
-      box-shadow: inset 0 1px rgba(255,255,255,.04), 0 20px 70px rgba(0,0,0,.18);
-      text-align: left;
-      cursor: pointer;
-      transform: perspective(900px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateZ(0);
-      transform-style: preserve-3d;
-      transition: border-color .5s ease, box-shadow .5s ease, transform .22s ease, background .5s ease;
-    }
-
-    .portal::before {
-      content: "";
-      position: absolute;
-      inset: 0;
+    .archive-link {
+      position: fixed;
+      top: 18px;
+      right: 20px;
       z-index: 4;
-      pointer-events: none;
-      background: linear-gradient(115deg, transparent 20%, rgba(239,255,251,.12) 49%, transparent 65%);
-      transform: translateX(-130%);
-      transition: transform .9s cubic-bezier(.16,1,.3,1);
-      mix-blend-mode: screen;
-    }
-
-    .portal::after {
-      content: "";
-      position: absolute;
-      inset: 12px;
-      z-index: 3;
-      border: 1px solid rgba(229,255,248,.06);
-      pointer-events: none;
-    }
-
-    .portal:hover,
-    .portal:focus-visible {
-      border-color: rgba(217,255,244,.48);
-      box-shadow: 0 0 32px rgba(184,255,227,.12), 0 24px 80px rgba(0,0,0,.34), inset 0 0 38px rgba(183,255,224,.055);
-    }
-
-    .portal:hover::before,
-    .portal:focus-visible::before {
-      transform: translateX(125%);
-    }
-
-    .portal-art {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-      pointer-events: none;
-      transform: translateZ(22px);
-    }
-
-    .portal-meta {
-      position: absolute;
-      z-index: 6;
-      left: 22px;
-      right: 22px;
-      bottom: 20px;
-      transform: translateZ(40px);
-    }
-
-    .portal-index {
-      display: block;
-      margin-bottom: 8px;
-      color: rgba(230,255,248,.38);
-      font-size: 9px;
-      letter-spacing: .25em;
-    }
-
-    .portal-title {
-      display: block;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      font-size: clamp(16px, 1.4vw, 23px);
-      font-weight: 400;
-      letter-spacing: .11em;
-    }
-
-    .portal-state {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 10px;
-      color: rgba(226,255,247,.42);
-      font-size: 8px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-    }
-
-    .portal-state::before {
-      content: "";
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: currentColor;
-      box-shadow: 0 0 9px currentColor;
-    }
-
-    .portal[data-scene="seraphim"] .portal-state {
-      color: var(--mint);
-    }
-
-    .hub-footer {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      padding-top: 18px;
-      color: rgba(222,250,243,.35);
-      font-size: 8px;
-      letter-spacing: .19em;
-      text-transform: uppercase;
-    }
-
-    .hub-footer .instruction {
-      color: rgba(224,255,246,.64);
-    }
-
-    /* Portal 01: SERAPHIM */
-    .seraph-art {
-      background:
-        radial-gradient(circle at 52% 38%, rgba(196,245,236,.13), transparent 34%),
-        linear-gradient(155deg, rgba(11,22,27,.25), rgba(2,7,9,.88));
-      filter: saturate(.78) contrast(1.04);
-      transform: translateZ(22px) scale(1.04);
-      transition: filter .6s ease, transform 1.2s cubic-bezier(.16,1,.3,1);
-    }
-
-    .portal:hover .seraph-art {
-      filter: saturate(1) contrast(1.06) brightness(1.08);
-      transform: translateZ(28px) scale(1.095);
-    }
-
-    .mini-witness {
-      position: absolute;
-      overflow: hidden;
-      border: 1px solid rgba(231,255,249,.17);
-      background-position: center;
-      background-size: cover;
-      box-shadow: 0 0 18px rgba(189,255,233,.06);
-      filter: saturate(.55) brightness(.58) contrast(1.1);
-      animation: mini-witness-drift 7s ease-in-out infinite;
-    }
-
-    .mini-witness:nth-child(1) {
-      top: 10%;
-      left: 8%;
-      width: 48%;
-      height: 31%;
-      background-image: url("witness-frost-meadow.jpg");
-    }
-
-    .mini-witness:nth-child(2) {
-      top: 20%;
-      right: 7%;
-      width: 30%;
-      height: 37%;
-      background-image: url("witness-bog-mirror.jpg");
-      animation-delay: -2s;
-    }
-
-    .mini-witness:nth-child(3) {
-      top: 48%;
-      left: 13%;
-      width: 36%;
-      height: 25%;
-      background-image: url("witness-tower-choir.jpg");
-      animation-delay: -4s;
-    }
-
-    .mini-witness:nth-child(4) {
-      top: 60%;
-      right: 10%;
-      width: 38%;
-      height: 19%;
-      background-image: url("witness-blue-current.jpg");
-      animation-delay: -5.5s;
-    }
-
-    .mini-witness:nth-child(3)::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(255,23,82,.42), rgba(124,31,255,.34));
-      filter: invert(1) hue-rotate(220deg) saturate(3);
-      mix-blend-mode: screen;
-      animation: mini-spectral 6s ease-in-out infinite;
-    }
-
-    .mini-tracker {
-      position: absolute;
-      top: 26%;
-      left: 25%;
-      width: 34%;
-      aspect-ratio: 1;
-      border: 1px solid rgba(232,255,249,.74);
-      box-shadow: 0 0 18px rgba(195,255,236,.34), inset 0 0 22px rgba(194,255,236,.05);
-      animation: mini-search 8s cubic-bezier(.72,0,.28,1) infinite;
-    }
-
-    .mini-tracker::before,
-    .mini-tracker::after {
-      content: "";
-      position: absolute;
-      background: rgba(228,255,247,.78);
-      box-shadow: 0 0 8px var(--mint);
-    }
-
-    .mini-tracker::before {
-      top: 50%;
-      left: -25%;
-      width: 150%;
-      height: 1px;
-    }
-
-    .mini-tracker::after {
-      top: -25%;
-      left: 50%;
-      width: 1px;
-      height: 150%;
-    }
-
-    .mini-data {
-      position: absolute;
-      top: 51%;
-      right: 8%;
-      width: 34%;
-      padding-top: 7px;
-      border-top: 1px solid rgba(226,255,247,.35);
-      color: rgba(235,255,249,.5);
-      font-size: 6px;
-      line-height: 1.7;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      animation: mini-data-flicker 4s steps(1) infinite;
-    }
-
-    /* Portal 02: MNEMOSYNE */
-    .memory-art {
-      background:
-        radial-gradient(circle at 48% 40%, rgba(177,207,255,.15), transparent 34%),
-        linear-gradient(155deg, rgba(19,24,40,.5), rgba(5,8,13,.8));
-    }
-
-    .memory-pane {
-      position: absolute;
-      top: 23%;
-      left: 17%;
-      width: 63%;
-      height: 41%;
-      border: 1px solid rgba(221,231,255,.18);
-      background:
-        radial-gradient(circle at 34% 34%, rgba(199,226,255,.28), transparent 4%),
-        radial-gradient(circle at 66% 51%, rgba(204,180,255,.15), transparent 18%),
-        linear-gradient(135deg, rgba(177,205,235,.12), rgba(25,33,47,.45));
-      box-shadow: 0 0 35px rgba(141,175,219,.06);
-      backdrop-filter: blur(10px);
-      animation: memory-drift 7s ease-in-out infinite;
-    }
-
-    .memory-pane:nth-child(2) {
-      transform: translate(9%, 12%) rotate(3deg);
-      opacity: .66;
-      animation-delay: -2.1s;
-    }
-
-    .memory-pane:nth-child(3) {
-      transform: translate(-8%, 20%) rotate(-4deg);
-      opacity: .4;
-      animation-delay: -4.3s;
-    }
-
-    .memory-pane::after {
-      content: "FRAGMENT / 00";
-      position: absolute;
-      bottom: 8px;
-      left: 10px;
-      color: rgba(232,244,255,.38);
-      font-size: 6px;
-      letter-spacing: .18em;
-    }
-
-    /* Portal 03: EDEN */
-    .eden-art {
-      background: #71867d;
-    }
-
-    .eden-image {
-      position: absolute;
-      inset: -8%;
-      width: 116%;
-      height: 116%;
-      object-fit: cover;
-      opacity: .42;
-      filter: blur(1px) saturate(.7) contrast(.78);
-      animation: eden-breathe 10s ease-in-out infinite;
-    }
-
-    .eden-orbit {
-      position: absolute;
-      top: 20%;
-      left: 18%;
-      width: 64%;
-      aspect-ratio: 1;
-      border: 1px solid rgba(240,255,245,.22);
-      border-radius: 50%;
-      box-shadow: 0 0 30px rgba(216,255,229,.08), inset 0 0 30px rgba(222,255,233,.06);
-      animation: orbit-turn 18s linear infinite;
-    }
-
-    .eden-orbit::before,
-    .eden-orbit::after {
-      content: "";
-      position: absolute;
-      inset: 17%;
-      border: 1px solid rgba(239,255,245,.19);
-      border-radius: 50%;
-    }
-
-    .eden-orbit::after {
-      inset: 37%;
-      background: rgba(232,255,240,.11);
-      box-shadow: 0 0 34px rgba(218,255,229,.16);
-    }
-
-    .eden-node {
-      position: absolute;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: rgba(246,255,250,.88);
-      box-shadow: 0 0 12px #d7ffe7;
-    }
-
-    .eden-node:nth-child(2) { top: 8%; left: 50%; }
-    .eden-node:nth-child(3) { top: 56%; right: -2px; }
-    .eden-node:nth-child(4) { bottom: 5%; left: 24%; }
-
-    /* Portal 04: WETWARE */
-    .wetware-art {
-      display: grid;
-      place-items: center;
-      background:
-        radial-gradient(circle, rgba(227,186,255,.13), transparent 28%),
-        repeating-linear-gradient(0deg, transparent 0 5px, rgba(231,255,248,.018) 5px 6px),
-        #06080b;
-    }
-
-    .lotus-mini {
-      position: relative;
-      z-index: 2;
-      display: block;
-      margin: -14% 0 0;
-      color: rgba(241,215,255,.82);
-      font-size: clamp(6px, .67vw, 10px);
-      line-height: .95;
-      text-align: center;
-      text-shadow: 0 0 8px rgba(227,176,255,.72), 0 0 26px rgba(194,113,255,.35);
-      white-space: pre;
-      animation: lotus-bloom 5s ease-in-out infinite;
-    }
-
-    .lotus-ring {
-      position: absolute;
-      top: 20%;
-      left: 21%;
-      width: 58%;
-      aspect-ratio: 1;
-      border: 1px dashed rgba(228,195,255,.37);
-      border-radius: 50%;
-      box-shadow: 0 0 24px rgba(199,127,255,.15), inset 0 0 20px rgba(218,171,255,.08);
-      animation: orbit-turn 16s linear infinite reverse;
-    }
-
-    .lotus-ring::before {
-      content: "";
-      position: absolute;
-      top: -3px;
-      left: 50%;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #f1d9ff;
-      box-shadow: 0 0 13px #d790ff;
-    }
-
-    /* SERAPHIM environment */
-    .seraphim-screen {
-      background: #061014;
-    }
-
-    .field,
-    .field-bloom,
-    .field-wash,
-    .vignette,
-    .scanline {
-      position: absolute;
-      inset: -4%;
-      pointer-events: none;
-    }
-
-    .field,
-    .field-bloom {
-      background: url("seraphim-field.jpg") center 47% / cover no-repeat;
-      will-change: transform;
-      transform: translate3d(var(--field-x, 0), var(--field-y, 0), 0) scale(1.09);
-      transition: transform .8s cubic-bezier(.22,.61,.36,1);
-    }
-
-    .field {
-      filter: saturate(.58) contrast(1.07) brightness(.64);
-      animation: field-breathe 18s ease-in-out infinite alternate;
-    }
-
-    .field-bloom {
-      opacity: .29;
-      filter: blur(25px) saturate(1.3) brightness(1.35);
-      mix-blend-mode: screen;
-      animation: bloom-breathe 8s ease-in-out infinite;
-    }
-
-    .field-wash {
-      inset: 0;
-      background:
-        radial-gradient(circle at var(--light-x, 50%) var(--light-y, 50%), rgba(218,255,243,.16), transparent 15%),
-        radial-gradient(circle at 50% 44%, transparent 0 18%, rgba(3,10,13,.1) 55%, rgba(3,8,10,.7) 100%),
-        linear-gradient(180deg, rgba(105,157,161,.12), rgba(4,10,14,.44));
-      mix-blend-mode: screen, normal, normal;
-    }
-
-    .vignette {
-      inset: 0;
-      z-index: 2;
-      background:
-        linear-gradient(90deg, rgba(2,7,9,.68), transparent 22%, transparent 75%, rgba(2,7,9,.62)),
-        linear-gradient(0deg, rgba(2,7,9,.62), transparent 25%, rgba(2,7,9,.22));
-    }
-
-    .scanline {
-      inset: -18% 0 auto;
-      z-index: 8;
-      height: 16%;
-      background: linear-gradient(180deg, transparent, rgba(212,255,244,.035) 64%, rgba(226,255,248,.27) 97%, transparent);
-      filter: drop-shadow(0 0 10px rgba(206,255,244,.28));
-      animation: scan-pass 7.5s cubic-bezier(.45,0,.55,1) infinite;
-    }
-
-    .seraphim-interface {
-      position: absolute;
-      inset: 0;
-      z-index: 10;
-      pointer-events: none;
-    }
-
-    .seraphim-interface button {
-      pointer-events: auto;
-    }
-
-    .seraphim-top {
-      position: absolute;
-      top: 22px;
-      left: 25px;
-      right: 25px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 20px;
-      color: rgba(229,255,248,.53);
-      font-size: 9px;
-      letter-spacing: .17em;
-      text-transform: uppercase;
-    }
-
-    .return-button {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      padding: 10px 13px;
-      border: 1px solid rgba(224,255,247,.19);
-      border-radius: 2px;
-      color: rgba(236,255,250,.72);
-      background: rgba(6,16,19,.24);
-      backdrop-filter: blur(12px);
-      cursor: pointer;
-      transition: border-color .35s ease, background .35s ease, box-shadow .35s ease;
-    }
-
-    .return-button:hover {
-      border-color: rgba(224,255,247,.55);
-      background: rgba(211,255,242,.08);
-      box-shadow: 0 0 24px rgba(195,255,234,.08);
-    }
-
-    .return-icon {
-      font-size: 14px;
-      transition: transform .3s ease;
-    }
-
-    .return-button:hover .return-icon {
-      transform: translateX(-3px);
-    }
-
-    .seraphim-title {
-      text-align: right;
-      line-height: 1.7;
-    }
-
-    .seraphim-title strong {
-      display: block;
-      color: rgba(239,255,251,.85);
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      font-size: 13px;
-      font-weight: 400;
-      letter-spacing: .19em;
-    }
-
-    .system-status {
-      position: absolute;
-      left: 27px;
-      bottom: 25px;
-      display: grid;
-      grid-template-columns: auto auto;
-      gap: 6px 22px;
-      color: rgba(229,255,248,.37);
-      font-size: 8px;
-      line-height: 1.35;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-    }
-
-    .system-status b {
-      color: rgba(235,255,250,.67);
-      font-weight: 400;
-    }
-
-    .interaction-prompt {
-      position: absolute;
-      right: 27px;
-      bottom: 27px;
-      color: rgba(231,255,249,.38);
-      font-size: 8px;
-      letter-spacing: .18em;
-      text-align: right;
-      text-transform: uppercase;
-    }
-
-    .tracker {
-      position: absolute;
-      z-index: 13;
-      top: 28%;
-      left: 22%;
-      width: 150px;
-      height: 150px;
-      border: 1px solid rgba(232,255,250,.59);
-      background: radial-gradient(circle, rgba(232,255,250,.035), transparent 67%);
-      box-shadow: 0 0 24px rgba(194,255,237,.18), inset 0 0 26px rgba(194,255,237,.03);
-      pointer-events: none;
-      transition:
-        left .95s cubic-bezier(.16,1,.3,1),
-        top .95s cubic-bezier(.16,1,.3,1),
-        width .95s cubic-bezier(.16,1,.3,1),
-        height .95s cubic-bezier(.16,1,.3,1),
-        border-color .35s ease,
-        box-shadow .35s ease;
-    }
-
-    .tracker::before,
-    .tracker::after {
-      content: "";
-      position: absolute;
-      background: rgba(228,255,248,.26);
-    }
-
-    .tracker::before {
-      top: 50%;
-      left: -13%;
-      width: 126%;
-      height: 1px;
-    }
-
-    .tracker::after {
-      top: -13%;
-      left: 50%;
-      width: 1px;
-      height: 126%;
-    }
-
-    .tracker-corner {
-      position: absolute;
-      width: 17px;
-      height: 17px;
-      border-color: rgba(242,255,252,.92);
-      filter: drop-shadow(0 0 5px rgba(203,255,240,.7));
-    }
-
-    .tracker-corner:nth-child(1) { top: -2px; left: -2px; border-top: 2px solid; border-left: 2px solid; }
-    .tracker-corner:nth-child(2) { top: -2px; right: -2px; border-top: 2px solid; border-right: 2px solid; }
-    .tracker-corner:nth-child(3) { bottom: -2px; right: -2px; border-bottom: 2px solid; border-right: 2px solid; }
-    .tracker-corner:nth-child(4) { bottom: -2px; left: -2px; border-bottom: 2px solid; border-left: 2px solid; }
-
-    .tracker-label {
-      position: absolute;
-      top: -22px;
-      left: -1px;
-      color: rgba(237,255,251,.77);
-      font-size: 7px;
-      letter-spacing: .14em;
-      white-space: nowrap;
-      text-transform: uppercase;
-    }
-
-    .tracker.locked {
-      border-color: rgba(222,255,245,.96);
-      box-shadow: 0 0 16px rgba(195,255,236,.42), 0 0 48px rgba(182,255,229,.13), inset 0 0 34px rgba(199,255,238,.07);
-    }
-
-    .tracker.spectral {
-      border-color: rgba(255,145,210,.82);
-      box-shadow:
-        0 0 14px rgba(255,55,145,.62),
-        0 0 42px rgba(139,43,255,.34),
-        inset 0 0 24px rgba(255,64,157,.1);
-    }
-
-    .tracker.spectral::before,
-    .tracker.spectral::after {
-      background: rgba(255,130,204,.32);
-      box-shadow: 0 0 7px rgba(255,48,145,.34);
-    }
-
-    .tracker.spectral .tracker-corner {
-      border-color: rgba(255,210,237,.96);
-      filter: drop-shadow(0 0 6px rgba(255,42,143,.88));
-    }
-
-    .tracker.spectral.locked {
-      border-color: rgba(255,223,244,.98);
-      box-shadow:
-        0 0 19px rgba(255,60,155,.9),
-        0 0 62px rgba(137,39,255,.55),
-        inset 0 0 36px rgba(255,83,172,.14);
-    }
-
-    .tracker.locked .tracker-corner {
-      animation: corner-lock .5s cubic-bezier(.16,1,.3,1);
-    }
-
-    .passive-marker {
-      position: absolute;
-      z-index: 7;
-      width: 27px;
-      height: 27px;
-      border: 1px solid rgba(229,255,248,.15);
-      transform: translate(-50%, -50%) rotate(45deg);
-      pointer-events: none;
-      animation: passive-pulse 4s ease-in-out infinite;
-    }
-
-    .passive-marker::after {
-      content: "";
-      position: absolute;
-      inset: 9px;
-      border-radius: 50%;
-      background: rgba(229,255,248,.58);
-      box-shadow: 0 0 9px rgba(201,255,240,.55);
-    }
-
-    .readout {
-      position: absolute;
-      z-index: 14;
-      top: 28%;
-      right: 6vw;
-      width: min(275px, 28vw);
-      padding: 17px 18px 16px;
-      border: 1px solid rgba(225,255,247,.2);
-      border-radius: 2px;
-      color: rgba(235,255,250,.74);
-      background: linear-gradient(150deg, rgba(218,255,244,.09), rgba(4,14,17,.25));
-      box-shadow: inset 0 1px rgba(255,255,255,.045), 0 20px 50px rgba(0,0,0,.18), 0 0 35px rgba(191,255,234,.055);
-      backdrop-filter: blur(17px) saturate(1.15);
-      pointer-events: none;
-      transition: top .95s cubic-bezier(.16,1,.3,1), left .95s cubic-bezier(.16,1,.3,1), right .95s cubic-bezier(.16,1,.3,1), opacity .35s ease, transform .35s ease;
-    }
-
-    .readout.pulse {
-      animation: readout-snap .6s cubic-bezier(.16,1,.3,1);
-    }
-
-    .readout-header {
-      display: flex;
-      justify-content: space-between;
-      gap: 14px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid rgba(227,255,249,.14);
-      color: rgba(236,255,251,.48);
-      font-size: 7px;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-    }
-
-    .readout-status {
-      color: var(--mint);
-      text-shadow: 0 0 8px rgba(163,255,211,.42);
-    }
-
-    .entity-name {
-      margin: 16px 0 14px;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      font-size: clamp(17px, 1.8vw, 25px);
-      font-weight: 300;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      text-shadow: 0 0 18px rgba(215,255,243,.17);
-    }
-
-    .property-grid {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 7px 16px;
-      margin: 0;
-      font-size: 7px;
-      line-height: 1.45;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
-
-    .property-grid dt {
-      color: rgba(232,255,249,.34);
-    }
-
-    .property-grid dd {
-      margin: 0;
-      color: rgba(239,255,251,.69);
-      text-align: right;
-    }
-
-    .confidence {
-      margin-top: 16px;
-    }
-
-    .confidence-line {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 7px;
-      color: rgba(233,255,249,.35);
-      font-size: 7px;
+      min-height: 42px;
+      padding: 0 15px;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      background: rgba(244, 241, 235, .76);
+      color: var(--ink);
+      font: 10px/1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       letter-spacing: .13em;
+      text-decoration: none;
       text-transform: uppercase;
+      backdrop-filter: blur(10px);
+      transition: background .22s ease, color .22s ease, transform .22s ease, box-shadow .22s ease;
     }
 
-    .confidence-track {
-      height: 2px;
-      overflow: hidden;
-      background: rgba(232,255,249,.12);
-    }
-
-    .confidence-fill {
-      width: 84%;
-      height: 100%;
-      background: linear-gradient(90deg, rgba(169,232,244,.5), var(--mint));
-      box-shadow: 0 0 10px var(--mint);
-      transition: width 1s cubic-bezier(.16,1,.3,1);
-    }
-
-    .tether-canvas {
-      z-index: 12;
-    }
-
-    .recognition-message {
-      position: absolute;
-      z-index: 18;
-      top: 50%;
-      left: 50%;
-      width: min(80vw, 700px);
-      color: rgba(243,255,252,.92);
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      font-size: clamp(16px, 2.5vw, 36px);
-      font-weight: 300;
-      letter-spacing: .17em;
-      text-align: center;
-      text-transform: uppercase;
-      text-shadow: 0 0 18px rgba(215,255,243,.5), 0 0 55px rgba(190,255,230,.3);
-      pointer-events: none;
-      opacity: 0;
-      transform: translate(-50%, -43%) scale(.97);
-      transition: opacity .65s ease, transform .8s cubic-bezier(.16,1,.3,1);
-    }
-
-    .recognition-message.visible {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-    }
-
-    .bloom-flash {
-      position: absolute;
-      z-index: 17;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0;
-      background: radial-gradient(circle at var(--flash-x, 50%) var(--flash-y, 50%), rgba(255,239,250,.98), rgba(255,46,143,.48) 12%, rgba(112,30,255,.3) 25%, transparent 48%);
-      mix-blend-mode: screen;
-    }
-
-    .seraphim-screen .vignette {
-      z-index: 6;
-      pointer-events: none;
-    }
-
-    .bloom-flash.fire {
-      animation: bloom-flash .95s cubic-bezier(.16,1,.3,1);
-    }
-
-    /* SERAPHIM / FIELD OF WITNESSES */
-    .constellation-backdrop {
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 50% 42%, rgba(104,151,158,.11), transparent 34%),
-        radial-gradient(circle at 76% 18%, rgba(107,62,146,.07), transparent 28%),
-        linear-gradient(155deg, #08151a, #03080a 65%, #071015);
-    }
-
-    .constellation-backdrop::before,
-    .constellation-backdrop::after {
+    .archive-link::before {
       content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 0 5px rgba(17,17,15,.08);
+      animation: breathe 2.6s ease-in-out infinite;
     }
 
-    .constellation-backdrop::before {
-      opacity: .32;
-      background-image:
-        linear-gradient(rgba(212,255,245,.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(212,255,245,.025) 1px, transparent 1px);
-      background-size: 44px 44px;
-      mask-image: radial-gradient(circle at center, #000, transparent 78%);
+    .archive-link:hover,
+    .archive-link:focus-visible {
+      background: var(--ink);
+      color: var(--paper);
+      transform: translate(-3px, 3px);
+      box-shadow: 8px -8px 0 rgba(17,17,15,.09);
+      outline: none;
     }
 
-    .constellation-backdrop::after {
-      background:
-        radial-gradient(circle at 11% 22%, rgba(221,255,248,.25) 0 1px, transparent 1.5px),
-        radial-gradient(circle at 84% 74%, rgba(221,255,248,.16) 0 1px, transparent 1.5px),
-        radial-gradient(circle at 62% 12%, rgba(221,255,248,.14) 0 1px, transparent 1.5px),
-        radial-gradient(circle at 27% 81%, rgba(221,255,248,.13) 0 1px, transparent 1.5px);
-      background-size: 233px 197px, 271px 251px, 197px 241px, 307px 223px;
-      animation: star-drift 26s linear infinite;
+    main {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      min-height: 100svh;
+      align-items: flex-end;
+      padding: clamp(26px, 5vw, 72px);
     }
 
-    .constellation {
-      position: absolute;
-      inset: 0;
-      z-index: 4;
-      overflow: hidden;
-      perspective: 1200px;
+    .hero {
+      max-width: 78vw;
+      padding-bottom: clamp(22px, 5vh, 68px);
     }
 
-    .witness-card {
-      --parallax-x: 0px;
-      --parallax-y: 0px;
-      --depth: 1;
-      position: absolute;
-      overflow: visible;
-      opacity: var(--card-opacity, .82);
-      transform: translate3d(var(--parallax-x), var(--parallax-y), 0) rotate(var(--card-rotate, 0deg));
-      transform-origin: center;
-      transition:
-        left 1.1s cubic-bezier(.16,1,.3,1),
-        top 1.1s cubic-bezier(.16,1,.3,1),
-        width 1.1s cubic-bezier(.16,1,.3,1),
-        height 1.1s cubic-bezier(.16,1,.3,1),
-        opacity .75s ease,
-        filter .6s ease,
-        transform .55s cubic-bezier(.16,1,.3,1);
-      will-change: transform;
+    .hero h1 {
+      margin: 0;
+      max-width: 8ch;
+      font-size: clamp(76px, 15vw, 230px);
+      font-weight: 500;
+      letter-spacing: -.085em;
+      line-height: .78;
+      text-wrap: balance;
     }
 
-    .witness-card.mobile-hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
+    .hero p {
+      max-width: 430px;
+      margin: clamp(25px, 4vw, 46px) 0 0 5px;
+      color: var(--soft-ink);
+      font-size: clamp(12px, 1.2vw, 16px);
+      line-height: 1.55;
+      letter-spacing: .02em;
     }
 
-    .witness-card.changing {
-      opacity: 0;
-      filter: blur(10px);
-      transform: translate3d(var(--parallax-x), calc(var(--parallax-y) + 12px), 0) scale(.96);
+    .hero p span {
+      color: var(--ink);
     }
 
-    .witness-card.is-active {
-      z-index: 7;
-      opacity: 1;
-      filter: brightness(1.06);
-    }
-
-    .witness-card.is-recognized {
-      animation: witness-recoil .92s cubic-bezier(.16,1,.3,1);
-    }
-
-    .witness-media {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-      border: 1px solid rgba(226,255,248,.16);
-      border-radius: 1px;
-      background: rgba(9,19,22,.38);
-      box-shadow:
-        0 22px 55px rgba(0,0,0,.32),
-        0 0 22px rgba(190,255,235,.045),
-        inset 0 0 0 1px rgba(255,255,255,.015);
-      animation: witness-float var(--float-duration, 8s) ease-in-out infinite;
-      animation-delay: var(--float-delay, 0s);
-      transition: border-color .45s ease, box-shadow .55s ease, transform .45s cubic-bezier(.16,1,.3,1);
-    }
-
-    .witness-card:hover .witness-media,
-    .witness-card.pointer-near .witness-media,
-    .witness-card.is-active .witness-media {
-      border-color: rgba(230,255,249,.46);
-      box-shadow:
-        0 28px 70px rgba(0,0,0,.42),
-        0 0 35px rgba(193,255,235,.1),
-        inset 0 0 0 1px rgba(255,255,255,.035);
-    }
-
-    .witness-image,
-    .witness-spectrum img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: var(--image-position, center);
-    }
-
-    .witness-image {
-      filter: saturate(.56) brightness(.58) contrast(1.1) hue-rotate(-5deg);
-      transform: scale(1.025);
-      transition: filter .65s ease, transform 9s ease;
-    }
-
-    .witness-card:hover .witness-image,
-    .witness-card.pointer-near .witness-image,
-    .witness-card.is-active .witness-image {
-      filter: saturate(.82) brightness(.7) contrast(1.06);
-      transform: scale(1.055);
-    }
-
-    .witness-shade {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-      background:
-        linear-gradient(180deg, rgba(4,9,11,.02), rgba(2,7,9,.3)),
-        radial-gradient(circle at center, transparent 35%, rgba(1,5,6,.38) 100%);
-    }
-
-    .witness-spectrum {
-      position: absolute;
+    #guide {
+      position: fixed;
       inset: 0;
       z-index: 3;
-      overflow: hidden;
-      opacity: 0;
-      clip-path: inset(50% 50% 50% 50%);
-      filter:
-        drop-shadow(0 0 7px rgba(255,63,145,.88))
-        drop-shadow(0 0 20px rgba(160,50,255,.72));
-      transition: clip-path .9s cubic-bezier(.16,1,.3,1), opacity .3s ease;
-      mix-blend-mode: screen;
-    }
-
-    .witness-card.is-active .witness-spectrum {
-      opacity: .96;
-    }
-
-    .witness-spectrum img {
-      filter: invert(1) hue-rotate(216deg) saturate(4.5) contrast(1.38) brightness(1.18);
-      transform: scale(1.035) translateX(1px);
-    }
-
-    .witness-spectrum::before,
-    .witness-spectrum::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    .witness-spectrum::before {
-      background:
-        repeating-linear-gradient(0deg, transparent 0 3px, rgba(255,214,246,.1) 3px 4px),
-        linear-gradient(135deg, rgba(255,16,73,.55), rgba(123,26,255,.64) 53%, rgba(255,80,184,.48));
-      mix-blend-mode: color-dodge;
-      animation: spectrum-scan 1.8s linear infinite;
-    }
-
-    .witness-spectrum::after {
-      box-shadow:
-        inset 0 0 22px rgba(255,49,130,.92),
-        inset 0 0 46px rgba(115,28,255,.58),
-        0 0 26px rgba(255,36,121,.82);
-      background: radial-gradient(circle at 50% 45%, rgba(255,219,250,.15), transparent 52%);
-    }
-
-    .witness-code {
-      position: absolute;
-      z-index: 4;
-      left: 0;
-      right: 0;
-      bottom: -19px;
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      color: rgba(225,255,247,.33);
-      font-size: 6px;
-      letter-spacing: .13em;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .witness-code span:last-child {
-      opacity: .54;
-    }
-
-    .witness-card.is-active .witness-code {
-      color: rgba(236,255,251,.65);
-    }
-
-    .witness-card.is-active .witness-code span:last-child {
-      color: #ff8bcc;
-      opacity: 1;
-      text-shadow: 0 0 9px rgba(255,65,153,.58);
-    }
-
-    .click-ripple {
-      position: fixed;
-      z-index: 19;
-      width: 20px;
-      height: 20px;
-      margin: -10px 0 0 -10px;
-      border: 1px solid rgba(233,255,249,.75);
-      border-radius: 50%;
-      pointer-events: none;
-      box-shadow: 0 0 13px rgba(195,255,235,.3);
-      animation: click-ripple .9s cubic-bezier(.16,1,.3,1) forwards;
-    }
-
-    .toast {
-      position: fixed;
-      z-index: 80;
-      left: 50%;
-      bottom: 34px;
-      min-width: min(440px, calc(100vw - 38px));
-      padding: 15px 18px;
-      border: 1px solid rgba(227,255,249,.23);
-      border-radius: 2px;
-      color: rgba(237,255,251,.75);
-      background: rgba(5,15,18,.72);
-      box-shadow: 0 20px 60px rgba(0,0,0,.35), 0 0 28px rgba(197,255,235,.06);
-      backdrop-filter: blur(18px);
-      font-size: 9px;
-      letter-spacing: .16em;
-      text-align: center;
-      text-transform: uppercase;
-      opacity: 0;
-      pointer-events: none;
-      transform: translate(-50%, 14px);
-      transition: opacity .4s ease, transform .55s cubic-bezier(.16,1,.3,1);
-    }
-
-    .toast.visible {
-      opacity: 1;
-      transform: translate(-50%, 0);
-    }
-
-    .boot {
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      display: grid;
-      place-items: center;
-      background: #030809;
-      opacity: 1;
-      visibility: visible;
-      transition: opacity .8s ease, visibility 0s linear .85s;
-    }
-
-    .boot.hidden {
-      opacity: 0;
-      visibility: hidden;
-    }
-
-    .boot-inner {
-      width: min(340px, 76vw);
-      color: rgba(232,255,248,.72);
-      font-size: 8px;
-      letter-spacing: .17em;
-      text-transform: uppercase;
-    }
-
-    .boot-name {
-      margin-bottom: 16px;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      font-size: 17px;
-      font-weight: 300;
-      letter-spacing: .24em;
-      text-shadow: 0 0 14px rgba(198,255,237,.2);
-    }
-
-    .boot-track {
-      height: 1px;
-      margin: 12px 0;
-      overflow: hidden;
-      background: rgba(228,255,248,.1);
-    }
-
-    .boot-track::after {
-      content: "";
-      display: block;
       width: 100%;
       height: 100%;
-      background: var(--mint);
-      box-shadow: 0 0 10px var(--mint);
-      transform-origin: left;
-      animation: boot-load 1.45s cubic-bezier(.22,.61,.36,1) forwards;
+      pointer-events: none;
     }
 
-    .boot-detail {
-      display: flex;
-      justify-content: space-between;
-      color: rgba(232,255,248,.36);
+    .corner-index {
+      position: fixed;
+      right: 24px;
+      bottom: 22px;
+      z-index: 2;
+      color: var(--soft-ink);
+      font: 9px/1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      letter-spacing: .16em;
+      text-transform: uppercase;
     }
 
-    @keyframes grain-shift {
-      0% { transform: translate(0,0); }
-      25% { transform: translate(3%, -2%); }
-      50% { transform: translate(-2%, 3%); }
-      75% { transform: translate(2%, 2%); }
-      100% { transform: translate(-3%, -1%); }
+    @keyframes breathe {
+      0%, 100% { transform: scale(.75); opacity: .45; }
+      50% { transform: scale(1); opacity: 1; }
     }
 
-    @keyframes mini-witness-drift {
-      0%, 100% { translate: 0 -2px; }
-      50% { translate: 3px 3px; }
-    }
-
-    @keyframes mini-spectral {
-      0%, 38%, 100% { opacity: 0; transform: translateX(-12%); }
-      48%, 76% { opacity: .9; transform: translateX(0); }
-    }
-
-    @keyframes star-drift {
-      from { transform: translate3d(0, 0, 0); }
-      to { transform: translate3d(19px, -13px, 0); }
-    }
-
-    @keyframes witness-float {
-      0%, 100% { translate: 0 -3px; rotate: -.16deg; }
-      50% { translate: 0 5px; rotate: .16deg; }
-    }
-
-    @keyframes witness-recoil {
-      0% { scale: 1; }
-      22% { scale: 1.035; }
-      48% { scale: .985; }
-      100% { scale: 1; }
-    }
-
-    @keyframes spectrum-scan {
-      from { background-position: 0 0, center; }
-      to { background-position: 0 12px, center; }
-    }
-
-    @keyframes live-pulse {
-      0%, 100% { opacity: .35; transform: scale(.8); }
-      50% { opacity: 1; transform: scale(1.2); }
-    }
-
-    @keyframes mini-search {
-      0%, 12% { transform: translate(0,0) scale(.82); }
-      30%, 42% { transform: translate(92%, 22%) scale(.55); }
-      62%, 74% { transform: translate(38%, 108%) scale(.7); }
-      100% { transform: translate(0,0) scale(.82); }
-    }
-
-    @keyframes mini-data-flicker {
-      0%, 46%, 49%, 100% { opacity: .7; }
-      47% { opacity: .18; }
-    }
-
-    @keyframes memory-drift {
-      0%, 100% { translate: 0 -4px; rotate: -1deg; }
-      50% { translate: 7px 7px; rotate: 1deg; }
-    }
-
-    @keyframes eden-breathe {
-      0%, 100% { transform: scale(1.02); filter: blur(1px) saturate(.65) contrast(.78); }
-      50% { transform: scale(1.09); filter: blur(2px) saturate(.92) contrast(.82); }
-    }
-
-    @keyframes orbit-turn {
-      to { transform: rotate(360deg); }
-    }
-
-    @keyframes lotus-bloom {
-      0%, 100% { transform: scale(.92); opacity: .55; filter: blur(.15px); }
-      50% { transform: scale(1.04); opacity: 1; filter: blur(0); }
-    }
-
-    @keyframes field-breathe {
-      from { scale: 1; }
-      to { scale: 1.035; }
-    }
-
-    @keyframes bloom-breathe {
-      0%, 100% { opacity: .2; transform: translate3d(var(--field-x, 0), var(--field-y, 0), 0) scale(1.09); }
-      50% { opacity: .37; transform: translate3d(var(--field-x, 0), var(--field-y, 0), 0) scale(1.13); }
-    }
-
-    @keyframes scan-pass {
-      0% { transform: translateY(-10vh); opacity: 0; }
-      8% { opacity: .7; }
-      90% { opacity: .5; }
-      100% { transform: translateY(128vh); opacity: 0; }
-    }
-
-    @keyframes passive-pulse {
-      0%, 100% { opacity: .2; scale: .8; }
-      50% { opacity: .65; scale: 1.08; }
-    }
-
-    @keyframes corner-lock {
-      0% { width: 30px; height: 30px; }
-      100% { width: 17px; height: 17px; }
-    }
-
-    @keyframes readout-snap {
-      0% { transform: translateX(0); }
-      34% { transform: translateX(8px); }
-      100% { transform: translateX(0); }
-    }
-
-    @keyframes bloom-flash {
-      0% { opacity: 0; transform: scale(.7); }
-      22% { opacity: .92; }
-      100% { opacity: 0; transform: scale(1.2); }
-    }
-
-    @keyframes click-ripple {
-      to { width: 170px; height: 170px; margin: -85px 0 0 -85px; opacity: 0; }
-    }
-
-    @keyframes boot-load {
-      from { transform: scaleX(0); }
-      to { transform: scaleX(1); }
-    }
-
-    @media (max-width: 920px) {
-      .hub {
-        overflow-y: auto;
-        padding-top: 78px;
-      }
-
-      .hub-heading {
-        align-items: flex-start;
-      }
-
-      .hub-note {
-        max-width: 250px;
-      }
-
-      .portal-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .portal {
-        min-height: 32vh;
-      }
-
-      .readout {
-        width: 245px;
-      }
-    }
-
-    @media (max-width: 620px) {
-      .system-line {
-        top: 17px;
-        left: 17px;
-        right: 17px;
-      }
-
-      .system-line span:last-child,
-      .hub-note,
-      .hub-footer span:last-child,
-      .seraphim-title span,
-      .system-status {
-        display: none;
-      }
-
-      .hub {
-        padding: 62px 14px 16px;
-      }
-
-      .hub-heading {
-        margin-bottom: 18px;
-      }
-
-      h1 {
-        font-size: 40px;
-      }
-
-      .portal-grid {
-        gap: 8px;
-      }
-
-      .portal {
-        min-height: 31vh;
-      }
-
-      .portal-meta {
-        left: 14px;
-        right: 14px;
-        bottom: 13px;
-      }
-
-      .portal-title {
-        font-size: 13px;
-        letter-spacing: .08em;
-      }
-
-      .portal-state {
-        font-size: 6px;
-      }
-
-      .lotus-mini {
-        font-size: 5px;
-      }
-
-      .hub-footer {
-        padding-top: 12px;
-      }
-
-      .seraphim-top {
-        top: 14px;
-        left: 14px;
-        right: 14px;
-      }
-
-      .return-button {
-        padding: 9px 10px;
-        font-size: 8px;
-      }
-
-      .readout {
-        top: auto !important;
-        left: 14px !important;
-        right: 14px !important;
-        bottom: 54px;
-        width: auto;
-        padding: 12px 14px;
-      }
-
-      .entity-name {
-        margin: 11px 0 10px;
-        font-size: 16px;
-      }
-
-      .property-grid {
-        grid-template-columns: repeat(2, auto 1fr);
-        gap: 5px 9px;
-        font-size: 6px;
-      }
-
-      .confidence {
-        margin-top: 10px;
-      }
-
-      .interaction-prompt {
-        right: 14px;
-        bottom: 18px;
-      }
-
-      .cursor-aura {
-        display: none;
-      }
+    @media (max-width: 700px) {
+      .system-note { top: 20px; left: 18px; max-width: 42vw; }
+      .archive-link { top: 14px; right: 14px; min-height: 38px; padding: 0 12px; }
+      main { padding: 22px 18px; }
+      .hero { max-width: 94vw; padding-bottom: 80px; }
+      .hero h1 { font-size: clamp(72px, 23vw, 122px); line-height: .82; }
+      .hero p { max-width: 74vw; margin-top: 28px; }
+      .corner-index { right: 16px; bottom: 15px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        scroll-behavior: auto !important;
-        animation-duration: .001ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: .001ms !important;
-      }
+      .archive-link::before { animation: none; }
+      .archive-link { transition: none; }
     }
   </style>
 </head>
 <body>
-  <div class="boot" id="boot" aria-hidden="true">
-    <div class="boot-inner">
-      <div class="boot-name">THE GARDEN</div>
-      <div>Restoring environmental index</div>
-      <div class="boot-track"></div>
-      <div class="boot-detail"><span>04 environments</span><span>signal viable</span></div>
-    </div>
-  </div>
+  <p class="system-note">Classroom surface / 001</p>
 
-  <canvas class="ambient" id="ambient" aria-hidden="true"></canvas>
-  <div class="cursor-aura" aria-hidden="true"></div>
-  <div class="grain" aria-hidden="true"></div>
+  <a class="archive-link" id="archiveLink" href="garden.html" aria-label="Open The Garden archive">
+    Enter archive <span aria-hidden="true">↗</span>
+  </a>
 
   <main>
-    <section class="screen hub active" id="hub" aria-labelledby="garden-title">
-      <div class="system-line">
-        <span class="system-id"><i class="live-dot"></i> Garden interface / online</span>
-        <span>Observer channel 01 · local presence detected</span>
-      </div>
-
-      <header class="hub-heading">
-        <div>
-          <p class="eyebrow">Environmental recovery system / index 000–004</p>
-          <h1 id="garden-title">THE GARDEN <span>/</span></h1>
-        </div>
-        <p class="hub-note">Four latent environments recovered from a soft machine. Approach a signal to inspect its condition.</p>
-      </header>
-
-      <div class="portal-grid" aria-label="Environment selection">
-        <button class="portal" data-scene="seraphim" type="button" aria-label="Enter SERAPHIM presence recognition system">
-          <span class="portal-art seraph-art">
-            <span class="mini-witness"></span>
-            <span class="mini-witness"></span>
-            <span class="mini-witness"></span>
-            <span class="mini-witness"></span>
-            <span class="mini-tracker"></span>
-            <span class="mini-data">witness 04<br>presence felt<br>signal 84.2%</span>
-          </span>
-          <span class="portal-meta">
-            <span class="portal-index">ENV / 01</span>
-            <span class="portal-title">SERAPHIM</span>
-            <span class="portal-state">Signal available · enter</span>
-          </span>
-        </button>
-
-        <button class="portal" data-scene="mnemosyne" type="button" aria-label="Preview MNEMOSYNE memory census">
-          <span class="portal-art memory-art">
-            <span class="memory-pane"></span>
-            <span class="memory-pane"></span>
-            <span class="memory-pane"></span>
-          </span>
-          <span class="portal-meta">
-            <span class="portal-index">ENV / 02</span>
-            <span class="portal-title">MNEMOSYNE</span>
-            <span class="portal-state">Dormant · memory incomplete</span>
-          </span>
-        </button>
-
-        <button class="portal" data-scene="eden" type="button" aria-label="Preview EDEN diagnostic environment">
-          <span class="portal-art eden-art">
-            <img class="eden-image" src="eden-field.jpg" alt="" aria-hidden="true">
-            <span class="eden-orbit">
-              <span class="eden-node"></span>
-              <span class="eden-node"></span>
-              <span class="eden-node"></span>
-            </span>
-          </span>
-          <span class="portal-meta">
-            <span class="portal-index">ENV / 03</span>
-            <span class="portal-title">EDEN</span>
-            <span class="portal-state">Dormant · organism dreaming</span>
-          </span>
-        </button>
-
-        <button class="portal" data-scene="wetware" type="button" aria-label="Preview WETWARE luminous terminal">
-          <span class="portal-art wetware-art">
-            <span class="lotus-ring"></span>
-            <span class="lotus-mini" aria-hidden="true">       .-.
-   .-'   '-.
- .'  .-.-.  '.
-/  .'     '.  \
-; /  .- -.  \ ;
-\ \       / / /
- '. '---' .'
-   '-----'</span>
-          </span>
-          <span class="portal-meta">
-            <span class="portal-index">ENV / 04</span>
-            <span class="portal-title">WETWARE</span>
-            <span class="portal-state">Dormant · bloom suspended</span>
-          </span>
-        </button>
-      </div>
-
-      <footer class="hub-footer">
-        <span class="instruction">Move to disturb · select to enter</span>
-        <span>Archive condition / stable but breathing</span>
-      </footer>
-    </section>
-
-    <section class="screen seraphim-screen" id="seraphim" aria-label="SERAPHIM presence recognition environment">
-      <div class="constellation-backdrop"></div>
-      <div class="constellation" id="constellation" aria-label="Floating landscape signals"></div>
-      <div class="field-wash" id="fieldWash"></div>
-      <div class="vignette"></div>
-      <div class="scanline"></div>
-      <div id="passiveMarkers" aria-hidden="true"></div>
-      <canvas class="tether-canvas" id="tetherCanvas" aria-hidden="true"></canvas>
-
-      <div class="tracker" id="tracker" aria-hidden="true">
-        <i class="tracker-corner"></i>
-        <i class="tracker-corner"></i>
-        <i class="tracker-corner"></i>
-        <i class="tracker-corner"></i>
-        <span class="tracker-label" id="trackerLabel">Searching / field 04</span>
-      </div>
-
-      <aside class="readout" id="readout" aria-live="polite">
-        <div class="readout-header">
-          <span>Presence analysis</span>
-          <span class="readout-status" id="readoutStatus">Acquiring</span>
-        </div>
-        <h2 class="entity-name" id="entityName">Soft Presence</h2>
-        <dl class="property-grid">
-          <dt>Entity</dt><dd id="entityId">SERAPH_04</dd>
-          <dt>State</dt><dd id="entityState">Listening</dd>
-          <dt>Memory</dt><dd id="entityMemory">83.71%</dd>
-          <dt>Light</dt><dd id="entityLight">Inward</dd>
-          <dt>Distance</dt><dd id="entityDistance">Internal</dd>
-        </dl>
-        <div class="confidence">
-          <div class="confidence-line"><span>Recognition confidence</span><span id="confidenceValue">84.2%</span></div>
-          <div class="confidence-track"><div class="confidence-fill" id="confidenceFill"></div></div>
-        </div>
-      </aside>
-
-      <div class="seraphim-interface">
-        <div class="seraphim-top">
-          <button class="return-button" id="returnButton" type="button">
-            <span class="return-icon">←</span>
-            <span>Return to garden</span>
-          </button>
-          <div class="seraphim-title">
-            <strong>SERAPHIM / FIELD OF WITNESSES</strong>
-            <span>Landscape recognition array · observer channel 01</span>
-          </div>
-        </div>
-
-        <div class="system-status" aria-hidden="true">
-          <span>Field condition</span><b>Soft / viable</b>
-          <span>Detected forms</span><b id="detectedCount">0007</b>
-          <span>Observer effect</span><b id="observerEffect">12.4%</b>
-        </div>
-
-        <div class="interaction-prompt">Move to attract · click to recognize</div>
-      </div>
-
-      <div class="recognition-message" id="recognitionMessage">Presence felt</div>
-      <div class="bloom-flash" id="bloomFlash"></div>
+    <section class="hero" aria-labelledby="pageTitle">
+      <h1 id="pageTitle">Hello World!</h1>
+      <p><span>This is the real page.</span> Start building here. The strange, living thing we made earlier is safely preserved in the archive.</p>
     </section>
   </main>
 
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <canvas id="guide" aria-hidden="true"></canvas>
+  <div class="corner-index">Move / disturb the line</div>
 
-  <script type="application/x-disabled">
+  <script>
     (() => {
+      const canvas = document.getElementById('guide');
+      const context = canvas.getContext('2d');
+      const title = document.getElementById('pageTitle');
+      const link = document.getElementById('archiveLink');
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const root = document.documentElement;
-      const body = document.body;
-      const hub = document.getElementById('hub');
-      const seraphim = document.getElementById('seraphim');
-      const boot = document.getElementById('boot');
-      const toast = document.getElementById('toast');
-      const portals = [...document.querySelectorAll('.portal')];
-      const tracker = document.getElementById('tracker');
-      const trackerLabel = document.getElementById('trackerLabel');
-      const readout = document.getElementById('readout');
-      const readoutStatus = document.getElementById('readoutStatus');
-      const entityName = document.getElementById('entityName');
-      const entityId = document.getElementById('entityId');
-      const entityState = document.getElementById('entityState');
-      const entityMemory = document.getElementById('entityMemory');
-      const entityLight = document.getElementById('entityLight');
-      const entityDistance = document.getElementById('entityDistance');
-      const confidenceValue = document.getElementById('confidenceValue');
-      const confidenceFill = document.getElementById('confidenceFill');
-      const recognitionMessage = document.getElementById('recognitionMessage');
-      const bloomFlash = document.getElementById('bloomFlash');
-      const field = document.getElementById('field');
-      const fieldBloom = document.getElementById('fieldBloom');
-      const fieldWash = document.getElementById('fieldWash');
-      const passiveMarkers = document.getElementById('passiveMarkers');
-      const observerEffect = document.getElementById('observerEffect');
-      const ambient = document.getElementById('ambient');
-      const ambientCtx = ambient.getContext('2d');
-      const tether = document.getElementById('tetherCanvas');
-      const tetherCtx = tether.getContext('2d');
-      let isSeraphim = false;
-      let activeIndex = 0;
-      let recognitionTimer = 0;
-      let searchTimer = 0;
-      let toastTimer = 0;
-      let scanTimer = 0;
-      let pointer = { x: innerWidth / 2, y: innerHeight / 2, active: false };
-      let ambientParticles = [];
+      const pointer = { x: innerWidth * .64, y: innerHeight * .42, tx: innerWidth * .64, ty: innerHeight * .42, active: false };
+      let width = innerWidth;
+      let height = innerHeight;
       let pixelRatio = Math.min(devicePixelRatio || 1, 2);
+      let pulse = 0;
 
-      const targets = [
-        { x: .17, y: .23, w: .17, h: .21, id: 'SERAPH_04', name: 'Soft Presence', state: 'Listening', memory: '83.71%', light: 'Inward', distance: 'Internal', confidence: 84.2 },
-        { x: .61, y: .14, w: .15, h: .18, id: 'REMNANT_11', name: 'Upper Witness', state: 'Remembering', memory: '62.09%', light: 'Returning', distance: '7.4 dreams', confidence: 76.8 },
-        { x: .36, y: .53, w: .19, h: .16, id: 'CHOIR_02', name: 'Quiet Assembly', state: 'Gathering', memory: '91.44%', light: 'Mutual', distance: 'Near', confidence: 92.1 },
-        { x: .69, y: .62, w: .14, h: .21, id: 'VESSEL_08', name: 'Blue Vessel', state: 'Waiting', memory: '48.27%', light: 'Absorbed', distance: 'Unknown', confidence: 68.5 },
-        { x: .10, y: .68, w: .13, h: .17, id: 'ECHO_17', name: 'Minor Echo', state: 'Following', memory: '37.82%', light: 'Peripheral', distance: 'Behind', confidence: 61.4 }
-      ];
-
-      function clamp(value, min, max) {
-        return Math.min(max, Math.max(min, value));
-      }
-
-      function showToast(message) {
-        clearTimeout(toastTimer);
-        toast.textContent = message;
-        toast.classList.add('visible');
-        toastTimer = setTimeout(() => toast.classList.remove('visible'), 2600);
-      }
-
-      function sizeCanvas(canvas, context) {
-        const w = innerWidth;
-        const h = innerHeight;
-        canvas.width = Math.floor(w * pixelRatio);
-        canvas.height = Math.floor(h * pixelRatio);
-        canvas.style.width = `${w}px`;
-        canvas.style.height = `${h}px`;
-        context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-      }
-
-      function buildAmbientParticles() {
-        const count = Math.min(95, Math.max(42, Math.floor(innerWidth / 18)));
-        ambientParticles = Array.from({ length: count }, () => ({
-          x: Math.random() * innerWidth,
-          y: Math.random() * innerHeight,
-          radius: Math.random() * 1.25 + .25,
-          alpha: Math.random() * .22 + .04,
-          speed: Math.random() * .14 + .025,
-          phase: Math.random() * Math.PI * 2,
-          drift: Math.random() * .55 + .1
-        }));
-      }
-
-      function drawAmbient(time) {
-        ambientCtx.clearRect(0, 0, innerWidth, innerHeight);
-        const t = time * .00025;
-        for (const p of ambientParticles) {
-          p.y -= p.speed;
-          p.x += Math.sin(t + p.phase) * .035 * p.drift;
-          if (p.y < -4) {
-            p.y = innerHeight + 4;
-            p.x = Math.random() * innerWidth;
-          }
-          const proximity = Math.max(0, 1 - Math.hypot(pointer.x - p.x, pointer.y - p.y) / 260);
-          ambientCtx.beginPath();
-          ambientCtx.arc(p.x + (pointer.x / innerWidth - .5) * p.drift * 7, p.y + (pointer.y / innerHeight - .5) * p.drift * 7, p.radius + proximity * 1.4, 0, Math.PI * 2);
-          ambientCtx.fillStyle = `rgba(205,255,240,${p.alpha + proximity * .25})`;
-          ambientCtx.shadowBlur = 8 + proximity * 14;
-          ambientCtx.shadowColor = 'rgba(174,255,226,.55)';
-          ambientCtx.fill();
-        }
-        ambientCtx.shadowBlur = 0;
-        requestAnimationFrame(drawAmbient);
-      }
-
-      function updatePointer(x, y) {
-        pointer.x = x;
-        pointer.y = y;
-        pointer.active = true;
-        root.style.setProperty('--mx', `${x}px`);
-        root.style.setProperty('--my', `${y}px`);
-
-        if (isSeraphim) {
-          const nx = x / innerWidth - .5;
-          const ny = y / innerHeight - .5;
-          const fieldX = `${nx * -18}px`;
-          const fieldY = `${ny * -13}px`;
-          field.style.setProperty('--field-x', fieldX);
-          field.style.setProperty('--field-y', fieldY);
-          fieldBloom.style.setProperty('--field-x', fieldX);
-          fieldBloom.style.setProperty('--field-y', fieldY);
-          fieldWash.style.setProperty('--light-x', `${x / innerWidth * 100}%`);
-          fieldWash.style.setProperty('--light-y', `${y / innerHeight * 100}%`);
-          observerEffect.textContent = `${(8 + Math.hypot(nx, ny) * 17).toFixed(1)}%`;
-          attractNearestTarget(x, y);
-        }
-      }
-
-      function targetRect(target) {
-        return {
-          x: target.x * innerWidth,
-          y: target.y * innerHeight,
-          w: target.w * innerWidth,
-          h: target.h * innerHeight
-        };
-      }
-
-      function placePassiveMarkers() {
-        passiveMarkers.innerHTML = '';
-        targets.forEach((target, index) => {
-          const marker = document.createElement('i');
-          marker.className = 'passive-marker';
-          marker.style.left = `${(target.x + target.w / 2) * 100}%`;
-          marker.style.top = `${(target.y + target.h / 2) * 100}%`;
-          marker.style.animationDelay = `${index * -.72}s`;
-          passiveMarkers.appendChild(marker);
-        });
-      }
-
-      function setReadout(target, index) {
-        entityName.textContent = target.name;
-        entityId.textContent = target.id;
-        entityState.textContent = target.state;
-        entityMemory.textContent = target.memory;
-        entityLight.textContent = target.light;
-        entityDistance.textContent = target.distance;
-        confidenceValue.textContent = `${target.confidence.toFixed(1)}%`;
-        confidenceFill.style.width = `${target.confidence}%`;
-        trackerLabel.textContent = `Acquiring / field 0${index + 1}`;
-
-        const top = clamp((target.y + target.h * .25) * innerHeight, 100, innerHeight - 330);
-        readout.style.top = `${top}px`;
-        if (target.x < .52) {
-          readout.style.left = 'auto';
-          readout.style.right = '6vw';
-        } else {
-          readout.style.right = 'auto';
-          readout.style.left = '6vw';
-        }
-        readout.classList.remove('pulse');
-        void readout.offsetWidth;
-        readout.classList.add('pulse');
-      }
-
-      function moveTracker(index, locked = false) {
-        activeIndex = index;
-        const target = targets[index];
-        const rect = targetRect(target);
-        tracker.style.left = `${rect.x}px`;
-        tracker.style.top = `${rect.y}px`;
-        tracker.style.width = `${rect.w}px`;
-        tracker.style.height = `${rect.h}px`;
-        tracker.classList.toggle('locked', locked);
-        readoutStatus.textContent = locked ? 'Recognized' : 'Acquiring';
-        trackerLabel.textContent = locked ? `Recognized / ${target.id}` : `Acquiring / field 0${index + 1}`;
-        setReadout(target, index);
-      }
-
-      function attractNearestTarget(x, y) {
-        let nearest = -1;
-        let nearestDistance = Infinity;
-        targets.forEach((target, index) => {
-          const rect = targetRect(target);
-          const distance = Math.hypot(x - (rect.x + rect.w / 2), y - (rect.y + rect.h / 2));
-          if (distance < nearestDistance) {
-            nearestDistance = distance;
-            nearest = index;
-          }
-        });
-        if (nearestDistance < Math.min(190, innerWidth * .16) && nearest !== activeIndex) {
-          clearTimeout(scanTimer);
-          moveTracker(nearest, false);
-          scheduleSearch();
-        }
-      }
-
-      function recognizeAt(x, y) {
-        const target = targets[activeIndex];
-        const rect = targetRect(target);
-        moveTracker(activeIndex, true);
-        bloomFlash.style.setProperty('--flash-x', `${(rect.x + rect.w / 2) / innerWidth * 100}%`);
-        bloomFlash.style.setProperty('--flash-y', `${(rect.y + rect.h / 2) / innerHeight * 100}%`);
-        bloomFlash.classList.remove('fire');
-        void bloomFlash.offsetWidth;
-        bloomFlash.classList.add('fire');
-        recognitionMessage.classList.add('visible');
-        createRipple(x, y);
-        clearTimeout(recognitionTimer);
-        recognitionTimer = setTimeout(() => {
-          recognitionMessage.classList.remove('visible');
-          tracker.classList.remove('locked');
-          readoutStatus.textContent = 'Observing';
-          scheduleSearch();
-        }, 1850);
-      }
-
-      function createRipple(x, y) {
-        const ripple = document.createElement('i');
-        ripple.className = 'click-ripple';
-        ripple.style.left = `${x}px`;
-        ripple.style.top = `${y}px`;
-        seraphim.appendChild(ripple);
-        setTimeout(() => ripple.remove(), 950);
-      }
-
-      function scheduleSearch() {
-        clearTimeout(scanTimer);
-        if (!isSeraphim) return;
-        scanTimer = setTimeout(() => {
-          const next = (activeIndex + 1) % targets.length;
-          moveTracker(next, false);
-          scheduleSearch();
-        }, 3600);
-      }
-
-      function drawTether(time) {
-        tetherCtx.clearRect(0, 0, innerWidth, innerHeight);
-        if (isSeraphim && tracker.offsetWidth && readout.offsetWidth) {
-          const a = tracker.getBoundingClientRect();
-          const b = readout.getBoundingClientRect();
-          const readoutOnRight = b.left > a.left;
-          const startX = readoutOnRight ? a.right : a.left;
-          const startY = a.top + a.height * .52;
-          const endX = readoutOnRight ? b.left : b.right;
-          const endY = b.top + 32;
-          const elbowX = startX + (endX - startX) * .48;
-
-          tetherCtx.save();
-          tetherCtx.lineWidth = 1;
-          tetherCtx.strokeStyle = 'rgba(221,255,247,.42)';
-          tetherCtx.shadowBlur = 8;
-          tetherCtx.shadowColor = 'rgba(187,255,231,.28)';
-          tetherCtx.beginPath();
-          tetherCtx.moveTo(startX, startY);
-          tetherCtx.lineTo(elbowX, startY);
-          tetherCtx.lineTo(endX, endY);
-          tetherCtx.stroke();
-
-          tetherCtx.shadowBlur = 12;
-          tetherCtx.fillStyle = 'rgba(231,255,249,.9)';
-          const phase = ((time * .0002) % 1);
-          let pulseX;
-          let pulseY;
-          if (phase < .5) {
-            const p = phase * 2;
-            pulseX = startX + (elbowX - startX) * p;
-            pulseY = startY;
-          } else {
-            const p = (phase - .5) * 2;
-            pulseX = elbowX + (endX - elbowX) * p;
-            pulseY = startY + (endY - startY) * p;
-          }
-          tetherCtx.beginPath();
-          tetherCtx.arc(pulseX, pulseY, 2.1, 0, Math.PI * 2);
-          tetherCtx.fill();
-          tetherCtx.restore();
-        }
-        requestAnimationFrame(drawTether);
-      }
-
-      function enterSeraphim() {
-        isSeraphim = true;
-        body.classList.add('seraphim-open');
-        hub.classList.remove('active');
-        seraphim.classList.add('active');
-        moveTracker(0, false);
-        scheduleSearch();
-        setTimeout(() => document.getElementById('returnButton').focus({ preventScroll: true }), 850);
-      }
-
-      function returnToHub() {
-        isSeraphim = false;
-        body.classList.remove('seraphim-open');
-        seraphim.classList.remove('active');
-        hub.classList.add('active');
-        clearTimeout(scanTimer);
-        clearTimeout(recognitionTimer);
-        recognitionMessage.classList.remove('visible');
-        setTimeout(() => portals[0].focus({ preventScroll: true }), 850);
-      }
-
-      portals.forEach((portal) => {
-        portal.addEventListener('pointermove', (event) => {
-          const rect = portal.getBoundingClientRect();
-          const px = (event.clientX - rect.left) / rect.width;
-          const py = (event.clientY - rect.top) / rect.height;
-          portal.style.setProperty('--tilt-x', `${(py - .5) * -5}deg`);
-          portal.style.setProperty('--tilt-y', `${(px - .5) * 6}deg`);
-          portal.style.setProperty('--glow-x', `${px * 100}%`);
-          portal.style.setProperty('--glow-y', `${py * 100}%`);
-        });
-        portal.addEventListener('pointerleave', () => {
-          portal.style.setProperty('--tilt-x', '0deg');
-          portal.style.setProperty('--tilt-y', '0deg');
-          portal.style.setProperty('--glow-x', '50%');
-          portal.style.setProperty('--glow-y', '50%');
-        });
-        portal.addEventListener('click', () => {
-          const scene = portal.dataset.scene;
-          if (scene === 'seraphim') {
-            enterSeraphim();
-          } else {
-            const names = { mnemosyne: 'MNEMOSYNE', eden: 'EDEN', wetware: 'WETWARE' };
-            showToast(`${names[scene]} / signal dormant · environment recovery pending`);
-          }
-        });
-      });
-
-      document.getElementById('returnButton').addEventListener('click', returnToHub);
-
-      seraphim.addEventListener('pointerdown', (event) => {
-        if (event.target.closest('button')) return;
-        recognizeAt(event.clientX, event.clientY);
-      });
-
-      window.addEventListener('pointermove', (event) => updatePointer(event.clientX, event.clientY), { passive: true });
-
-      window.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && isSeraphim) returnToHub();
-      });
-
-      window.addEventListener('resize', () => {
+      const resize = () => {
+        width = innerWidth;
+        height = innerHeight;
         pixelRatio = Math.min(devicePixelRatio || 1, 2);
-        sizeCanvas(ambient, ambientCtx);
-        sizeCanvas(tether, tetherCtx);
-        buildAmbientParticles();
-        placePassiveMarkers();
-        if (isSeraphim) moveTracker(activeIndex, tracker.classList.contains('locked'));
-      });
+        canvas.width = Math.round(width * pixelRatio);
+        canvas.height = Math.round(height * pixelRatio);
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
+        context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+      };
 
-      setInterval(() => {
-        if (!isSeraphim) return;
-        const target = targets[activeIndex];
-        const jitter = (Math.random() - .5) * .42;
-        const value = clamp(target.confidence + jitter, 0, 100);
-        confidenceValue.textContent = `${value.toFixed(1)}%`;
-        confidenceFill.style.width = `${value}%`;
-      }, 850);
+      const pointOnCurve = (start, controlA, controlB, end, t) => {
+        const mt = 1 - t;
+        return {
+          x: mt ** 3 * start.x + 3 * mt ** 2 * t * controlA.x + 3 * mt * t ** 2 * controlB.x + t ** 3 * end.x,
+          y: mt ** 3 * start.y + 3 * mt ** 2 * t * controlA.y + 3 * mt * t ** 2 * controlB.y + t ** 3 * end.y
+        };
+      };
 
-      sizeCanvas(ambient, ambientCtx);
-      sizeCanvas(tether, tetherCtx);
-      buildAmbientParticles();
-      placePassiveMarkers();
-      requestAnimationFrame(drawAmbient);
-      requestAnimationFrame(drawTether);
-      updatePointer(innerWidth / 2, innerHeight / 2);
+      const draw = (time = 0) => {
+        pointer.x += (pointer.tx - pointer.x) * .075;
+        pointer.y += (pointer.ty - pointer.y) * .075;
+        pulse *= .92;
 
-      setTimeout(() => boot.classList.add('hidden'), reducedMotion ? 100 : 1550);
+        const titleBox = title.getBoundingClientRect();
+        const linkBox = link.getBoundingClientRect();
+        const start = {
+          x: Math.min(titleBox.right - titleBox.width * .08, width * .48),
+          y: titleBox.top + titleBox.height * .18
+        };
+        const end = { x: linkBox.left - 12, y: linkBox.top + linkBox.height * .55 };
+        const controlA = { x: start.x + (end.x - start.x) * .28, y: start.y - height * .15 };
+        const controlB = { x: end.x - width * .22, y: end.y + height * .36 };
+        const points = [];
+        const count = Math.max(48, Math.round(width / 18));
+
+        for (let index = 0; index <= count; index += 1) {
+          const t = index / count;
+          const base = pointOnCurve(start, controlA, controlB, end, t);
+          const ahead = pointOnCurve(start, controlA, controlB, end, Math.min(1, t + .012));
+          const dx = ahead.x - base.x;
+          const dy = ahead.y - base.y;
+          const length = Math.hypot(dx, dy) || 1;
+          const envelope = Math.sin(Math.PI * t);
+          const wave = Math.sin(t * 24 - time * .0042) * (6 + pulse * 12) * envelope;
+          const distance = Math.hypot(base.x - pointer.x, base.y - pointer.y);
+          const disturbance = pointer.active ? Math.max(0, 1 - distance / 170) * 34 * envelope : 0;
+          points.push({
+            x: base.x + (-dy / length) * (wave + disturbance),
+            y: base.y + (dx / length) * (wave + disturbance)
+          });
+        }
+
+        context.clearRect(0, 0, width, height);
+        context.beginPath();
+        context.moveTo(points[0].x, points[0].y);
+        for (let index = 1; index < points.length - 1; index += 1) {
+          const midpointX = (points[index].x + points[index + 1].x) / 2;
+          const midpointY = (points[index].y + points[index + 1].y) / 2;
+          context.quadraticCurveTo(points[index].x, points[index].y, midpointX, midpointY);
+        }
+        context.lineTo(end.x, end.y);
+        context.strokeStyle = 'rgba(17,17,15,.72)';
+        context.lineWidth = 1.45;
+        context.lineCap = 'round';
+        context.stroke();
+
+        const beforeEnd = points[points.length - 3];
+        const angle = Math.atan2(end.y - beforeEnd.y, end.x - beforeEnd.x);
+        const headSize = 10 + pulse * 3;
+        context.beginPath();
+        context.moveTo(end.x, end.y);
+        context.lineTo(end.x - Math.cos(angle - .62) * headSize, end.y - Math.sin(angle - .62) * headSize);
+        context.moveTo(end.x, end.y);
+        context.lineTo(end.x - Math.cos(angle + .62) * headSize, end.y - Math.sin(angle + .62) * headSize);
+        context.strokeStyle = 'rgba(17,17,15,.88)';
+        context.lineWidth = 1.7;
+        context.stroke();
+
+        if (!reducedMotion) requestAnimationFrame(draw);
+      };
+
+      addEventListener('resize', resize);
+      addEventListener('pointermove', event => {
+        pointer.tx = event.clientX;
+        pointer.ty = event.clientY;
+        pointer.active = true;
+      }, { passive: true });
+      addEventListener('pointerleave', () => { pointer.active = false; });
+      addEventListener('pointerdown', () => { pulse = 1; }, { passive: true });
+
+      resize();
+      draw();
     })();
   </script>
-  <script src="field-of-witnesses.js"></script>
 </body>
 </html>
