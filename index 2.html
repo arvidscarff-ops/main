@@ -1,0 +1,1155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Arvid — Growth Systems</title>
+
+  <style>
+    :root {
+      --background: #aeb5c0;
+      --white: #f7f9fb;
+      --dark: #303746;
+      --blue: #d7e8ff;
+      --violet: #dedbff;
+      --line: rgba(255, 255, 255, 0.55);
+      --mono: "SFMono-Regular", Consolas, monospace;
+      --sans: "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    body {
+      color: var(--white);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,.22), transparent 33%),
+        linear-gradient(120deg, rgba(255,255,255,.08), transparent 40%),
+        var(--background);
+      font-family: var(--sans);
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      z-index: 20;
+      inset: 0;
+      opacity: 0.12;
+      pointer-events: none;
+      mix-blend-mode: soft-light;
+
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    button {
+      color: inherit;
+      font: inherit;
+    }
+
+    .topbar,
+    .bottombar {
+      position: fixed;
+      z-index: 15;
+      right: 24px;
+      left: 24px;
+
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+
+      font: 8px/1 var(--mono);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .topbar {
+      top: 18px;
+      height: 36px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .bottombar {
+      bottom: 15px;
+      height: 31px;
+      border-top: 1px solid var(--line);
+    }
+
+    .center-label {
+      justify-self: center;
+    }
+
+    .right-label {
+      justify-self: end;
+    }
+
+    .status-light {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      margin-right: 7px;
+      border-radius: 50%;
+      background: var(--white);
+      box-shadow: 0 0 14px var(--white);
+      animation: breathe 2.5s ease-in-out infinite;
+    }
+
+    .sound-button {
+      padding: 0;
+      border: 0;
+      color: inherit;
+      background: transparent;
+      font: inherit;
+      letter-spacing: inherit;
+      cursor: pointer;
+    }
+
+    .stage {
+      position: fixed;
+      z-index: 2;
+      inset: 55px 24px 47px;
+    }
+
+    .connections {
+      position: absolute;
+      z-index: 1;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    .connection {
+      fill: none;
+      stroke: rgba(255,255,255,.48);
+      stroke-width: 1;
+      transition:
+        stroke 0.35s ease,
+        stroke-width 0.35s ease,
+        filter 0.35s ease;
+    }
+
+    .connection.is-active {
+      stroke: var(--white);
+      stroke-width: 1.7;
+      filter: drop-shadow(0 0 7px white);
+    }
+
+    .measurement {
+      fill: rgba(255,255,255,.75);
+      font: 8px var(--mono);
+      letter-spacing: 0.08em;
+    }
+
+    .project {
+      position: absolute;
+      z-index: 5;
+
+      width: clamp(175px, 19vw, 290px);
+      height: clamp(135px, 22vh, 220px);
+      padding: 16px;
+
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.52);
+      border-radius: 2px;
+
+      color: var(--white);
+      text-align: left;
+      background: rgba(255,255,255,.055);
+      box-shadow:
+        0 25px 75px rgba(48,55,70,.08),
+        inset 0 1px rgba(255,255,255,.25);
+      backdrop-filter: blur(7px);
+
+      cursor: pointer;
+      transition:
+        transform 0.5s cubic-bezier(.2,.8,.2,1),
+        opacity 0.4s ease,
+        background 0.4s ease,
+        box-shadow 0.4s ease;
+    }
+
+    .project[data-index="0"] {
+      top: 6%;
+      left: 2%;
+    }
+
+    .project[data-index="1"] {
+      top: 6%;
+      right: 2%;
+    }
+
+    .project[data-index="2"] {
+      bottom: 6%;
+      left: 4%;
+    }
+
+    .project[data-index="3"] {
+      right: 4%;
+      bottom: 6%;
+    }
+
+    .project::after {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(255,255,255,.16);
+      pointer-events: none;
+    }
+
+    .project:hover,
+    .project:focus-visible {
+      outline: none;
+      transform: translateY(-4px);
+      background: rgba(255,255,255,.1);
+    }
+
+    .project.is-active {
+      background: rgba(255,255,255,.16);
+      box-shadow:
+        0 32px 90px rgba(48,55,70,.2),
+        0 0 45px rgba(255,255,255,.18),
+        inset 0 1px rgba(255,255,255,.4);
+      transform: translateY(-5px) scale(1.025);
+    }
+
+    .project__meta {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      font: 7px/1 var(--mono);
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .project__symbol {
+      position: absolute;
+      top: 48%;
+      left: 50%;
+      width: 34%;
+      aspect-ratio: 1;
+      border: 1px solid rgba(255,255,255,.5);
+      transform: translate(-50%, -50%) rotate(45deg);
+      transition:
+        transform 0.6s ease,
+        border-radius 0.6s ease,
+        box-shadow 0.6s ease;
+    }
+
+    .project__symbol::before,
+    .project__symbol::after {
+      content: "";
+      position: absolute;
+      background: rgba(255,255,255,.45);
+    }
+
+    .project__symbol::before {
+      top: 50%;
+      left: -25%;
+      width: 150%;
+      height: 1px;
+    }
+
+    .project__symbol::after {
+      top: -25%;
+      left: 50%;
+      width: 1px;
+      height: 150%;
+    }
+
+    .project.is-active .project__symbol {
+      border-radius: 50%;
+      transform: translate(-50%, -50%) rotate(90deg);
+      box-shadow:
+        inset 0 0 24px rgba(255,255,255,.22),
+        0 0 25px rgba(255,255,255,.2);
+    }
+
+    .project h2 {
+      position: absolute;
+      z-index: 2;
+      bottom: 13px;
+      left: 15px;
+      margin: 0;
+
+      font-size: clamp(24px, 2.8vw, 44px);
+      font-weight: 470;
+      line-height: 0.78;
+      letter-spacing: -0.055em;
+    }
+
+    .project__plus {
+      position: absolute;
+      z-index: 3;
+      right: 13px;
+      bottom: 13px;
+
+      display: grid;
+      width: 24px;
+      height: 24px;
+      place-items: center;
+
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      font-size: 14px;
+    }
+
+    .dial {
+      position: absolute;
+      z-index: 8;
+      top: 50%;
+      left: 50%;
+
+      width: clamp(280px, 41vmin, 500px);
+      aspect-ratio: 1;
+
+      border: 1px solid rgba(255,255,255,.6);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, rgba(255,255,255,.16), transparent 52%);
+      box-shadow:
+        inset 0 0 55px rgba(255,255,255,.08),
+        0 0 70px rgba(255,255,255,.1);
+
+      cursor: grab;
+      touch-action: none;
+      transform: translate(-50%, -50%);
+    }
+
+    .dial.is-dragging {
+      cursor: grabbing;
+    }
+
+    .dial::before,
+    .dial::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .dial::before {
+      inset: 8%;
+      border-style: dashed;
+    }
+
+    .dial::after {
+      inset: 28%;
+    }
+
+    .dial__rotator {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      will-change: transform;
+    }
+
+    .tick {
+      position: absolute;
+      top: 2%;
+      left: 50%;
+      width: 1px;
+      height: 7px;
+      background: rgba(255,255,255,.48);
+      transform-origin: 50% 48%;
+    }
+
+    .tick.major {
+      height: 15px;
+      background: var(--white);
+    }
+
+    .dial__needle {
+      position: absolute;
+      z-index: 3;
+      top: 8%;
+      left: 50%;
+      width: 1px;
+      height: 42%;
+      background: linear-gradient(var(--white), transparent);
+      transform: translateX(-50%);
+      transform-origin: bottom;
+    }
+
+    .dial__needle::before {
+      content: "";
+      position: absolute;
+      top: -3px;
+      left: 50%;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--white);
+      box-shadow: 0 0 15px var(--white);
+      transform: translateX(-50%);
+    }
+
+    .dial__center {
+      position: absolute;
+      z-index: 5;
+      top: 50%;
+      left: 50%;
+
+      display: grid;
+      width: 23%;
+      aspect-ratio: 1;
+      place-items: center;
+
+      border: 1px solid var(--white);
+      border-radius: 50%;
+      background: rgba(48,55,70,.15);
+      box-shadow:
+        0 0 30px rgba(255,255,255,.2),
+        inset 0 0 25px rgba(255,255,255,.12);
+
+      text-align: center;
+      font: 7px/1.5 var(--mono);
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .dial__angle {
+      display: block;
+      font-size: 11px;
+    }
+
+    .dial__instruction {
+      position: absolute;
+      bottom: 17%;
+      left: 50%;
+      font: 7px/1 var(--mono);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transform: translateX(-50%);
+    }
+
+    .detail {
+      position: fixed;
+      z-index: 30;
+      inset: 0;
+
+      display: grid;
+      visibility: hidden;
+      padding: clamp(15px, 4vw, 60px);
+      place-items: center;
+
+      opacity: 0;
+      background: rgba(45,52,67,.72);
+      backdrop-filter: blur(20px);
+
+      transition:
+        opacity 0.35s ease,
+        visibility 0.35s ease;
+    }
+
+    .detail.is-open {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .detail__panel {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+
+      width: min(1000px, 100%);
+      min-height: min(600px, 80vh);
+      padding: clamp(30px, 5vw, 70px);
+
+      border: 1px solid var(--line);
+      background: rgba(72,81,101,.94);
+      box-shadow: 0 45px 150px rgba(40,46,58,.35);
+
+      align-items: center;
+      transform: scale(.98);
+      transition: transform .4s ease;
+    }
+
+    .detail.is-open .detail__panel {
+      transform: none;
+    }
+
+    .detail h2 {
+      margin: 0;
+      font-size: clamp(55px, 9vw, 135px);
+      font-weight: 450;
+      line-height: 0.75;
+      letter-spacing: -0.075em;
+    }
+
+    .detail__placeholder {
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
+    }
+
+    .detail__placeholder span {
+      font: 8px/1 var(--mono);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .detail__placeholder p {
+      max-width: 380px;
+      margin-top: 30px;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .detail__close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+
+      width: 35px;
+      height: 35px;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    @keyframes breathe {
+      50% {
+        opacity: 0.35;
+        transform: scale(0.7);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .topbar,
+      .bottombar {
+        right: 10px;
+        left: 10px;
+      }
+
+      .center-label {
+        display: none;
+      }
+
+      .stage {
+        inset: 50px 10px 43px;
+      }
+
+      .dial {
+        top: 31%;
+        width: min(58vw, 235px);
+      }
+
+      .project {
+        width: calc(50% - 6px);
+        height: 20%;
+        min-width: 0;
+      }
+
+      .project[data-index="0"] {
+        top: 56%;
+        left: 0;
+      }
+
+      .project[data-index="1"] {
+        top: 56%;
+        right: 0;
+      }
+
+      .project[data-index="2"] {
+        bottom: 1%;
+        left: 0;
+      }
+
+      .project[data-index="3"] {
+        right: 0;
+        bottom: 1%;
+      }
+
+      .project h2 {
+        font-size: clamp(20px, 7vw, 32px);
+      }
+
+      .project__meta {
+        font-size: 5px;
+      }
+
+      .detail__panel {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <span>Arvid / Growth Systems</span>
+    <span class="center-label">Interface / Selected Work</span>
+
+    <button class="sound-button right-label" type="button">
+      Sound / On
+    </button>
+  </header>
+
+  <main class="stage">
+    <svg class="connections" aria-hidden="true"></svg>
+
+    <button class="project" data-index="0" data-title="First Signal">
+      <span class="project__meta">
+        <span>Project 01</span>
+        <span>Acquisition</span>
+      </span>
+
+      <span class="project__symbol"></span>
+      <h2>First<br>Signal</h2>
+      <span class="project__plus">+</span>
+    </button>
+
+    <button class="project" data-index="1" data-title="Friction Map">
+      <span class="project__meta">
+        <span>Project 02</span>
+        <span>Conversion</span>
+      </span>
+
+      <span class="project__symbol"></span>
+      <h2>Friction<br>Map</h2>
+      <span class="project__plus">+</span>
+    </button>
+
+    <button class="project" data-index="2" data-title="Pattern Shift">
+      <span class="project__meta">
+        <span>Project 03</span>
+        <span>Positioning</span>
+      </span>
+
+      <span class="project__symbol"></span>
+      <h2>Pattern<br>Shift</h2>
+      <span class="project__plus">+</span>
+    </button>
+
+    <button class="project" data-index="3" data-title="Return Path">
+      <span class="project__meta">
+        <span>Project 04</span>
+        <span>Retention</span>
+      </span>
+
+      <span class="project__symbol"></span>
+      <h2>Return<br>Path</h2>
+      <span class="project__plus">+</span>
+    </button>
+
+    <div
+      class="dial"
+      role="slider"
+      tabindex="0"
+      aria-label="Project selection dial"
+      aria-valuemin="1"
+      aria-valuemax="4"
+      aria-valuenow="1"
+    >
+      <div class="dial__rotator">
+        <div class="dial__needle"></div>
+      </div>
+
+      <div class="dial__center">
+        <span>
+          Active node
+          <strong class="dial__angle">000°</strong>
+        </span>
+      </div>
+
+      <span class="dial__instruction">Drag to rotate</span>
+    </div>
+  </main>
+
+  <footer class="bottombar">
+    <span>Stockholm / Elsewhere</span>
+    <span class="center-label">Drag · Scroll · Arrow keys</span>
+    <span class="right-label active-counter">01 / 04</span>
+  </footer>
+
+  <section class="detail" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="detail__panel">
+      <button class="detail__close" type="button" aria-label="Close">×</button>
+
+      <h2 class="detail__title">First Signal</h2>
+
+      <div class="detail__placeholder">
+        <span>Case study container</span>
+
+        <p>
+          This is where the selected project’s context, experiment,
+          creative work and measurable outcome can eventually live.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const dial = document.querySelector(".dial");
+    const rotator = document.querySelector(".dial__rotator");
+    const angleDisplay = document.querySelector(".dial__angle");
+    const counter = document.querySelector(".active-counter");
+    const projects = [...document.querySelectorAll(".project")];
+    const connections = document.querySelector(".connections");
+
+    const detail = document.querySelector(".detail");
+    const detailTitle = document.querySelector(".detail__title");
+    const closeButton = document.querySelector(".detail__close");
+    const soundButton = document.querySelector(".sound-button");
+
+    let angle = 0;
+    let targetAngle = 0;
+    let dragging = false;
+    let movedDuringDrag = false;
+    let lastPointerAngle = 0;
+    let previousTick = 0;
+    let activeProject = 0;
+
+    let soundEnabled = true;
+    let audioContext;
+    let lastSoundTime = 0;
+
+    /*
+      Build the small measurement ticks around the dial.
+    */
+    for (let index = 0; index < 72; index++) {
+      const tick = document.createElement("span");
+
+      tick.className = "tick";
+
+      if (index % 6 === 0) {
+        tick.classList.add("major");
+      }
+
+      tick.style.transform = `
+        translateX(-50%)
+        rotate(${index * 5}deg)
+      `;
+
+      tick.style.transformOrigin = "50% calc(var(--dial-size, 250px) / 2)";
+
+      rotator.appendChild(tick);
+    }
+
+    /*
+      Web Audio must be activated by a user gesture.
+      No sound file is needed.
+    */
+    function prepareAudio() {
+      if (!soundEnabled) return;
+
+      if (!audioContext) {
+        const AudioEngine =
+          window.AudioContext || window.webkitAudioContext;
+
+        audioContext = new AudioEngine();
+      }
+
+      if (audioContext.state === "suspended") {
+        audioContext.resume();
+      }
+    }
+
+    /*
+      Short two-layer mechanical click:
+      - a high metallic contact
+      - a quiet lower mechanical knock
+    */
+    function playTick(strong = false) {
+      if (!soundEnabled) return;
+
+      prepareAudio();
+
+      if (!audioContext) return;
+
+      const now = audioContext.currentTime;
+
+      if (now - lastSoundTime < 0.022) return;
+
+      lastSoundTime = now;
+
+      const click = audioContext.createOscillator();
+      const clickGain = audioContext.createGain();
+
+      click.type = "triangle";
+      click.frequency.setValueAtTime(strong ? 1150 : 1450, now);
+      click.frequency.exponentialRampToValueAtTime(420, now + 0.025);
+
+      clickGain.gain.setValueAtTime(0.0001, now);
+      clickGain.gain.exponentialRampToValueAtTime(
+        strong ? 0.045 : 0.025,
+        now + 0.002
+      );
+      clickGain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        now + 0.032
+      );
+
+      click.connect(clickGain);
+      clickGain.connect(audioContext.destination);
+
+      click.start(now);
+      click.stop(now + 0.04);
+
+      if (strong) {
+        const knock = audioContext.createOscillator();
+        const knockGain = audioContext.createGain();
+
+        knock.type = "sine";
+        knock.frequency.setValueAtTime(145, now);
+        knock.frequency.exponentialRampToValueAtTime(85, now + 0.045);
+
+        knockGain.gain.setValueAtTime(0.03, now);
+        knockGain.gain.exponentialRampToValueAtTime(
+          0.0001,
+          now + 0.05
+        );
+
+        knock.connect(knockGain);
+        knockGain.connect(audioContext.destination);
+
+        knock.start(now);
+        knock.stop(now + 0.06);
+      }
+    }
+
+    function normalizedAngle(value) {
+      return ((value % 360) + 360) % 360;
+    }
+
+    function shortestDifference(from, to) {
+      let difference = to - from;
+
+      while (difference > 180) difference -= 360;
+      while (difference < -180) difference += 360;
+
+      return difference;
+    }
+
+    function pointerAngle(event) {
+      const bounds = dial.getBoundingClientRect();
+      const centerX = bounds.left + bounds.width / 2;
+      const centerY = bounds.top + bounds.height / 2;
+
+      return Math.atan2(
+        event.clientY - centerY,
+        event.clientX - centerX
+      ) * 180 / Math.PI;
+    }
+
+    function chooseProject(index) {
+      const currentStep = Math.round(targetAngle / 90);
+      const currentIndex = ((currentStep % 4) + 4) % 4;
+
+      let stepDifference = index - currentIndex;
+
+      if (stepDifference > 2) stepDifference -= 4;
+      if (stepDifference < -2) stepDifference += 4;
+
+      targetAngle = currentStep * 90 + stepDifference * 90;
+    }
+
+    function updateActiveProject() {
+      const nextProject =
+        ((Math.round(angle / 90) % 4) + 4) % 4;
+
+      if (nextProject !== activeProject) {
+        activeProject = nextProject;
+      }
+
+      projects.forEach((project, index) => {
+        const isActive = index === activeProject;
+
+        project.classList.toggle("is-active", isActive);
+        project.setAttribute(
+          "aria-current",
+          isActive ? "true" : "false"
+        );
+      });
+
+      dial.setAttribute("aria-valuenow", activeProject + 1);
+
+      counter.textContent =
+        `${String(activeProject + 1).padStart(2, "0")} / 04`;
+    }
+
+    function updateTickSound() {
+      const tickNumber = Math.round(angle / 5);
+
+      if (tickNumber !== previousTick) {
+        const strong = tickNumber % 18 === 0;
+
+        playTick(strong);
+        previousTick = tickNumber;
+      }
+    }
+
+    function render() {
+      if (!dragging) {
+        angle += (targetAngle - angle) * 0.12;
+
+        if (Math.abs(targetAngle - angle) < 0.01) {
+          angle = targetAngle;
+        }
+      }
+
+      rotator.style.transform = `rotate(${angle}deg)`;
+
+      angleDisplay.textContent =
+        `${String(Math.round(normalizedAngle(angle))).padStart(3, "0")}°`;
+
+      updateTickSound();
+      updateActiveProject();
+      drawConnections();
+
+      requestAnimationFrame(render);
+    }
+
+    dial.addEventListener("pointerdown", event => {
+      prepareAudio();
+
+      dragging = true;
+      movedDuringDrag = false;
+      lastPointerAngle = pointerAngle(event);
+
+      dial.classList.add("is-dragging");
+      dial.setPointerCapture(event.pointerId);
+    });
+
+    dial.addEventListener("pointermove", event => {
+      if (!dragging) return;
+
+      const currentPointerAngle = pointerAngle(event);
+      const movement = shortestDifference(
+        lastPointerAngle,
+        currentPointerAngle
+      );
+
+      if (Math.abs(movement) > 0.2) {
+        movedDuringDrag = true;
+      }
+
+      angle += movement;
+      targetAngle = angle;
+      lastPointerAngle = currentPointerAngle;
+    });
+
+    function releaseDial() {
+      if (!dragging) return;
+
+      dragging = false;
+      dial.classList.remove("is-dragging");
+
+      /*
+        Snap to the nearest project position.
+      */
+      targetAngle = Math.round(angle / 90) * 90;
+    }
+
+    dial.addEventListener("pointerup", releaseDial);
+    dial.addEventListener("pointercancel", releaseDial);
+
+    dial.addEventListener("wheel", event => {
+      event.preventDefault();
+      prepareAudio();
+
+      targetAngle += Math.sign(event.deltaY) * 15;
+    }, { passive: false });
+
+    dial.addEventListener("keydown", event => {
+      if (event.key === "ArrowRight") {
+        prepareAudio();
+        targetAngle = Math.round(targetAngle / 90) * 90 + 90;
+      }
+
+      if (event.key === "ArrowLeft") {
+        prepareAudio();
+        targetAngle = Math.round(targetAngle / 90) * 90 - 90;
+      }
+
+      if (event.key === "Enter") {
+        openProject(projects[activeProject]);
+      }
+    });
+
+    projects.forEach((project, index) => {
+      project.addEventListener("click", () => {
+        prepareAudio();
+
+        if (index === activeProject) {
+          openProject(project);
+        } else {
+          chooseProject(index);
+        }
+      });
+    });
+
+    function openProject(project) {
+      detailTitle.textContent = project.dataset.title;
+      detail.classList.add("is-open");
+      detail.setAttribute("aria-hidden", "false");
+      closeButton.focus();
+    }
+
+    function closeProject() {
+      detail.classList.remove("is-open");
+      detail.setAttribute("aria-hidden", "true");
+      dial.focus();
+    }
+
+    closeButton.addEventListener("click", closeProject);
+
+    detail.addEventListener("click", event => {
+      if (event.target === detail) {
+        closeProject();
+      }
+    });
+
+    window.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        closeProject();
+      }
+    });
+
+    soundButton.addEventListener("click", () => {
+      soundEnabled = !soundEnabled;
+
+      soundButton.textContent =
+        soundEnabled ? "Sound / On" : "Sound / Off";
+
+      if (soundEnabled) {
+        prepareAudio();
+        playTick(true);
+      }
+    });
+
+    /*
+      Draw responsive measurement vectors between
+      the dial and all four project containers.
+    */
+    function drawConnections() {
+      const stageBounds =
+        document.querySelector(".stage").getBoundingClientRect();
+
+      const dialBounds = dial.getBoundingClientRect();
+
+      const centerX =
+        dialBounds.left - stageBounds.left + dialBounds.width / 2;
+
+      const centerY =
+        dialBounds.top - stageBounds.top + dialBounds.height / 2;
+
+      connections.setAttribute(
+        "viewBox",
+        `0 0 ${stageBounds.width} ${stageBounds.height}`
+      );
+
+      connections.innerHTML = "";
+
+      projects.forEach((project, index) => {
+        const bounds = project.getBoundingClientRect();
+
+        const projectX =
+          bounds.left - stageBounds.left + bounds.width / 2;
+
+        const projectY =
+          bounds.top - stageBounds.top + bounds.height / 2;
+
+        const dx = projectX - centerX;
+        const dy = projectY - centerY;
+        const distance = Math.hypot(dx, dy);
+
+        const normalX = dx / distance;
+        const normalY = dy / distance;
+
+        const startDistance = dialBounds.width * 0.48;
+        const endDistance = Math.min(bounds.width, bounds.height) * 0.4;
+
+        const startX = centerX + normalX * startDistance;
+        const startY = centerY + normalY * startDistance;
+
+        const endX = projectX - normalX * endDistance;
+        const endY = projectY - normalY * endDistance;
+
+        const kinkX = startX + (endX - startX) * 0.58;
+        const kinkY = startY + (endY - startY) * 0.58;
+
+        const group = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "g"
+        );
+
+        const line = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "path"
+        );
+
+        line.setAttribute(
+          "d",
+          `M ${startX} ${startY}
+           L ${kinkX} ${kinkY}
+           L ${endX} ${endY}`
+        );
+
+        line.setAttribute(
+          "class",
+          index === activeProject
+            ? "connection is-active"
+            : "connection"
+        );
+
+        const label = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "text"
+        );
+
+        label.setAttribute("class", "measurement");
+        label.setAttribute("x", kinkX + 8);
+        label.setAttribute("y", kinkY - 8);
+
+        label.textContent =
+          `D/${(distance * 0.173).toFixed(2)}  N0${index + 1}`;
+
+        group.appendChild(line);
+        group.appendChild(label);
+        connections.appendChild(group);
+      });
+    }
+
+    window.addEventListener("resize", drawConnections);
+
+    /*
+      Correct tick origins after the dial gets its final size.
+    */
+    function positionTicks() {
+      const dialSize = dial.getBoundingClientRect().width;
+
+      document.querySelectorAll(".tick").forEach((tick, index) => {
+        tick.style.transformOrigin =
+          `50% ${dialSize * 0.48}px`;
+
+        tick.style.transform =
+          `translateX(-50%) rotate(${index * 5}deg)`;
+      });
+    }
+
+    positionTicks();
+    window.addEventListener("resize", positionTicks);
+
+    render();
+  </script>
+</body>
+</html>

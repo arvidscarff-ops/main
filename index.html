@@ -1,302 +1,591 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f4f1eb">
-  <meta name="description" content="A clean starting surface for a new web project.">
-  <title>Hello World!</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Arvid — Selected Work</title>
+
   <style>
     :root {
-      --paper: #f4f1eb;
-      --ink: #11110f;
-      --soft-ink: rgba(17, 17, 15, .46);
-      --line: rgba(17, 17, 15, .22);
+      --background: #aeb5c0;
+      --white: #f7f9fb;
+      --dark: #303746;
+      --accent: #d7d4ff;
+      --line: rgba(255, 255, 255, 0.55);
+      --mono: "SFMono-Regular", Consolas, monospace;
+      --sans: "Helvetica Neue", Arial, sans-serif;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
-    html, body {
+    html,
+    body {
       width: 100%;
-      min-height: 100%;
+      height: 100%;
       margin: 0;
-      background: var(--paper);
-      color: var(--ink);
+      overflow: hidden;
     }
 
     body {
-      min-height: 100svh;
-      overflow: hidden;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 50% 40%, rgba(255,255,255,.25), transparent 35%),
+        var(--background);
+      font-family: var(--sans);
     }
 
-    body::before {
+    body::after {
       content: "";
       position: fixed;
       inset: 0;
       pointer-events: none;
-      opacity: .28;
-      background:
-        radial-gradient(circle at 16% 22%, rgba(255,255,255,.9), transparent 26%),
-        radial-gradient(circle at 76% 70%, rgba(166,151,128,.14), transparent 34%);
-      mix-blend-mode: multiply;
+      opacity: 0.12;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      mix-blend-mode: soft-light;
     }
 
-    .system-note {
+    button {
+      color: inherit;
+      font: inherit;
+    }
+
+    .topbar {
       position: fixed;
-      top: 24px;
-      left: 26px;
-      z-index: 3;
-      margin: 0;
-      color: var(--soft-ink);
-      font: 10px/1.25 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      letter-spacing: .16em;
+      z-index: 10;
+      top: 20px;
+      right: 25px;
+      left: 25px;
+
+      display: flex;
+      justify-content: space-between;
+
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+
+      font: 9px/1 var(--mono);
+      letter-spacing: 0.16em;
       text-transform: uppercase;
     }
 
-    .archive-link {
-      position: fixed;
-      top: 18px;
-      right: 20px;
-      z-index: 4;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      min-height: 42px;
-      padding: 0 15px;
-      border: 1px solid var(--ink);
-      border-radius: 999px;
-      background: rgba(244, 241, 235, .76);
-      color: var(--ink);
-      font: 10px/1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      letter-spacing: .13em;
-      text-decoration: none;
-      text-transform: uppercase;
-      backdrop-filter: blur(10px);
-      transition: background .22s ease, color .22s ease, transform .22s ease, box-shadow .22s ease;
-    }
-
-    .archive-link::before {
+    .status::before {
       content: "";
+      display: inline-block;
       width: 6px;
       height: 6px;
+      margin-right: 8px;
       border-radius: 50%;
-      background: currentColor;
-      box-shadow: 0 0 0 5px rgba(17,17,15,.08);
-      animation: breathe 2.6s ease-in-out infinite;
+      background: var(--white);
+      box-shadow: 0 0 14px var(--white);
+      animation: breathe 2.5s ease-in-out infinite;
     }
 
-    .archive-link:hover,
-    .archive-link:focus-visible {
-      background: var(--ink);
-      color: var(--paper);
-      transform: translate(-3px, 3px);
-      box-shadow: 8px -8px 0 rgba(17,17,15,.09);
-      outline: none;
+    .intro {
+      position: fixed;
+      z-index: 5;
+      top: 84px;
+      left: 50%;
+      width: min(700px, 80vw);
+      text-align: center;
+      transform: translateX(-50%);
     }
 
-    main {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      min-height: 100svh;
-      align-items: flex-end;
-      padding: clamp(26px, 5vw, 72px);
-    }
-
-    .hero {
-      max-width: 78vw;
-      padding-bottom: clamp(22px, 5vh, 68px);
-    }
-
-    .hero h1 {
+    .intro h1 {
       margin: 0;
-      max-width: 8ch;
-      font-size: clamp(76px, 15vw, 230px);
-      font-weight: 500;
-      letter-spacing: -.085em;
-      line-height: .78;
-      text-wrap: balance;
+      font-size: clamp(30px, 4vw, 66px);
+      font-weight: 450;
+      line-height: 0.9;
+      letter-spacing: -0.06em;
     }
 
-    .hero p {
-      max-width: 430px;
-      margin: clamp(25px, 4vw, 46px) 0 0 5px;
-      color: var(--soft-ink);
-      font-size: clamp(12px, 1.2vw, 16px);
-      line-height: 1.55;
-      letter-spacing: .02em;
+    .intro h1 span {
+      color: transparent;
+      -webkit-text-stroke: 1px var(--white);
     }
 
-    .hero p span {
-      color: var(--ink);
-    }
-
-    #guide {
+    .gallery {
       position: fixed;
       inset: 0;
-      z-index: 3;
-      width: 100%;
-      height: 100%;
+      cursor: grab;
+      perspective: 1200px;
+      touch-action: none;
+      user-select: none;
+    }
+
+    .gallery.is-dragging {
+      cursor: grabbing;
+    }
+
+    .project {
+      position: absolute;
+      top: 52%;
+      left: 50%;
+
+      width: clamp(230px, 31vw, 510px);
+      aspect-ratio: 4 / 5;
+      padding: 20px;
+
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 3px;
+
+      color: var(--white);
+      text-align: left;
+      background: rgba(255, 255, 255, 0.07);
+      box-shadow:
+        0 35px 90px rgba(48, 55, 70, 0.16),
+        inset 0 1px rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+
+      cursor: pointer;
+      transform-origin: center;
+      will-change: transform, opacity, filter;
+    }
+
+    .project::before {
+      content: "";
+      position: absolute;
+      inset: 10px;
+      border: 1px solid rgba(255,255,255,.24);
       pointer-events: none;
     }
 
-    .corner-index {
+    .project__number {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font: 9px/1 var(--mono);
+      letter-spacing: 0.15em;
+    }
+
+    .project__graphic {
+      position: absolute;
+      top: 46%;
+      left: 50%;
+      width: 45%;
+      aspect-ratio: 1;
+      border: 1px solid rgba(255,255,255,.65);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition:
+        border-radius 0.5s ease,
+        transform 0.5s ease,
+        box-shadow 0.5s ease;
+    }
+
+    .project__graphic::before,
+    .project__graphic::after {
+      content: "";
+      position: absolute;
+      inset: 22%;
+      border: 1px solid rgba(255,255,255,.45);
+      transform: rotate(45deg);
+    }
+
+    .project__graphic::after {
+      inset: 40%;
+      border-radius: 50%;
+      background: var(--white);
+      box-shadow: 0 0 24px var(--white);
+    }
+
+    .project__title {
+      position: absolute;
+      right: 20px;
+      bottom: 19px;
+      left: 20px;
+
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .project h2 {
+      margin: 0;
+      font-size: clamp(30px, 3.6vw, 60px);
+      font-weight: 450;
+      line-height: 0.76;
+      letter-spacing: -0.06em;
+    }
+
+    .project__arrow {
+      display: grid;
+      flex: 0 0 30px;
+      width: 30px;
+      height: 30px;
+      place-items: center;
+      border: 1px solid var(--white);
+      border-radius: 50%;
+      font-size: 15px;
+    }
+
+    .project.is-active {
+      background: rgba(255,255,255,.13);
+      box-shadow:
+        0 45px 120px rgba(48,55,70,.25),
+        0 0 70px rgba(255,255,255,.18),
+        inset 0 1px rgba(255,255,255,.4);
+    }
+
+    .project.is-active .project__graphic {
+      border-radius: 38% 62% 54% 46%;
+      transform: translate(-50%, -50%) rotate(12deg);
+      box-shadow: 0 0 45px rgba(255,255,255,.2);
+    }
+
+    .navigation {
       position: fixed;
-      right: 24px;
+      z-index: 10;
+      right: 25px;
       bottom: 22px;
-      z-index: 2;
-      color: var(--soft-ink);
-      font: 9px/1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      letter-spacing: .16em;
+      left: 25px;
+
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: end;
+
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      font: 9px/1 var(--mono);
+      letter-spacing: 0.15em;
       text-transform: uppercase;
+    }
+
+    .drag-label {
+      justify-self: center;
+    }
+
+    .counter {
+      justify-self: end;
+    }
+
+    .progress {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      display: flex;
+      gap: 8px;
+      transform: translateX(-50%);
+    }
+
+    .progress button {
+      width: 6px;
+      height: 6px;
+      padding: 0;
+      border: 1px solid var(--white);
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      transition: transform .25s ease, background .25s ease;
+    }
+
+    .progress button.is-active {
+      background: var(--white);
+      box-shadow: 0 0 12px var(--white);
+      transform: scale(1.35);
     }
 
     @keyframes breathe {
-      0%, 100% { transform: scale(.75); opacity: .45; }
-      50% { transform: scale(1); opacity: 1; }
+      50% {
+        opacity: 0.35;
+        transform: scale(0.7);
+      }
     }
 
-    @media (max-width: 700px) {
-      .system-note { top: 20px; left: 18px; max-width: 42vw; }
-      .archive-link { top: 14px; right: 14px; min-height: 38px; padding: 0 12px; }
-      main { padding: 22px 18px; }
-      .hero { max-width: 94vw; padding-bottom: 80px; }
-      .hero h1 { font-size: clamp(72px, 23vw, 122px); line-height: .82; }
-      .hero p { max-width: 74vw; margin-top: 28px; }
-      .corner-index { right: 16px; bottom: 15px; }
+    @media (max-width: 600px) {
+      .topbar {
+        top: 12px;
+        right: 12px;
+        left: 12px;
+      }
+
+      .intro {
+        top: 65px;
+      }
+
+      .project {
+        top: 54%;
+        width: min(70vw, 320px);
+      }
+
+      .navigation {
+        right: 12px;
+        bottom: 12px;
+        left: 12px;
+      }
+
+      .navigation > span:first-child {
+        display: none;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .archive-link::before { animation: none; }
-      .archive-link { transition: none; }
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.001ms !important;
+      }
     }
   </style>
 </head>
+
 <body>
-  <p class="system-note">Classroom surface / 001</p>
+  <header class="topbar">
+    <span>Arvid / Selected Work</span>
+    <span class="status">System active</span>
+  </header>
 
-  <a class="archive-link" id="archiveLink" href="garden.html" aria-label="Open The Garden archive">
-    Enter archive <span aria-hidden="true">↗</span>
-  </a>
+  <section class="intro">
+    <h1>Projects in <span>continuous orbit.</span></h1>
+  </section>
 
-  <main>
-    <section class="hero" aria-labelledby="pageTitle">
-      <h1 id="pageTitle">Hello World!</h1>
-      <p><span>This is the real page.</span> Start building here. The strange, living thing we made earlier is safely preserved in the archive.</p>
-    </section>
+  <main class="gallery" aria-label="Project gallery">
+
+    <button class="project" data-index="0">
+      <span class="project__number">PROJECT 01</span>
+      <span class="project__graphic"></span>
+      <span class="project__title">
+        <h2>First<br>Signal</h2>
+        <span class="project__arrow">↗</span>
+      </span>
+    </button>
+
+    <button class="project" data-index="1">
+      <span class="project__number">PROJECT 02</span>
+      <span class="project__graphic"></span>
+      <span class="project__title">
+        <h2>Friction<br>Map</h2>
+        <span class="project__arrow">↗</span>
+      </span>
+    </button>
+
+    <button class="project" data-index="2">
+      <span class="project__number">PROJECT 03</span>
+      <span class="project__graphic"></span>
+      <span class="project__title">
+        <h2>Pattern<br>Shift</h2>
+        <span class="project__arrow">↗</span>
+      </span>
+    </button>
+
+    <button class="project" data-index="3">
+      <span class="project__number">PROJECT 04</span>
+      <span class="project__graphic"></span>
+      <span class="project__title">
+        <h2>Return<br>Path</h2>
+        <span class="project__arrow">↗</span>
+      </span>
+    </button>
+
+    <button class="project" data-index="4">
+      <span class="project__number">PROJECT 05</span>
+      <span class="project__graphic"></span>
+      <span class="project__title">
+        <h2>New<br>Project</h2>
+        <span class="project__arrow">↗</span>
+      </span>
+    </button>
+
   </main>
 
-  <canvas id="guide" aria-hidden="true"></canvas>
-  <div class="corner-index">Move / disturb the line</div>
+  <footer class="navigation">
+    <span>Stockholm / Elsewhere</span>
+    <span class="drag-label">← Drag or use arrow keys →</span>
+    <span class="counter">01 / 05</span>
+
+    <div class="progress" aria-label="Choose a project"></div>
+  </footer>
 
   <script>
-    (() => {
-      const canvas = document.getElementById('guide');
-      const context = canvas.getContext('2d');
-      const title = document.getElementById('pageTitle');
-      const link = document.getElementById('archiveLink');
-      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const pointer = { x: innerWidth * .64, y: innerHeight * .42, tx: innerWidth * .64, ty: innerHeight * .42, active: false };
-      let width = innerWidth;
-      let height = innerHeight;
-      let pixelRatio = Math.min(devicePixelRatio || 1, 2);
-      let pulse = 0;
+    const gallery = document.querySelector(".gallery");
+    const projects = [...document.querySelectorAll(".project")];
+    const counter = document.querySelector(".counter");
+    const progress = document.querySelector(".progress");
 
-      const resize = () => {
-        width = innerWidth;
-        height = innerHeight;
-        pixelRatio = Math.min(devicePixelRatio || 1, 2);
-        canvas.width = Math.round(width * pixelRatio);
-        canvas.height = Math.round(height * pixelRatio);
-        canvas.style.width = `${width}px`;
-        canvas.style.height = `${height}px`;
-        context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-      };
+    const total = projects.length;
 
-      const pointOnCurve = (start, controlA, controlB, end, t) => {
-        const mt = 1 - t;
-        return {
-          x: mt ** 3 * start.x + 3 * mt ** 2 * t * controlA.x + 3 * mt * t ** 2 * controlB.x + t ** 3 * end.x,
-          y: mt ** 3 * start.y + 3 * mt ** 2 * t * controlA.y + 3 * mt * t ** 2 * controlB.y + t ** 3 * end.y
-        };
-      };
+    let position = 0;
+    let target = 0;
+    let velocity = 0;
 
-      const draw = (time = 0) => {
-        pointer.x += (pointer.tx - pointer.x) * .075;
-        pointer.y += (pointer.ty - pointer.y) * .075;
-        pulse *= .92;
+    let dragging = false;
+    let dragged = false;
+    let previousX = 0;
+    let lastMoveTime = 0;
 
-        const titleBox = title.getBoundingClientRect();
-        const linkBox = link.getBoundingClientRect();
-        const start = {
-          x: Math.min(titleBox.right - titleBox.width * .08, width * .48),
-          y: titleBox.top + titleBox.height * .18
-        };
-        const end = { x: linkBox.left - 12, y: linkBox.top + linkBox.height * .55 };
-        const controlA = { x: start.x + (end.x - start.x) * .28, y: start.y - height * .15 };
-        const controlB = { x: end.x - width * .22, y: end.y + height * .36 };
-        const points = [];
-        const count = Math.max(48, Math.round(width / 18));
+    projects.forEach((project, index) => {
+      const dot = document.createElement("button");
 
-        for (let index = 0; index <= count; index += 1) {
-          const t = index / count;
-          const base = pointOnCurve(start, controlA, controlB, end, t);
-          const ahead = pointOnCurve(start, controlA, controlB, end, Math.min(1, t + .012));
-          const dx = ahead.x - base.x;
-          const dy = ahead.y - base.y;
-          const length = Math.hypot(dx, dy) || 1;
-          const envelope = Math.sin(Math.PI * t);
-          const wave = Math.sin(t * 24 - time * .0042) * (6 + pulse * 12) * envelope;
-          const distance = Math.hypot(base.x - pointer.x, base.y - pointer.y);
-          const disturbance = pointer.active ? Math.max(0, 1 - distance / 170) * 34 * envelope : 0;
-          points.push({
-            x: base.x + (-dy / length) * (wave + disturbance),
-            y: base.y + (dx / length) * (wave + disturbance)
-          });
+      dot.type = "button";
+      dot.setAttribute("aria-label", `Open project ${index + 1}`);
+
+      dot.addEventListener("click", () => {
+        moveToProject(index);
+      });
+
+      progress.appendChild(dot);
+
+      project.addEventListener("click", () => {
+        if (dragged) return;
+
+        const difference = wrappedDifference(index, position);
+
+        if (Math.abs(difference) > 0.25) {
+          target = position + difference;
+        } else {
+          alert(`Project ${index + 1} selected`);
+        }
+      });
+    });
+
+    function wrappedDifference(index, currentPosition) {
+      let difference = index - currentPosition;
+
+      while (difference > total / 2) difference -= total;
+      while (difference < -total / 2) difference += total;
+
+      return difference;
+    }
+
+    function moveToProject(index) {
+      target = position + wrappedDifference(index, position);
+    }
+
+    function render() {
+      if (!dragging) {
+        position += (target - position) * 0.085;
+
+        if (Math.abs(velocity) > 0.001) {
+          position += velocity;
+          target = position;
+          velocity *= 0.92;
+        } else {
+          target += (Math.round(target) - target) * 0.075;
+        }
+      }
+
+      let activeIndex = 0;
+      let closestDistance = Infinity;
+
+      projects.forEach((project, index) => {
+        const difference = wrappedDifference(index, position);
+        const absoluteDistance = Math.abs(difference);
+
+        if (absoluteDistance < closestDistance) {
+          closestDistance = absoluteDistance;
+          activeIndex = index;
         }
 
-        context.clearRect(0, 0, width, height);
-        context.beginPath();
-        context.moveTo(points[0].x, points[0].y);
-        for (let index = 1; index < points.length - 1; index += 1) {
-          const midpointX = (points[index].x + points[index + 1].x) / 2;
-          const midpointY = (points[index].y + points[index + 1].y) / 2;
-          context.quadraticCurveTo(points[index].x, points[index].y, midpointX, midpointY);
-        }
-        context.lineTo(end.x, end.y);
-        context.strokeStyle = 'rgba(17,17,15,.72)';
-        context.lineWidth = 1.45;
-        context.lineCap = 'round';
-        context.stroke();
+        const spacing = Math.min(window.innerWidth * 0.37, 560);
+        const x = difference * spacing;
 
-        const beforeEnd = points[points.length - 3];
-        const angle = Math.atan2(end.y - beforeEnd.y, end.x - beforeEnd.x);
-        const headSize = 10 + pulse * 3;
-        context.beginPath();
-        context.moveTo(end.x, end.y);
-        context.lineTo(end.x - Math.cos(angle - .62) * headSize, end.y - Math.sin(angle - .62) * headSize);
-        context.moveTo(end.x, end.y);
-        context.lineTo(end.x - Math.cos(angle + .62) * headSize, end.y - Math.sin(angle + .62) * headSize);
-        context.strokeStyle = 'rgba(17,17,15,.88)';
-        context.lineWidth = 1.7;
-        context.stroke();
+        const scale = Math.max(0.52, 1 - absoluteDistance * 0.18);
+        const depth = Math.min(absoluteDistance * 150, 480);
+        const rotation = difference * -8;
+        const opacity = Math.max(0.12, 1 - absoluteDistance * 0.25);
+        const blur = Math.max(0, absoluteDistance - 0.4) * 2.2;
 
-        if (!reducedMotion) requestAnimationFrame(draw);
-      };
+        project.style.transform = `
+          translate(-50%, -50%)
+          translateX(${x}px)
+          translateZ(${-depth}px)
+          rotateY(${rotation}deg)
+          scale(${scale})
+        `;
 
-      addEventListener('resize', resize);
-      addEventListener('pointermove', event => {
-        pointer.tx = event.clientX;
-        pointer.ty = event.clientY;
-        pointer.active = true;
-      }, { passive: true });
-      addEventListener('pointerleave', () => { pointer.active = false; });
-      addEventListener('pointerdown', () => { pulse = 1; }, { passive: true });
+        project.style.opacity = opacity;
+        project.style.filter = `blur(${blur}px)`;
+        project.style.zIndex = Math.round(100 - absoluteDistance * 10);
+        project.style.pointerEvents =
+          absoluteDistance < 2.3 ? "auto" : "none";
 
-      resize();
-      draw();
-    })();
+        project.classList.toggle(
+          "is-active",
+          absoluteDistance < 0.5
+        );
+
+        project.setAttribute(
+          "aria-current",
+          absoluteDistance < 0.5 ? "true" : "false"
+        );
+      });
+
+      [...progress.children].forEach((dot, index) => {
+        dot.classList.toggle("is-active", index === activeIndex);
+      });
+
+      counter.textContent =
+        `${String(activeIndex + 1).padStart(2, "0")} / ` +
+        `${String(total).padStart(2, "0")}`;
+
+      requestAnimationFrame(render);
+    }
+
+    gallery.addEventListener("pointerdown", event => {
+      dragging = true;
+      dragged = false;
+      velocity = 0;
+      previousX = event.clientX;
+      lastMoveTime = performance.now();
+
+      gallery.classList.add("is-dragging");
+      gallery.setPointerCapture(event.pointerId);
+    });
+
+    gallery.addEventListener("pointermove", event => {
+      if (!dragging) return;
+
+      const now = performance.now();
+      const deltaX = event.clientX - previousX;
+      const deltaTime = Math.max(16, now - lastMoveTime);
+      const spacing = Math.min(window.innerWidth * 0.37, 560);
+
+      if (Math.abs(deltaX) > 2) {
+        dragged = true;
+      }
+
+      const movement = -deltaX / spacing;
+
+      position += movement;
+      target = position;
+      velocity = movement * (16 / deltaTime);
+
+      previousX = event.clientX;
+      lastMoveTime = now;
+    });
+
+    function releasePointer() {
+      if (!dragging) return;
+
+      dragging = false;
+      gallery.classList.remove("is-dragging");
+
+      target = Math.round(position + velocity * 4);
+    }
+
+    gallery.addEventListener("pointerup", releasePointer);
+    gallery.addEventListener("pointercancel", releasePointer);
+
+    window.addEventListener("keydown", event => {
+      if (event.key === "ArrowRight") {
+        target = Math.round(target) + 1;
+      }
+
+      if (event.key === "ArrowLeft") {
+        target = Math.round(target) - 1;
+      }
+    });
+
+    gallery.addEventListener("wheel", event => {
+      event.preventDefault();
+
+      target += event.deltaY * 0.0025;
+    }, { passive: false });
+
+    render();
   </script>
 </body>
 </html>
