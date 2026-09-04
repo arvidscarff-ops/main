@@ -46,6 +46,13 @@ window.dataLayer = window.dataLayer || [];
         id = id.trim().toUpperCase();
         containerId = id;
 
+        // The site-wide GTM snippet may already have added this container.
+        // Keep the course controls/status working without loading it twice.
+        var existingScript = document.querySelector(
+            'script[src*="googletagmanager.com/gtm.js?id=' + id + '"]'
+        );
+        if (existingScript) { return true; }
+
         // This is the standard Google Tag Manager snippet. On a real website you
         // paste it directly into the <head> of every page instead.
         (function (w, d, s, l, i) {
