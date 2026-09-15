@@ -1,0 +1,385 @@
+id,name,location,start,end,ongoing,method,changedMethod,success,progress
+378,KDPI (first separatist movement),Iran,1945,1946,False,1,False,0,5
+432,Popular Revolutionary Movement (Bolivia),Bolivia,1946,1946,False,0,False,1,4
+368,Punnapra-Vayalar Uprising,Princely State of Travencore,1946,1946,False,0,False,0,5
+166,Paraguay leftist rebellion,Paraguay,1947,1947,False,0,False,0,5
+216,Taiwanese Revolt,Taiwan,1947,1947,False,0,False,0,5
+83,Franco-Madagascan,Madagascar,1947,1948,False,0,False,0,5
+96,Hyderabad Accession Movement,Hyderabad,1947,1948,False,0,False,1,4
+109,Jewish resistance,Palestine,1945,1948,False,0,False,1,4
+146,National Union Party,Costa Rica,1948,1948,False,0,False,1,4
+244,Yahya Family revolt,Yemen,1948,1948,False,0,False,1,4
+425,Chinese Communist Revolution,China,1946,1949,False,0,False,1,4
+401,Greek Civil War,Greece,1946,1949,False,0,True,0,5
+101,Indonesian Revolt,Indonesia,1945,1949,False,0,False,1,4
+364,Laotian Independence Movement,Laos,1946,1949,False,0,False,1,4
+238,Ukrainian rebellion,USSR,1945,1949,False,0,False,0,5
+380,"Meza Brali (Forest Brothers, Latvian anti-occupation campaign)",Latvia,1945,1950,False,0,False,0,5
+137,Moluccans,Indonesia,1950,1950,False,0,False,0,5
+153,Nigerian Independence Movement,Nigeria,1945,1950,False,1,False,0,5
+58,Convention People's Party movement,Ghana,1948,1951,False,1,False,0,5
+44,Bolivian Leftists,Bolivia,1952,1952,False,0,False,1,4
+199,Shifta insurgency,Eritrea,1945,1952,False,0,False,0,5
+355,Telangana People's Movement,India,1948,1952,False,0,False,0,5
+74,East Gemany Worker Uprising,East Germany,1953,1953,False,1,False,0,5
+129,Liberals of 1949,Colombia,1946,1953,False,0,True,0,5
+376,"Metsavennad (Forest Brothers, Estonian Anti-Occupation Campaign)",Estonia,1945,1953,False,0,False,0,5
+371,Cambodian Independence Movement,Cambodia (Kampuchea),1946,1954,False,0,False,1,4
+56,Conservative movement,Guatemala,1954,1954,False,0,False,1,4
+91,Hukbalahap Rebellion,Philippines,1946,1954,False,0,False,0,5
+100,Indochina revolt,Vietnam,1945,1954,False,0,False,1,4
+232,Tunisian independence movement,Tunisia,1952,1954,False,0,True,1,4
+362,Revolucion Libertadora,Argentina,1955,1955,False,0,False,1,4
+93,Hungary Anti-Communist,Hungary,1956,1956,False,1,False,0,5
+94,Hungary Anti-Soviet Occupation,Hungary,1956,1956,False,1,False,0,5
+134,Mau Mau Rebellion,Kenya,1952,1956,False,0,False,0,5
+381,"Mikso Broliai (Forest Brothers, Lithuanian Anti-Occupation Campaign)",Lithuania,1945,1956,False,0,False,0,5
+140,Moroccan Independence War,Morocco,1953,1956,False,1,True,1,4
+177,Poznan Protests,Poland,1956,1956,False,1,False,0,5
+366,First Pathet Lao ,Laos,1950,1957,False,0,False,0,5
+92,Hundred Flowers Movement,China,1956,1957,False,1,False,0,5
+19,Anti-Jimenez,Venezuela,1957,1958,False,1,False,1,4
+28,Anti-Shamun,Lebanon,1958,1958,False,0,False,0,5
+98,Ifni war,Morocco,1957,1958,False,0,False,0,5
+51,Cameroon anti-colonialist movement,Cameroon,1955,1959,False,0,True,1,4
+62,Cuban Revolution,Cuba,1956,1959,False,0,False,1,4
+77,Ethniki Organosis Kyprios Agoniston,Cyprus,1954,1959,False,0,True,1,4
+157,Nyasaland African Congress,Malawi,1958,1959,False,1,False,0,5
+197,Shammar Tribe and pro-Western officers,Iraq,1959,1959,False,0,False,0,5
+228,Tibetan resistance,Tibet,1956,1959,False,0,False,0,5
+246,Yemeni insurgency,Yemen,1955,1959,False,0,False,0,5
+102,Indonesian leftists / Anti Sukarno,Indonesia,1956,1960,False,0,False,0,5
+131,Malayan Emergency,Malaysia,1948,1960,False,0,False,0,5
+214,South Korea Student Revolution,South Korea,1960,1960,False,1,False,1,4
+186,Rwandan independence,Rwanda,1956,1961,False,0,False,1,4
+6,Algerian Revolt/ National Liberation Front,Algeria,1952,1962,False,0,True,1,4
+383,Brunei Revolt,Brunei,1962,1962,False,0,False,0,5
+65,Darul Islam,Indonesia,1949,1962,False,0,False,0,5
+405,Myanmar Regime Change Campaign,Myanmar/Burma,1948,1962,False,0,False,0,5
+178,Pro-French Nationalists,France,1960,1962,False,0,False,0,5
+34,Armed Forces for National Liberation (FALN),Venezuela,1958,1963,False,0,False,0,5
+82,Former Rebel Leaders,Algeria,1962,1963,False,0,False,0,5
+210,South Africa First Defiance Campaign,South Africa,1952,1963,False,0,True,0,5
+249,Zambia Anti-occupation,Zambia,1960,1963,False,1,False,1,4
+413,Cameroon anti-Ahidjo government movement,Cameroon,1960,1964,False,0,False,0,5
+241,Watusi,Rwanda,1961,1964,False,0,False,0,5
+409,CNL,Democratic Republic of Congo,1964,1965,False,0,False,0,5
+70,Dominican leftists,Dominican Republic,1965,1965,False,0,False,0,5
+116,Katanga-led leftists,Democratic Republic of Congo,1960,1965,False,0,False,0,5
+156,National Liberation Front (Viet Cong),South Vietnam,1958,1965,False,0,False,0,5
+46,Buganda Tribe,Uganda,1966,1966,False,0,False,0,5
+280,South Vietnam Anti-Military Govt,South Vietnam,1964,1966,False,1,False,0,5
+79,"FLOSY, NLF in Aden",Yemen,1960,1967,False,0,True,1,4
+142,NFDLM secessionists,Kenya,1964,1967,False,0,False,0,5
+63,Cultural Revolution Red Guards,China,1966,1968,False,0,False,0,5
+64,Czech Anti-Soviet Occupation,Czechoslovakia,1967,1968,False,1,False,0,5
+171,Poland Anti-Communist I,Poland,1968,1968,False,1,False,0,5
+247,Yugoslavia student protests,Yugoslavia,1968,1968,False,1,False,0,5
+21,Anti-Khan,Pakistan,1968,1969,False,1,False,0,5
+184,Royalists,Yemen Arab Republic,1962,1969,False,0,False,0,5
+373,Second Balochistan Separatist Movement,Pakistan,1962,1969,False,0,False,0,5
+42,Biafrans,Nigeria,1967,1970,False,0,False,0,5
+165,Palestinian activists,Jordan,1970,1970,False,0,False,0,5
+172,Poland Anti-Communist II,Poland,1970,1970,False,1,False,0,5
+40,Bangla Independence Campaign,Pakistan,1971,1971,False,0,False,1,4
+60,Croatian nationalists,Yugoslavia,1970,1971,False,1,False,0,5
+108,JVP,Sri Lanka,1971,1971,False,0,False,0,5
+148,Naxalite rebellion,India,1967,1971,False,0,False,0,5
+271,Anti-Tsiranana Campaign,Madagascar,1972,1972,False,1,False,1,4
+31,Anya Nya,Sudan,1962,1972,False,0,False,0,5
+234,Tupamaros,Uruguay,1963,1972,False,0,False,0,5
+81,First Hutu Rebellion,Burundi,1972,1973,False,0,False,0,5
+170,Pinochet-led rebels,Chile,1973,1973,False,0,False,1,4
+223,Thai student protests,Thailand,1973,1973,False,1,False,1,4
+52,Carnation Revolution,Portugal,1973,1974,False,1,False,1,4
+86,Front for the Liberation of Mozambique,Mozambique,1963,1974,False,0,True,1,4
+89,Greece Anti-Military,Greece,1973,1974,False,1,False,1,4
+160,PAIGC,Guinea-Bissau,1963,1974,False,0,False,1,4
+176,Popular Movement for the Liberation of Angola,Angola,1961,1974,False,0,False,1,4
+117,Khmer Rouge,Cambodia,1960,1975,False,0,False,1,4
+122,Kurdish rebellion,Iraq,1961,1975,False,0,False,0,5
+128,Lebanon leftists,Lebanon,1975,1975,False,0,False,0,5
+167,Second Pathet Lao,Laos,1959,1975,False,0,False,1,4
+173,Poland Worker uprising,Poland,1976,1976,False,1,False,1,4
+175,Popular Front for the Liberation of Oman and the Arab Gulf (PFLOAG),Oman,1964,1976,False,0,False,0,5
+277,Anti-Bhutto,Pakistan,1977,1977,False,1,False,1,4
+267,Anti-Indira Campaign,India,1974,1977,False,1,False,1,4
+254,Aruba Pro-Independence Campaign,Aruba,1977,1977,False,1,False,0,5
+72,ERP/ Monteneros,Argentina,1973,1977,False,0,False,0,5
+36,Third Balochistan Separatist Movement,Pakistan,1973,1977,False,0,False,0,5
+4,Afghans,Afghanistan,1978,1978,False,0,False,1,4
+276,Anti-Somoza Strikes,Nicaragua,1978,1978,False,1,False,0,5
+78,FLNC,Democratic Republic of Congo,1977,1978,False,0,False,0,5
+395,Hundred Day War ,Lebanon,1978,1978,False,0,False,1,4
+22,Anti-Khmer Rouge,Cambodia,1978,1979,False,0,False,1,4
+66,Democracy Movement,China,1976,1979,False,1,False,0,5
+80,FSLN,Nicaragua,1978,1979,False,0,False,1,4
+104,Iranian Revolution,Iran,1971,1979,False,1,True,1,4
+250,Zimbabwe African People's Union,Zimbabwe,1974,1979,False,0,False,0,5
+212,South Korea Anti-Junta,South Korea,1979,1980,False,1,False,0,5
+120,Kosovo Albanian nationalist movement,Yugoslavia,1981,1981,False,1,False,0,5
+221,Thai communist rebels,Thailand,1966,1981,False,0,False,0,5
+43,Bolivian Anti-Junta,Bolivia,1976,1982,False,1,False,1,4
+71,Druze resistance,Israel,1981,1982,False,1,False,0,5
+103,Iranian Mujahideen,Iran,1981,1982,False,0,False,0,5
+141,Muslim Brotherhood,Syria,1980,1982,False,0,False,0,5
+389,NDF,Yemen (North Yemen),1979,1982,False,0,False,0,5
+33,Argentina pro-democracy movement,Argentina,1977,1983,False,1,False,1,4
+305,MFDC Secessionist Campaign (Casamance),Senegal,1982,1983,False,1,False,0,5
+163,Pakistan Pro-Democracy Movement,Pakistan,1983,1983,False,1,False,0,5
+207,Somali rebels (Ogaden),Ethiopia,1976,1983,False,0,False,0,5
+307,Anti-Bouterse,Suriname,1983,1984,False,1,False,1,4
+68,Diretas ja,Brazil,1983,1984,False,1,False,0,5
+154,Nigerian Muslim fundamentalists,Nigeria,1980,1984,False,0,False,0,5
+18,Anti-Jaafar,Sudan,1985,1985,False,1,False,1,4
+289,Anti-Siles Zuazo,Bolivia,1984,1985,False,1,False,0,5
+239,Uruguay Anti-Military,Uruguay,1984,1985,False,1,False,1,4
+15,Anti-Duvalier,Haiti,1985,1986,False,1,False,1,4
+278,Anti-Zia al-Haq,Pakistan,1986,1986,False,1,False,0,5
+135,Mizo Revolt,India,1966,1986,False,0,False,0,5
+145,National Resistance Army,Uganda,1981,1986,False,0,False,1,4
+169,People Power,Philippines,1983,1986,False,1,False,1,4
+215,Taiwan pro-democracy movement,Taiwan,1979,1986,False,1,False,0,5
+245,Yemen leftists,Yemen People's Republic,1986,1986,False,0,False,0,5
+253,Anti-Ceaucescu Movement,Romania,1987,1987,False,1,False,0,5
+426,Anti-Coalition Government Campaign,Fiji,1987,1987,False,0,False,1,4
+296,Anti-National Governing Council (CNG),Haiti,1986,1987,False,1,False,0,5
+32,Argentina coup plot,Argentina,1987,1987,False,1,False,1,4
+263,Indo-Fijian Anti-Coup Campaign,Fiji,1987,1987,False,1,False,0,5
+161,PF-ZAPU guerillas,Zimbabwe,1982,1987,False,0,False,0,5
+213,South Korea Anti-Military,South Korea,1987,1987,False,1,False,1,4
+3,Afghan Resistance,Afghanistan,1979,1988,False,0,False,1,4
+406,Myanmar Regime Change Campaign,Myanmar/Burma,1962,1988,False,0,False,0,5
+188,SWAPO,Namibia,1960,1988,False,0,False,1,4
+192,Second Hutu Rebellion,Burundi,1988,1988,False,0,False,0,5
+11,Anti-Ceaucescu Rebels,Romania,1989,1989,False,0,False,1,4
+24,Anti-Noriega,Panama,1987,1989,False,1,False,0,5
+26,Anti-Pinochet Movement,Chile,1983,1989,False,1,False,1,4
+75,East Germany pro-dem movement,East Germany,1989,1989,False,1,False,1,4
+95,Hungary pro-dem movement,Hungary,1989,1989,False,1,False,1,4
+206,Solidarity,Poland,1980,1989,False,1,False,1,4
+226,Tiananmen,China,1989,1989,False,1,False,0,5
+227,Tibetan Uprising,Tibet,1987,1989,False,1,False,0,5
+240,Velvet Revolution,Czechoslovakia,1989,1989,False,1,False,1,4
+14,Anti-Doe rebels,Liberia,1989,1990,False,0,False,1,4
+37,Bangladesh Anti-Ershad,Bangladesh,1987,1990,False,1,False,1,4
+41,Benin Anti-Communist,Benin,1989,1990,False,1,False,1,4
+47,Bulgaria Anti-Communist,Bulgaria,1989,1990,False,1,False,1,4
+57,Contras,Nicaragua,1980,1990,False,0,False,1,4
+85,Frolinat,Chad,1966,1990,False,0,False,1,4
+292,Ivorian Pro-Democracy,Cote d'Ivoire,1989,1990,False,1,False,1,4
+138,Mongolian Anti-communist,Mongolia,1989,1990,False,1,False,1,4
+393,Second JVP Insurrection,Sri Lanka,1987,1990,False,0,False,0,5
+287,Students Union Protests,Ukraine,1990,1990,False,1,False,1,4
+224,The Stir,Nepal,1990,1990,False,1,False,1,4
+5,Albania Anti-Communist,Albania,1989,1991,False,1,False,1,4
+7,Anti-Arap Moi,Kenya,1990,1991,False,1,False,1,4
+285,Anti-Eyadema,Togo,1991,1991,False,1,False,0,5
+38,Belarus Anti-Communist,Belarus,1988,1991,False,1,False,1,4
+61,Croats,Yugoslavia,1991,1991,False,0,False,0,5
+76,Eritrean-led rebels,Ethiopia,1974,1991,False,0,False,1,4
+123,Kyrgyzstan Democratic Movement,Kyrgyzstan,1990,1991,False,1,False,1,4
+127,Latvia pro-dem movement,Latvia,1989,1991,False,1,False,1,4
+259,NCCOP Pro-Democracy Movement,Cameroon,1991,1991,False,1,False,0,5
+185,Russia pro-dem movement,Russia,1990,1991,False,1,False,1,4
+190,Sajudis/ Lithuanian pro-democracy movement/,Lithuania,1988,1991,False,1,False,1,4
+200,Shiite rebellion,Iraq,1991,1991,False,0,False,0,5
+202,Singing Revolution,Estonia,1987,1991,False,1,False,1,4
+205,Slovenian Independence,Slovenia,1991,1991,False,0,False,1,4
+208,Somalia clan factions (SNM),Somalia,1982,1991,False,0,False,1,4
+229,Tigrean Self-Determination Campaign,Ethiopia,1978,1991,False,0,False,1,4
+243,Western Sahara Freedom Movement (POLISARIO),Western Sahara,1975,1991,False,0,True,0,5
+248,Zambia Anti-Single Party,Zambia,1990,1991,False,1,False,1,4
+336,Anti-Roh Tae Woo,South Korea,1988,1992,False,1,False,0,5
+69,Dniestr,Moldova,1992,1992,False,0,False,0,5
+392,First Southern Ossetian Separatist Campaign,Georgia,1991,1992,False,0,False,0,5
+132,Mali Anti-Military,Mali,1990,1992,False,1,False,1,4
+387,Military Forces of Hugo Chavez,Venezuela,1992,1992,False,0,False,0,5
+151,Niger Anti-Military,Niger,1991,1992,False,1,False,1,4
+179,Public Against Violence,Slovakia,1989,1992,False,1,False,1,4
+181,Renamo,Mozambique,1979,1992,False,0,False,0,5
+191,Salvadoran Civil Conflict,El Salvador,1977,1992,False,0,True,1,4
+222,Thai pro-dem movement,Thailand,1992,1992,False,1,False,1,4
+236,Tutsi supremacists,Burundi,1991,1992,False,0,False,1,4
+398,UPA,Uganda,1987,1992,False,0,False,0,5
+1,Active Forces,Madagascar,1991,1993,False,1,False,1,4
+8,Anti-Banda,Malawi,1992,1993,False,1,False,1,4
+325,CCCN and Union Pro-Democracy Movement,Central African Republic,1990,1993,False,1,False,1,4
+121,Kurdish Secession against Saddam,Iraq,1985,1993,False,0,False,0,5
+399,Russian Parliamentary Forces,Russia,1993,1993,False,0,False,0,5
+2,Afar insurgency,Djibouti,1991,1994,False,0,False,0,5
+35,Armenians in Nagorno-Karabakh,Azerbaijan,1991,1994,False,0,False,0,5
+412,Democratic Republic of Yemen Secessionist Movement,Yemen,1994,1994,False,0,False,0,5
+329,Georgia-Abkhazia War,Georgia,1992,1994,False,0,False,0,5
+168,Patriotic Front,Rwanda,1994,1994,False,0,False,1,4
+201,Sikh insurgency,India,1984,1994,False,0,False,0,5
+209,Somalia militia insurgencies,Somalia,1993,1994,False,0,False,1,4
+211,South Africa Second Defiance Campaign,South Africa,1980,1994,False,1,True,1,4
+235,Tutsi rebels,Rwanda,1990,1994,False,0,False,1,4
+136,Mohajir,Pakistan,1994,1995,False,0,False,0,5
+143,NPFL & ULIMO,Liberia,1992,1995,False,0,False,0,5
+158,Ogoni movement,Nigeria,1990,1995,False,1,False,0,5
+369,Republic of Western Bosnia,Bosnia-Herzegovina,1993,1995,False,0,False,0,5
+189,Sacred Union,Democratic Republic of Congo,1991,1995,False,0,False,0,5
+196,Serb militias,Bosnia-Herzegovina,1991,1995,False,0,False,0,5
+391,Serbian Republic of Krajina,Croatia,1991,1995,False,0,False,0,5
+220,Tauregs,Mali,1989,1995,False,0,False,0,5
+111,KDPI,Iran,1979,1996,False,0,False,0,5
+110,Kurdish civil conflict,Iraq,1996,1996,False,0,False,0,5
+133,Leftist rebels (URNG),Guatemala,1961,1996,False,0,True,0,5
+147,National Patriotic Forces,Liberia,1996,1996,False,0,False,0,5
+388,SCIRI,Iraq,1989,1996,False,0,False,0,5
+218,Taliban/ Anti-Government Forces,Afghanistan,1992,1996,False,0,False,1,4
+396,"Anti-Lissouba Campaign (Cocoyes, Ninjas, Cobras)",Congo,1993,1997,False,0,False,1,4
+49,CAR multiple factions,Central African Republic,1996,1997,False,0,False,0,5
+112,Kabila-ADFL,Democratic Republic of Congo,1996,1997,False,0,False,1,4
+174,Popular Democratic Army (UTO),Tajikistan,1992,1997,False,0,False,0,5
+193,Second Khmer Rouge,Cambodia,1979,1997,False,0,False,0,5
+198,Shanti Bahini,Bangladesh,1976,1997,False,0,False,0,5
+233,Tupac Amaru Revolutionary Movement (MRTA) - Senderista Insurgency,Peru,1996,1997,False,0,False,0,5
+29,Anti-Suharto,Indonesia,1996,1998,False,1,False,1,4
+45,Bougainville Revolt,Papua New Guinea,1988,1998,False,0,True,0,5
+54,Chad rebels,Chad,1994,1998,False,0,False,0,5
+97,IRA,UK,1968,1998,False,0,True,0,5
+152,Nigeria Anti-Military,Nigeria,1993,1998,False,1,False,1,4
+268,Anti-Habibie Student Protests ,Indonesia,1999,1999,False,1,False,1,4
+119,Kosovo Albanian,Yugoslavia,1989,1999,False,0,True,0,5
+400,"Military Junta for the Consolidation of Democracy, Peace and Justice",Guinea-Bissau,1998,1999,False,0,False,1,4
+230,Timorese Independence Campaign,East Timor,1975,1999,False,1,True,1,4
+384,al-Gama'a al-Islamiyya,Egypt,1992,1999,False,0,False,0,5
+367,Anjouan Separatist Movement,Comoros,1997,2000,False,1,False,0,5
+264,Anti-Chaudry Campaign,Fiji,2000,2000,False,1,False,1,4
+13,Anti-Diouf,Senegal,2000,2000,False,1,False,1,4
+16,Anti-Fujimori,Peru,2000,2000,False,1,False,1,4
+23,Anti-Milosevic,Serbia,1996,2000,False,1,False,1,4
+25,Anti-PRI,Mexico,1986,2000,False,1,False,1,4
+90,Hizballah,Lebanon,1982,2000,False,0,False,0,5
+357,Somali Civil War,Somalia,1991,2000,False,0,False,0,5
+12,Anti-Chiluba,Zambia,2001,2001,False,1,False,1,4
+403,Hutu Nationalist Insurgency,Rwanda,1996,2001,False,0,False,0,5
+435,NLA Insurgency,Macedonia,2001,2001,False,0,False,0,5
+279,People Power III,Philippines,2001,2001,False,1,False,0,5
+348,RFDG,Guinea,2000,2001,False,0,False,0,5
+194,Second People Power Movement,Philippines,2000,2001,False,1,False,1,4
+130,Madagasar pro-democracy movement,Madagascar,2002,2002,False,1,False,1,4
+410,"Second Congo War (MLC, RCD)",Democratic Republic of Congo,1998,2002,False,0,False,0,5
+180,Sierra Leone Civil War,Sierra Leone,1991,2002,False,0,False,0,5
+237,UNITA,Angola,1975,2002,False,0,False,0,5
+252,anti-coup Venezuelan campaign,Venezuela,2002,2002,False,1,False,1,4
+257,Anti-Sanchez de Lozada Campaign,Bolivia,2003,2003,False,1,False,1,4
+397,"Anti-Sassou-Nguessou Campaign (Cocoyes, Ninjas, Ntsiloulous)",Congo,1997,2003,False,0,False,0,5
+126,LURD,Liberia,1999,2003,False,0,False,1,4
+363,MDJT,Chad,1998,2003,False,0,False,0,5
+183,Rose Revolution,Georgia,2003,2003,False,1,False,1,4
+297,Anti-Aristide,Haiti,2002,2004,False,1,False,1,4
+159,Orange Revolution,Ukraine,2001,2004,False,1,False,1,4
+286,Anti-Gnassingbe/Coup Crisis,Togo,2005,2005,False,1,False,0,5
+53,Cedar Revolution,Lebanon,2005,2005,False,1,False,1,4
+87,GAM,Indonesia,1976,2005,False,0,False,0,5
+118,Kifaya,Egypt,2003,2005,False,1,False,0,5
+162,PMIC/New Forces,Ivory Coast,2002,2005,False,0,False,0,5
+261,Rebellion of the Forajidos,Ecuador,2005,2005,False,1,False,1,4
+187,SPLA-Garang faction,Sudan,1983,2005,False,0,False,0,5
+231,Tulip Revolution,Kyrgyzstan,2005,2005,False,1,False,1,4
+394,2006 Lebanon War,Lebanon,2006,2006,False,0,False,0,5
+10,Anti-Calderon,Mexico,2006,2006,False,1,False,0,5
+30,Anti-Thaksin,Thailand,2005,2006,False,1,False,1,4
+50,CPN-M/UPF,Nepal,1996,2006,False,1,True,1,4
+149,Nepalese Anti-government,Nepal,2006,2006,False,1,False,1,4
+310,Tongan Pro-Democracy Protests,Tonga,2005,2006,False,1,False,0,5
+283,Anti-Military Government Campaign,Thailand,2007,2007,False,1,False,1,4
+288,Awami League Protests,Bangladesh,2004,2007,False,1,False,1,4
+55,Chechen separatists,Russia,1994,2007,False,0,False,0,5
+17,Anti-Gayoom,Maldives,2003,2008,False,1,False,1,4
+304,Anti-Musharraf Campaign (Lawyer's Movement),Pakistan,2007,2008,False,1,False,1,4
+321,Lebanon Political Crisis,Lebanon,2006,2008,False,1,False,1,4
+284,People's Alliance for Democracy Campaign,Thailand,2008,2008,False,1,False,1,4
+273,Saffron Revolution,Myanmar,2007,2008,False,1,False,0,5
+225,Third Hutu Rebellion,Burundi,1991,2008,False,0,False,0,5
+434,Third Southern Ossetian Separatist Campaign,Georgia,2008,2008,False,0,False,1,4
+272,Anti-Ravalomanana Movement,Madagascar,2009,2009,False,1,False,1,4
+318,Armenian Opposition Protest/March 1st Movement,Armenia,2008,2009,False,1,False,0,5
+326,CNDP,Democratic Republic of Congo,2006,2009,False,0,False,0,5
+298,Cutlery Revolution,Iceland,2008,2009,False,1,False,1,4
+125,LTTE,Sri Lanka,1972,2009,False,0,True,0,5
+433,Anti-Deby Rebellion (Chad),Chad,2005,2010,False,0,False,0,5
+327,Guinean Pro-Democracy Movement,Guinea,2007,2010,False,1,False,1,4
+300,Kyrgyz Anti-Interim Goverment ,Kyrgyzstan,2010,2010,False,1,False,0,5
+269,Kyrgyz Second Revolution,Kyrgyzstan,2010,2010,False,1,False,1,4
+274,Maoist Anti-Government Protests,Nepal,2010,2010,False,1,False,1,4
+311,Anti-Ben Ali Campaign (Jasmine Revolution),Tunisia,2010,2011,False,1,False,1,4
+331,Anti-Mubarak Movement,Egypt,2007,2011,False,1,False,1,4
+260,Djibouti Arab Spring,Djibouti,2011,2011,False,1,False,0,5
+266,Frente Nacional��de Resistencia Popular (FNRP),Honduras,2009,2011,False,1,False,0,5
+270,Libyan Civil War,Libya,2011,2011,False,0,False,1,4
+338,Pro-Aristide Campaign,Haiti,2005,2011,False,1,False,0,5
+293,Pro-Ouattara Campaign,Cote d'Ivoire,2010,2011,False,1,False,1,4
+324,Red Shirt Campaign,Thailand,2009,2011,False,1,False,0,5
+281,Swaziland Anti-Monarchy Protests,Swaziland,2011,2011,False,1,False,0,5
+317,Anti-Abdelaziz Bouteflika Campaign,Algeria,2010,2012,False,1,False,0,5
+316,Anti-Ali Abdullah Saleh,Yemen,2011,2012,False,1,False,1,4
+302,Anti-Mutharika,Malawi,2011,2012,False,1,False,1,4
+107,JEM/SLA,Sudan,2003,2012,False,0,False,0,5
+195,Sendero Luminoso (The Shining Path) Senderista Insurgency,Peru,1980,2012,False,0,False,0,5
+382,\nPeoples��� Alliance for Freedom and Democracy,Ethiopia,1992,2012,False,0,False,0,5
+427,ADF Insurgency,Uganda,1996,2013,True,0,False,0,0
+341,Al Qaeda in the Arabian Peninsula,Yemen,2009,2013,True,0,False,0,0
+323,Anti-Al-Bashir Government,Sudan,2011,2013,False,1,False,0,5
+339,Anti-Aziz Protests,Mauritania,2008,2013,True,1,False,0,0
+360,Anti-Bozize/Seleka,Central African Republic,2003,2013,False,0,False,1,4
+313,Anti-Erdogan,Turkey,2013,2013,True,1,False,0,0
+312,Anti-Islamist Government Protests,Tunisia,2013,2013,True,1,False,0,1
+255,Anti-King Hamad Campaign,Bahrain,2011,2013,True,1,False,0,2
+262,Anti-Morsi Protests,Egypt,2013,2013,False,1,False,1,4
+335,"Anti-Putin/ \Snow Revolution\""""",Russia,2010,2013,True,1,False,0,0
+332,Anti-Shashkvilli Campaign,Georgia,2007,2013,False,1,False,1,4
+361,Anti-balaka,Central African Republic,2013,2013,True,0,False,0,0
+351,Assam Independence Campaign,India,1985,2013,True,0,False,0,0
+73,Basque Campaign for Self-Determination,Spain,1968,2013,True,1,True,0,0
+39,Belarus Pro-Democracy Campaign,Belarus,2006,2013,True,1,False,0,0
+352,Bodoland Independence Campaign,India,1987,2013,True,0,False,0,0
+334,Boko Haram,Nigeria,2009,2013,True,0,False,0,0
+390,Cabinda Conflict ,Angola,1991,2013,True,0,False,0,0
+386,Casamance Conflict,Senegal,1982,2013,True,0,False,0,0
+343,Caucasus Emirate,Russia,2007,2013,True,0,False,0,0
+308,Civil Movement for Democracy,Thailand,2013,2013,True,1,False,0,0
+290,Dance With Me Campaign,Bulgaria,2013,2013,True,1,False,0,3
+314,Euromaiden,Ukraine,2013,2013,True,1,False,0,0
+375,Fourth Balochistan Separatist Movement,Pakistan,2004,2013,True,0,False,0,0
+333,Green Revolution and Day of Rage,Iran,2009,2013,False,1,False,0,5
+105,Iraqi insurgency,Iraq,2003,2013,True,0,False,0,0
+106,Islamic Salvation Front,Algeria,1989,2013,True,0,True,0,0
+356,Islamic State,Syria,2013,2013,True,0,False,0,0
+115,Kashmiri Muslim separatists,India,1990,2013,True,0,False,0,0
+294,"Kivu Rebels (M23, APCLS, PARC-FAAL)",Democratic Republic of Congo,2011,2013,True,0,False,0,1
+251,Kurdish rebellion (Turkey),Turkey,1978,2013,True,0,False,0,1
+124,LRA,Uganda,1986,2013,True,0,False,0,0
+309,Let's Save Togo (Anti-Gnassingbe),Togo,2012,2013,False,1,False,0,5
+379,Manipur Insurgency,India,1979,2013,True,0,False,0,0
+139,Moro National Liberation Front,Philippines,1970,2013,True,0,False,0,3
+407,Myanmar Regime Change Campaign,Myanmar/Burma,1988,2013,True,0,False,0,3
+408,Myanmar Territorial Secession Campaign,Myanmar/Burma,1948,2013,True,0,False,0,3
+349,Naga Insurgency (Myanmar),Myanmar,1988,2013,True,0,False,0,0
+144,Naga Rebellion,India,1951,2013,True,0,True,0,0
+303,Nasheed Supporters,Maldives,2012,2013,False,1,False,0,5
+347,Naxalite insurgency,India,1980,2013,True,0,False,0,0
+150,New People's Army,Philippines,1972,2013,True,0,False,0,0
+328,Northern Mali Conflict,Mali,2012,2013,True,0,False,0,0
+385,PJAK,Iran,2005,2013,True,0,False,0,0
+342,Pakistani Islamist Insurgency,Pakistan,2007,2013,True,0,False,0,0
+164,Palestinian Liberation,Palestinian Territories,1964,2013,True,1,True,0,1
+354,Patani insurgency,Thailand,2004,2013,True,0,False,0,3
+295,Pro-Morsi Protests,Egypt,2013,2013,True,1,False,0,0
+320,Protest for Constitutional Reform,Jordan,2011,2013,False,1,False,0,5
+182,Revolutionary Armed Forces of Colombia and National Liberation Army,Colombia,1964,2013,True,0,False,0,3
+319,Sinai Insurgency,Egypt,2013,2013,True,0,False,0,0
+344,Somali Islamist Insurgency,Somalia,2006,2013,True,0,False,0,0
+402,South Kordofan and Blue Nile ,Sudan,2011,2013,True,0,False,0,0
+322,South Sudanese Civil War,South Sudan,2013,2013,True,0,False,0,0
+256,Southern Yemen Secessionist Movement,Yemen,2007,2013,True,1,False,0,1
+282,Syrian Civil Conflict,Syria,2011,2013,True,0,True,0,0
+217,Taliban Resistance,Afghanistan,2001,2013,True,0,False,0,1
+374,Tripuri nationalists,India,1989,2013,True,0,False,0,0
+242,West Papuan self-determination campaign,Indonesia,1964,2013,True,1,True,0,0
+340,Western Sahara Independence Movement,Western Sahara,1999,2013,True,1,False,0,5
+258,al-Houthi Rebellion,Yemen,2004,2013,True,0,False,0,1
