@@ -35,6 +35,18 @@ Recommended exports:
 
 Edit `assets/js/projects.js`. Each item has a `type` of `work` or `lab`. Add a matching directory with an `index.html` based on an existing case-study route, then update its `data-type` and `data-slug` values. The reusable renderer in `assets/js/case-study.js` builds the editorial modules.
 
-## Before publishing
+## Earlier graphic-design archive
 
-Replace `your@email.com` in `contact/index.html`, add real biography/project content, and update per-project metadata and social preview images.
+`work/graphic-design/` is a separate archive of earlier graphic-design work, linked from Work without mixing it into the marketing-facing project data. Its five static galleries retain the Squarespace artwork and copy: TEXTUR, Event & Festival Social Media Design, Social Media Motion Graphics, Logofolio, and Karnevalen Brand Bible. Blandat is intentionally excluded.
+
+- `assets/css/archive.css` extends the existing theme tokens, typography and frame.
+- `assets/media/graphic-design/` contains 41 gallery images, five cover images, and nine H.264/AAC MP4s with posters. No runtime Squarespace dependency.
+- Image and motion manifests preserve source URLs, order, dimensions and checksums. Original image backups and temporary authenticated export data are kept outside this public repository.
+- Videos are on demand, initially muted, with native playback/audio/fullscreen controls. Images link to their full-size web copies.
+- Contact now uses the email retained from the source portfolio.
+
+Run regression checks with `python3 -m unittest discover -s tests -v` and `node --test tests/test_navigation.mjs`. Serve locally with `python3 -m http.server 8000`, then test Work → Graphic Design, all galleries, full-size image → Back, themes, mobile layouts, and video playback. GitHub Pages publishes the root of `main`.
+
+## Remaining shell content
+
+The existing primary Work/Lab placeholders and biography shell are unchanged. Replace those with marketing-focused content and update their metadata/social preview images as that work is ready.
