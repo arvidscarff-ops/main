@@ -1,0 +1,48 @@
+SCRAPING – GROWTH TOOLBOX
+
+ÖVNINGEN
+Insamling av företagsnamn, organisationsnummer, telefon och adress
+från Allabolags sökning efter Arkitekter.
+
+METOD
+JavaScript-skriptet scraper.js är inställt på att hämta fem söksidor.
+Det använder fetch för att hämta HTML och Cheerio för att läsa ut
+uppgifter ur företagskorten. Texten städas från extra blanksteg.
+Skriptet väntar 500 millisekunder mellan sidorna och sparar resultatet
+som foretag.csv. TXT-versionen är tab-separerad UTF-8 med samma
+cellvärden och radordning som CSV-exporten.
+
+Kolumner:
+name = företagsnamn
+orgnr = organisationsnummer
+phone = telefonnummer
+address = adress
+Tomma fält betyder att uppgiften saknas i den sparade exporten.
+
+KÄLLSIDOR I SKRIPTET
+https://www.allabolag.se/bransch-s%C3%B6k?q=Arkitekter
+https://www.allabolag.se/bransch-s%C3%B6k?q=Arkitekter&page=2
+https://www.allabolag.se/bransch-s%C3%B6k?q=Arkitekter&page=3
+https://www.allabolag.se/bransch-s%C3%B6k?q=Arkitekter&page=4
+https://www.allabolag.se/bransch-s%C3%B6k?q=Arkitekter&page=5
+
+KONTROLL OCH BEGRÄNSNINGAR
+- 125 datarader med fyra kolumner per rad.
+- 122 unika organisationsnummer; 3 extra rader är exakta dubbletter.
+- Telefon saknas på 22 rader och adress på 7 rader.
+- Dubbletter och tomma fält är kvar i den ursprungliga exporten.
+- Insamlingsdatumet är inte dokumenterat.
+- Urvalet är inte en komplett lista över Sveriges arkitektföretag.
+- Uppgifterna har inte kontrollerats mot webbplatsens aktuella innehåll.
+- Om webbplatsens HTML ändras kan skriptets urval behöva uppdateras.
+
+PUBLICERADE FILER
+Portfolion visar insamlingsskriptet och denna metodbeskrivning.
+Företags- och kontaktuppgifterna i foretag.csv och foretag.txt
+publiceras inte. Beroendefiler ingår inte heller; detta är en
+källkodsvisning, inte ett komplett körpaket.
+
+Skriptet använder Node.js och Cheerio. Vid en eventuell ny körning
+behöver beroendena installeras och webbplatsens villkor och
+åtkomstregler kontrolleras. Skriptet skriver över foretag.csv i
+arbetsmappen och bör därför inte köras i en sparad originalmapp.

@@ -1,0 +1,54 @@
+<!doctype html><html lang="en" data-theme="dark"><head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-K2XLGKB2');</script>
+<!-- End Google Tag Manager --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#080908"><meta name="site-root" content="../.."><meta name="description" content="Berghs coursework by Arvid Scarff: data investigation, content, scraping and an API mashup."><link rel="canonical" href="https://arvidscarff-ops.github.io/main/work/growth-toolbox/"><link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../../assets/css/site.css"><link rel="stylesheet" href="../../assets/css/sections.css"><title>Growth Toolbox — Berghs — Arvid Shane Scarff</title><script>try{document.documentElement.dataset.theme=localStorage.getItem('ass-theme')||((matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark')}catch(e){}</script><link rel="stylesheet" href="../../assets/css/coursework.css"></head>
+<body class="page page--inner" data-page="coursework">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K2XLGKB2"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><a class="skip-link" href="#main">Skip to content</a><div class="site-frame" aria-hidden="true"></div><header class="section-header"><a class="index-link" aria-label="Back to Work" href="../">Work</a><details class="section-menu"><summary>Sections</summary><nav aria-label="Primary navigation"><a aria-current="location" href="../../work/">Work</a><a href="../../approach/">Approach</a><a href="../../design/">Design</a><a href="../../about/">About</a><a href="../../contact/">Contact</a><a href="../../redacted/">[redacted]</a></nav></details></header>
+<main id="main" class="inner-main section-main coursework" tabindex="-1">
+<p class="page-kicker">Work / Berghs / Growth Toolbox</p><h1 class="page-title">Growth<br>Toolbox</h1>
+<p class="course-intro">Data investigation,<br>content and code.</p>
+<p class="course-lede">A collection of coursework in data, content, scraping and APIs. Open the projects, read the thinking behind them, or download the supporting files.</p>
+
+<nav class="assignment-index" aria-label="Assignments">
+<a href="#investigation"><span>01</span> Data investigation <span>Open ↗</span></a>
+<a href="#content"><span>02</span> Content &amp; storytelling <span>Read ↗</span></a>
+<a href="#scraping"><span>03</span> Scraping <span>Inspect ↗</span></a>
+<a href="#mashup"><span>04</span> API mashup <span>Explore ↗</span></a>
+<a href="#evidence"><span>05</span> Portfolio website <span>View ↗</span></a>
+</nav>
+<section id="investigation" class="assignment" aria-labelledby="investigation-title">
+<div><p class="page-kicker">01 / Data investigation</p><h2 id="investigation-title">Above the law?</h2></div>
+<div class="assignment-body"><p class="assignment-deck">What does demand for accountability look like beyond a poll?</p><p>72% of surveyed US registered voters chose more investigations and prosecutions in the Epstein case in February 2026. The investigation places that finding alongside earlier recorded protest activity, with sources and downloadable data.</p><p>The protest records are from 2025 and mostly concern disclosure, not explicit prosecution. They cannot show whether the surveyed voters protested. The comparison raises a question; it does not measure a conversion from opinion to action.</p>
+<div class="text-links"><a href="above-the-law/">Open investigation ↗</a><a href="above-the-law/#sources">Sources &amp; data ↗</a><a href="../../attention-gap/">Earlier dashboard ↗</a></div>
+</div></section>
+<section id="content" class="assignment" aria-labelledby="content-title">
+<div><p class="page-kicker">02 / Content &amp; storytelling</p><h2 id="content-title">Getting the<br>story across.</h2></div>
+<div class="assignment-body"><p>A content plan for reaching journalists, a chart-led article, and sample email and LinkedIn copy.</p>
+<div class="text-links"><a href="content-plan/">Read content plan ↗</a><a href="article/">Read article ↗</a><a href="content-examples/">Read content examples ↗</a></div>
+<div class="download-list"><a href="files/content/above-the-law-content-package.pdf" download>Download full content package <span>PDF</span></a><a href="files/content/social-chart.png" download>Download social chart <span>PNG</span></a><a href="files/content/social-chart.pdf" download>Download social chart <span>PDF</span></a></div>
+<figure class="course-chart"><img src="files/content/social-chart.png" loading="lazy" alt="Navigator survey of 1,000 US registered voters, 19–23 February 2026: more investigations and prosecutions 72%; enough accountability / time to move on 17%; unsure 11%."><figcaption>The supporting social visual. Full wording and methodology are in the investigation.</figcaption></figure>
+</div></section>
+<section id="scraping" class="assignment" aria-labelledby="scraping-title">
+<div><p class="page-kicker">03 / Scraping</p><h2 id="scraping-title">From page<br>to dataset.</h2></div>
+<div class="assignment-body"><p>A JavaScript and Cheerio scraper that extracts company records from five Allabolag search pages for architects and exports them as TXT and CSV.</p>
+<p>The saved export contains 125 rows and 122 unique organisation numbers. Three extra rows are exact duplicates; phone numbers are absent in 22 rows and addresses in seven. The original order, duplicates and empty cells are preserved.</p>
+<p class="evidence-note">The scraper and method are available below. The company/contact dataset is not published.</p>
+<div class="text-links"><a href="files/scraping/LAS-MIG.txt" download>Download original method note · TXT ↗</a><a href="files/scraping/scraper.js" download>Download scraper · JS ↗</a></div>
+<p class="evidence-note">The method note describes the full dataset and export format. Check the source’s access rules before running the scraper.</p></div></section>
+<section id="mashup" class="assignment" aria-labelledby="mashup-title">
+<div><p class="page-kicker">04 / API mashup</p><h2 id="mashup-title">Weekender</h2></div>
+<div class="assignment-body"><p class="assignment-deck">A cheap flight is good.<br>A reason to go is better.</p><p>A working prototype connecting affordable return flights with nearby music festivals. It combines travel and event data rather than acting as a booking service. Live coverage depends on the providers; demo results are labelled.</p>
+<div class="text-links"><a href="https://weekender.arvidscarff.workers.dev" rel="noopener noreferrer">Open Weekender · external ↗</a><a href="https://weekender.arvidscarff.workers.dev/about" rel="noopener noreferrer">Read API &amp; prototype explanation · external ↗</a></div>
+</div></section>
+<section id="evidence" class="assignment" aria-labelledby="evidence-title">
+<div><p class="page-kicker">05 / Portfolio website</p><h2 id="evidence-title">The portfolio</h2></div>
+<div class="assignment-body"><p>A static portfolio bringing together interactive projects, data work and earlier graphic design. Built with HTML, CSS and JavaScript, with responsive layouts and keyboard navigation.</p><div class="text-links"><a href="../../#navigation">Open the index ↗</a><a href="../../design/">Explore graphic design ↗</a></div></div></section>
+<footer class="section-footer"><a href="../">← Back to Work</a><a href="#main">Back to top ↑</a></footer></main>
+<div class="frame-controls"><button class="frame-control" type="button" data-theme-toggle aria-label="Switch color theme"><span data-theme-label>Light</span></button><button class="frame-control" type="button" data-sound-toggle aria-pressed="false"><span aria-hidden="true" data-sound-icon>○</span> Sound <span data-sound-label>off</span></button></div><div class="page-transition" aria-hidden="true"></div><script type="module" src="../../assets/js/site.js"></script></body></html>

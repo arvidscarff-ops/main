@@ -1,0 +1,75 @@
+{
+  "period": [
+    "2025-01-01",
+    "2025-12-31"
+  ],
+  "geography": "50 US states and Washington, DC",
+  "unit": "Recorded in-person protest event-days with matching coded demands",
+  "eligible_records": 39079,
+  "exact_duplicates_removed": 0,
+  "unique_matched_records": 22816,
+  "category_memberships": 24562,
+  "epstein_august_2": 425,
+  "epstein_coverup_claim": 425,
+  "categories": [
+    {
+      "id": "epstein",
+      "label": "Epstein files / accountability",
+      "count": 491
+    },
+    {
+      "id": "gaza",
+      "label": "Gaza / Palestinian solidarity",
+      "count": 8953
+    },
+    {
+      "id": "racial",
+      "label": "Racial justice / police accountability",
+      "count": 1003
+    },
+    {
+      "id": "abortion",
+      "label": "Abortion / reproductive rights",
+      "count": 460
+    },
+    {
+      "id": "climate",
+      "label": "Climate action",
+      "count": 977
+    },
+    {
+      "id": "immigrant",
+      "label": "Immigrant rights / anti-deportation",
+      "count": 12122
+    },
+    {
+      "id": "ukraine",
+      "label": "Ukraine solidarity",
+      "count": 556
+    }
+  ],
+  "axis_max": 14000,
+  "source": {
+    "dataset": "Crowd Counting Consortium U.S. Protest Event Data, 2025-",
+    "doi": "10.7910/DVN/RI9JFU",
+    "version": "18.0",
+    "release_date": "2026-09-10",
+    "download_url": "https://dataverse.harvard.edu/api/access/datafile/14226873",
+    "dataset_url": "https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/RI9JFU&version=18.0",
+    "coding_guidelines_url": "https://dataverse.harvard.edu/api/access/datafile/14059540",
+    "retrieved_at": "2026-09-17T09:50:55.492632+00:00",
+    "source_sha256": "70253a0eb7b2820acb2ff3b3ba9b7c1d48635421af46c88f17e4fae9481fb621",
+    "source_md5": "3a9f1767e241fffb1daeee44b0d80608",
+    "source_bytes": 47231658,
+    "classification": "Analyst-reviewed exact CCC claims_summary clauses; candidate keywords and all included/excluded clauses in protest-coding.csv. Not official CCC movement totals.",
+    "candidate_patterns": {
+      "epstein": "epstein",
+      "racial": "black lives|racial justice|police brutality|police violence",
+      "gaza": "palestin|gaza",
+      "abortion": "abortion|reproductive|pro.choice",
+      "climate": "climate|fossil|renewable|global warming",
+      "immigrant": "immigr|deport|\\bICE\\b|\\bCBP\\b|asylum|migrant|border patrol",
+      "ukraine": "ukrain"
+    }
+  }
+}
