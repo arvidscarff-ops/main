@@ -1,52 +1,66 @@
-# Arvid Shane Scarff — portfolio shell
+# Arvid Shane Scarff — portfolio
 
-Dependency-free static portfolio for GitHub Pages. Open it through a local web server rather than by double-clicking `index.html`, because the homepage uses JavaScript modules and video assets.
+Dependency-free static site for GitHub Pages. Serve over HTTP: the homepage uses JavaScript modules. No runtime build or framework is required.
 
-## Content map
+## Local preview
 
-- `index.html` — fullscreen homepage composition
-- `work/` — editorial work index and work case-study routes
-- `lab/` — experiment index and lab case-study routes
-- `about/` — biography shell
-- `contact/` — email and copy interaction
-- `assets/css/site.css` — design tokens, frame, themes, bloom, layout, motion
-- `assets/js/projects.js` — all placeholder Work and Lab project data
-- `assets/js/home-config.js` — homepage feeds, cut timing, tear, and tracking controls
-- `assets/js/tracking.js` — replaceable procedural tracking source and renderer
+```sh
+python3 -m http.server 5190 --bind 127.0.0.1
+```
 
-## Replace the homepage films
+Open http://127.0.0.1:5190/. All site URLs are relative and support GitHub Pages' `/main/` prefix. GitHub Pages publishes the repository root from `main` to https://arvidscarff-ops.github.io/main/. Local edits do not publish until merged to `main`; publication of the eagle/star navigation was separately approved.
 
-The three browser-ready feeds are in `assets/media/home/`. Replace matching desktop, mobile, and poster files while retaining their filenames, or update the three entries in `assets/js/home-config.js`.
+## Navigation and content
 
-Recommended exports:
+- `index.html` — eagle and six orbiting stars. The eagle's eye retains the seventh star. First activation opens the two-row navigation; subsequent star activation follows its section. Eagle or Escape closes it. Back and section Index links restore the open menu.
+- `work/` — Weekender only, described as in development, with no invented results or performance claims.
+- `approach/` — clearly labelled editorial draft, awaiting the author's approval.
+- `design/` — earlier graphic-design index, linking the five preserved collections at their original URLs.
+- `about/` — concise profile, distinct from Approach.
+- `contact/` — existing contact details and copy interaction.
+- `redacted/` — cosmetic keypad and empty room. **Not authentication.** Everything in this static repository is public; never put sensitive material behind this interaction.
 
-- desktop: H.264 MP4, 1920×1080, muted, web optimized
-- mobile: H.264 MP4, 960×540 or similar, muted, web optimized
-- poster: optimized JPEG with the same crop as the film
+Original archive URLs under `work/graphic-design/` remain valid. Older Lab and sample case-study routes are retained for compatibility but not promoted in the six-section menu.
 
-## Art direction controls
+## Homepage implementation
 
-- Cut timing: `cutInterval.min` and `cutInterval.max` in `assets/js/home-config.js`
-- Tear: the `tear` object in `assets/js/home-config.js`
-- Tracking frequency and strength: the `tracking` object in `assets/js/home-config.js`
-- Bloom, frame, typography, motion, and color: tokens at the top of `assets/css/site.css`
+- `assets/js/home.js` — requestAnimationFrame orbit and reversible, position-preserving opening/closing transitions. Pauses animation while hidden. No animation library.
+- `assets/css/orbit.css` — responsive menu sizing, hover/press feedback, and usable no-JavaScript fallback.
+- `assets/icons/eagle.webp`, `orbit-star.webp` — tightly cropped, transparent, resized derivatives of the supplied artwork.
+- `assets/css/sections.css` — Index/Sections navigation, Work, draft Approach and keypad layouts.
+- `assets/js/keypad.js` — public, decorative gate; digits, erase, Enter and Escape support.
+- `assets/js/site.js` — themes, optional sound, clipboard and calm page transitions.
 
-## Add or edit projects
+The landscape uses the existing `camera-01` video/poster, not the old three-feed cutting/tracking system. Replace its matching desktop/mobile MP4 and poster in `assets/media/home/` to change the scene. Old `home-config.js` and tracking assets are retained but not imported by the new homepage.
 
-Edit `assets/js/projects.js`. Each item has a `type` of `work` or `lab`. Add a matching directory with an `index.html` based on an existing case-study route, then update its `data-type` and `data-slug` values. The reusable renderer in `assets/js/case-study.js` builds the editorial modules.
+Reduced-motion preferences suppress video loading and continuous orbit movement, and make the menu settle immediately. A separate Pause motion button freezes both the landscape and orbit. Sound is optional and off by default. Browser-storage failures do not block navigation.
 
-## Earlier graphic-design archive
+## Design archive
 
-`work/graphic-design/` is a separate archive of earlier graphic-design work, linked from Work without mixing it into the marketing-facing project data. Its five static galleries retain the Squarespace artwork and copy: TEXTUR, Event & Festival Social Media Design, Social Media Motion Graphics, Logofolio, and Karnevalen Brand Bible. Blandat is intentionally excluded.
+Five original collections: TEXTUR, Event & Festival Social Media Design, Social Media Motion Graphics, Logofolio, and Karnevalen Brand Bible. Blandat remains excluded.
 
-- `assets/css/archive.css` extends the existing theme tokens, typography and frame.
-- `assets/media/graphic-design/` contains 41 gallery images, five cover images, and nine H.264/AAC MP4s with posters. No runtime Squarespace dependency.
-- Image and motion manifests preserve source URLs, order, dimensions and checksums. Original image backups and temporary authenticated export data are kept outside this public repository.
-- Videos are on demand, initially muted, with native playback/audio/fullscreen controls. Images link to their full-size web copies.
-- Contact now uses the email retained from the source portfolio.
+- `assets/css/archive.css` retains archive layout and typography.
+- `assets/media/graphic-design/` retains the gallery images, cover images and H.264/AAC MP4s with posters. No runtime Squarespace dependency.
+- Manifests retain source URLs, order, dimensions and checksums. Original image backups and authenticated export data remain outside this public repository.
+- Videos are on demand, initially muted, with native playback/audio/fullscreen controls. Images link to full-size web copies.
 
-Run regression checks with `python3 -m unittest discover -s tests -v` and `node --test tests/test_navigation.mjs`. Serve locally with `python3 -m http.server 8000`, then test Work → Graphic Design, all galleries, full-size image → Back, themes, mobile layouts, and video playback. GitHub Pages publishes the root of `main`.
+## Checks
 
-## Remaining shell content
+With the preview server running:
 
-The existing primary Work/Lab placeholders and biography shell are unchanged. Replace those with marketing-focused content and update their metadata/social preview images as that work is ready.
+```sh
+python3 -m unittest discover -s tests -p 'test_*.py'
+node --test tests/test_navigation.mjs
+```
+
+Browser checks use Playwright/Chromium as external **test tooling only**; the site has no dependency on it. If Playwright is not resolvable in your environment, install it in a separate tooling directory, install its Chromium browser, then set `PLAYWRIGHT_PATH` to that installation's `node_modules/playwright/index.js`.
+
+```sh
+PLAYWRIGHT_PATH=/absolute/path/to/playwright/index.js \
+EVIDENCE_DIR=/tmp/portfolio-orbit-evidence \
+node --test tests/*.mjs
+```
+
+`TEST_URL` optionally overrides `http://127.0.0.1:5190/`. Coverage includes opening from a star or eagle, animation continuity, reversal, pause, return navigation, keyboard/touch, reduced motion, no-JavaScript links, blocked storage, keypad failure/success, all six destinations at four viewport sizes, local asset/link integrity, archive regressions and `/main/`-prefixed routing. Browser coverage is Chromium; it does not claim Safari/WebKit or physical-device validation.
+
+The initial 2026-09-17 local verification passed all 17 Node tests (including browser checks), all 5 Python tests, and `git diff --check`. Desktop and mobile screenshots were visually inspected. That preview review did not publish changes; publishing was approved separately afterward.

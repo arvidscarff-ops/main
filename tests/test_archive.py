@@ -11,7 +11,7 @@ class ArchiveTests(unittest.TestCase):
     def test_work_links_to_separate_earlier_design_archive(self):
         work=Page(ROOT/'work/index.html')
         links=[a['href'] for t,a in work.tags if t=='a' and 'href' in a]
-        self.assertIn('graphic-design/',links)
+        self.assertIn('../design/',links)
         archive=ROOT/'work/graphic-design/index.html'
         self.assertTrue(archive.exists(),'Archive landing must exist')
         page=Page(archive)
@@ -48,7 +48,7 @@ class ArchiveTests(unittest.TestCase):
                 p=ROOT/'work/graphic-design'/slug/'index.html'
                 self.assertTrue(p.exists()); s=p.read_text()
                 self.assertIn('src="../../../assets/js/site.js"',s)
-                self.assertIn('aria-current="page" href="../../">Work',s)
+                self.assertIn('aria-current="page" href="../../../design/">Design',s)
                 self.assertNotIn('Project One',s)
                 self.assertIn('https://arvidscarff-ops.github.io/main/work/graphic-design/'+slug+'/',s)
     def test_source_contact_replaces_placeholder(self):
