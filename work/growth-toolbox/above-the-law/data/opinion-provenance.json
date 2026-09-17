@@ -1,0 +1,56 @@
+{
+  "audited_at": "2026-09-17T11:18:11.232219+00:00",
+  "selection_rule": "Bounded primary-source audit with inspectable wording, results and methods. Six cause-specific national adult polls from 2025 are retained. The Epstein disclosure measure was replaced with a February 2026 registered-voter accountability question because it directly measures demand for investigations and prosecutions, not because of its percentage. This deliberate timing/population exception is not a matched comparison or exhaustive poll inventory.",
+  "source_documents": [
+    {
+      "id": "epstein",
+      "url": "https://navigatorresearch.org/wp-content/uploads/2026/02/Navigator-Update-03.02.2026.pdf",
+      "sha256": "66a299e402fd3fb978e49340d9f0bcb44293619263b3fe8a7a146fefa6d06b5a",
+      "verified": "Overall responses on p. 3 visually checked; methods p. 16. Replaces disclosure finding in active materials; previous source retained for provenance."
+    },
+    {
+      "id": "epstein_disclosure_superseded",
+      "url": "https://d3nkl3psvxxpe9.cloudfront.net/documents/econtoplines_x8wFIYj.pdf",
+      "sha256": "3a2e48d026e591c0ec82152c41a00513fe450d3522810bdc3669480a65b1637a"
+    },
+    {
+      "id": "gaza",
+      "url": "https://www.pewresearch.org/wp-content/uploads/sites/20/2025/10/PP_2025.10.3_israel-hamas-war_topline.pdf",
+      "sha256": "a0395f588455c0f2dea5ef4726147e9863235229ef764d0e920f0cccfd6fd979"
+    },
+    {
+      "id": "racial",
+      "url": "https://www.pewresearch.org/wp-content/uploads/sites/20/2025/05/ST_2025.05.07_George-Floyd_topline.pdf",
+      "sha256": "dbd57250aca1d9849f63f0044afdcf7e81268a70e8314062e6b20397e0ca0f08"
+    },
+    {
+      "id": "climate",
+      "url": "https://news.gallup.com/file/poll/659441/20250416GlobalWarming.pdf",
+      "sha256": "9a6533d277c84f0642ceaeacd6b63f6651f346aeea7c7a4726d722835cc2f3d9"
+    },
+    {
+      "id": "apnorc",
+      "url": "https://apnorc.org/wp-content/uploads/2025/07/July-W1-Topline-abortion.pdf",
+      "sha256": "4ff70deca1ebab6d79023b11762b6c5c3010163304a3b56ab0ef4255bf847c81"
+    }
+  ],
+  "additional_sources": [
+    {
+      "id": "ukraine",
+      "url": "https://datawrapper.dwcdn.net/vHXvl/3/",
+      "verified": "Browser-rendered exact question and August2025 results; article methods independently extracted."
+    },
+    {
+      "id": "gaza_methodology",
+      "url": "https://www.pewresearch.org/wp-content/uploads/sites/20/2025/10/PP_2025.10.03_israel-hamas-conflict_report.pdf#page=24",
+      "sha256": "28ce1afb7d3be14e8864a1dfb946411656e5a6fe61fe250e940459e5f4f752eb"
+    }
+  ],
+  "editorial_decisions": [
+    "Do not pool the percentages: constructs, questions, modes, populations and months differ.",
+    "Use AP-NORC published Legal NET64 for abortion, not rounded sum63 or Gallup pro-choice identity51.",
+    "Climate concern is an indirect proxy, not climate-policy support.",
+    "Use Navigator February2026 72% demand for more investigations/prosecutions in headline and comparison. Retain Reuters/Ipsos 69% as separately labelled supporting evidence. 2025 event counts are mostly disclosure demands, not a prosecution-protest count. No highest-percentage claim."
+  ],
+  "evidence_storage": "Primary PDF snapshots and extracted text retained outside the site in the above-the-law opinion-audit workspace."
+}

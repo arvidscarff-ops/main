@@ -13,7 +13,8 @@ Open http://127.0.0.1:5190/. All site URLs are relative and support GitHub Pages
 ## Navigation and content
 
 - `index.html` — eagle and six orbiting stars. The eagle's eye retains the seventh star. First activation opens the two-row navigation; subsequent star activation follows its section. Eagle or Escape closes it. Back and section Index links restore the open menu.
-- `work/` — Weekender only, described as in development, with no invented results or performance claims.
+- `work/` — Weekender and Growth Toolbox coursework, with no invented results or completion claims.
+- `work/growth-toolbox/` — coursework hub; static reading pages, updated investigation and curated downloads. The earlier `attention-gap/` and Design archive remain unchanged.
 - `approach/` — clearly labelled editorial draft, awaiting the author's approval.
 - `design/` — earlier graphic-design index, linking the five preserved collections at their original URLs.
 - `about/` — concise profile, distinct from Approach.
@@ -43,6 +44,14 @@ Five original collections: TEXTUR, Event & Festival Social Media Design, Social 
 - `assets/media/graphic-design/` retains the gallery images, cover images and H.264/AAC MP4s with posters. No runtime Squarespace dependency.
 - Manifests retain source URLs, order, dimensions and checksums. Original image backups and authenticated export data remain outside this public repository.
 - Videos are on demand, initially muted, with native playback/audio/fullscreen controls. Images link to full-size web copies.
+
+## Growth Toolbox coursework
+
+Open `/work/growth-toolbox/` through Work. The bundle includes **Above the law?**, its source data, the article, content plan, sample outreach copy, a downloadable content PDF and social visual (PNG/PDF), plus the scraper and method note. Weekender is hosted separately; links use same-tab navigation for compatibility with embedded browsers.
+
+The published plan, examples and PDF have been edited for the portfolio. Original coursework files are retained outside this repository. Raw company/contact exports, submission ZIPs, private notes and teacher briefs are excluded. GTM configuration is unchanged.
+
+See `coursework-publication-inventory.md` for the file list. Browser checks cover coursework routes, actual downloads, chart controls, responsive layouts, keyboard access, no-JavaScript reading, and root and `/main/` hosting.
 
 ## Checks
 

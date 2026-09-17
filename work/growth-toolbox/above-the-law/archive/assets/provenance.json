@@ -1,0 +1,50 @@
+{
+  "retrieved": "2026-09-15",
+  "sources": [
+    {
+      "file": "eurostat-digital.json",
+      "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/isoc_ci_ac_i?lang=EN&ind_type=IND_TOTAL&unit=PC_IND&sinceTimePeriod=2014&indic_is=I_IUVOD&indic_is=I_IUSNET&indic_is=I_IUCPP&indic_is=I_IUVOTE&indic_is=I_IUPOL2",
+      "sha256": "8ce8c85085ba69f426b2099a15c0dd55104ab83c101659f1973b59979e2fecb1"
+    },
+    {
+      "file": "eurostat-deprivation.json",
+      "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/ilc_mdsd11?lang=EN&sex=T&age=TOTAL&unit=PC&sinceTimePeriod=2014",
+      "sha256": "5c3ba923b338ae681e5137bf1fb27262abb8bdd8601022fa3f4a69d097050651"
+    },
+    {
+      "file": "wid-WO.csv",
+      "url": "https://wid.world/bulk_download/WID_data_WO.csv",
+      "sha256": "2b3e5d23cd54e9c20a40fff91a06226e896da094416a214ed2ce47b09608e51b"
+    },
+    {
+      "file": "wid-WO-metadata.csv",
+      "url": "https://wid.world/bulk_download/WID_metadata_WO.csv",
+      "sha256": "ea8f607daf3b68fc794088b9e871073ad39740ac43ca2871eab92f82b113f504"
+    },
+    {
+      "file": "world-internet.json",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/IT.NET.USER.ZS?format=json&date=2000:2025&per_page=100",
+      "sha256": "df97aafc6bdba02a328460d25d50e7d610fcaaafae31208a4dc67f8242f42933"
+    },
+    {
+      "file": "netflix.json",
+      "url": "Manually transcribed from Netflix 2021 and 2024 10-K consolidated performance tables; links inside file.",
+      "sha256": "fbd08be9c2a0109f03e22c0a295ea5cc057d4b05a2b9f4e09c2c4e2e6b7832ba"
+    },
+    {
+      "file": "netflix-2024.pdf",
+      "url": "https://s22.q4cdn.com/959853165/files/doc_financials/2024/ar/Netflix-10-K-01272025.pdf",
+      "sha256": "a8a00a029bddb45fa83d151798a9c4c94b8725c9a0a1ee490e2e7da8ec1e9ddb"
+    },
+    {
+      "file": "navco.tsv",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/3620879",
+      "sha256": "a0e41f37955f78c11bf0ce24e1c6027fa6515de18139bf052c1b92fcf86b1ecb"
+    },
+    {
+      "file": "navco-codebook.pdf",
+      "url": "https://dataverse.harvard.edu/api/access/datafile/3648624",
+      "sha256": "6fe8faa4c6ad45c74d61082d6aedc780d5440a7ace25747a63eaf338951c9a93"
+    }
+  ]
+}

@@ -1,0 +1,267 @@
+{
+  "schema_version": 1,
+  "audited_at": "2026-09-17T11:18:11.232219+00:00",
+  "common_construct": false,
+  "title": "Public opinion and recorded protest activity",
+  "scope": "Selected national US opinion snapshots: Epstein registered voters in February 2026; six other causes US adults in 2025. All event-days cover full-year 2025 from the existing CCC classification.",
+  "selection_rule": "Bounded primary-source audit with inspectable wording, results and methods. Six cause-specific national adult polls from 2025 are retained. The Epstein disclosure measure was replaced with a February 2026 registered-voter accountability question because it directly measures demand for investigations and prosecutions, not because of its percentage. This deliberate timing/population exception is not a matched comparison or exhaustive poll inventory.",
+  "interpretation": "Cause-specific context, not a shared dissatisfaction score, annual opinion average, correlation or opinion-to-protest conversion rate. No respondents are linked to event records.",
+  "records": [
+    {
+      "id": "epstein",
+      "percent": 72,
+      "measure": "Want more investigations and prosecutions in the Epstein case",
+      "construct": "Demand for accountability",
+      "question": "Which side do you agree with more in relation to Jeffrey Epstein?",
+      "response": "There should be more prosecutions and investigations into people associated with Jeffrey Epstein and his criminal activities",
+      "components": [
+        {
+          "label": "There should be more prosecutions and investigations into people associated with Jeffrey Epstein and his criminal activities",
+          "percent": 72
+        }
+      ],
+      "response_options": [
+        {
+          "label": "There should be more prosecutions and investigations into people associated with Jeffrey Epstein and his criminal activities",
+          "percent": 72
+        },
+        {
+          "label": "Not sure",
+          "percent": 11
+        },
+        {
+          "label": "There has been enough accountability for the ringleaders of the Jeffrey Epstein criminal circle and it's time to move on",
+          "percent": 17
+        }
+      ],
+      "fieldwork_start": "2026-02-19",
+      "fieldwork_end": "2026-02-23",
+      "fieldwork_display": "19–23 Feb 2026",
+      "sample_n": 1000,
+      "population": "US registered voters",
+      "method": "Global Strategy Group for Navigator; opt-in online panel, voter-file verified, demographic composition matched to the national registered-voter population. Methods also report additional interviews: 101 Hispanic, 99 African American, 75 Asian American/Pacific Islander and 100 independent voters.",
+      "pollster": "Navigator / Global Strategy Group",
+      "uncertainty": "Publisher reports ±3.1 percentage points at 95% confidence for the full sample. Opt-in panel; this reported margin does not capture selection bias or every source of survey error.",
+      "source_url": "https://navigatorresearch.org/wp-content/uploads/2026/02/Navigator-Update-03.02.2026.pdf#page=3",
+      "source_locator": "Report p. 3; methodology p. 16",
+      "article_url": "https://navigatorresearch.org/wp-content/uploads/2026/02/Navigator-Update-03.02.2026.pdf",
+      "fit_note": "Measures demand for further investigations and prosecutions, not guilt or willingness to protest. February 2026 opinion follows the 2025 events; coded Epstein demands are mostly about disclosure or cover-ups, not explicit prosecution. Historical context, not a matched opinion/action comparison.",
+      "event_note": "425 of the 491 recorded event-days fall on 2 August 2025, often in broader protests. The 491 are not a count of prosecution protests.",
+      "verified": "Primary PDF downloaded; overall 72/11/17 responses visually checked on p. 3; dates, sample and methods checked on p. 16.",
+      "aggregation_method": "single_response",
+      "rounding_note": "Published rounded response share.",
+      "question_item": "",
+      "moe_pp": 3.1,
+      "label": "Epstein files / accountability"
+    },
+    {
+      "id": "gaza",
+      "percent": 39,
+      "measure": "Say Israel is going too far in its military operation against Hamas",
+      "construct": "Policy evaluation",
+      "question": "Thinking about Israel’s current military operation against Hamas, is Israel…",
+      "question_item": "",
+      "response": "Going too far",
+      "components": [
+        {
+          "label": "Going too far",
+          "percent": 39
+        }
+      ],
+      "aggregation_method": "single_response",
+      "rounding_note": "Published rounded shares; totals may not sum to 100%.",
+      "fieldwork_start": "2025-09-22",
+      "fieldwork_end": "2025-09-28",
+      "fieldwork_display": "22–28 Sep 2025",
+      "sample_n": 3445,
+      "population": "US adults",
+      "method": "American Trends Panel; national random sampling of residential addresses. Online or live-interviewer telephone. Weighted to US adults.",
+      "moe_pp": 1.9,
+      "uncertainty": "Full-sample sampling margin: ±1.9 percentage points (report methodology, printed p. 23). Wording, weighting and nonresponse can add error.",
+      "pollster": "Pew Research Center",
+      "source_url": "https://www.pewresearch.org/wp-content/uploads/sites/20/2025/10/PP_2025.10.3_israel-hamas-war_topline.pdf#page=8",
+      "source_locator": "Topline p. 8; sample p. 1",
+      "article_url": "https://www.pewresearch.org/politics/2025/10/03/how-americans-view-the-israel-hamas-conflict-2-years-into-the-war/",
+      "fit_note": "A directional evaluation of military action, not support for every Palestinian-solidarity demand or protest. The 33% answering “not sure” remain in the denominator.",
+      "label": "Gaza / Palestinian solidarity",
+      "event_note": "Recurring demonstrations and broader rallies can contribute event-days; categories overlap.",
+      "methodology_url": "https://www.pewresearch.org/wp-content/uploads/sites/20/2025/10/PP_2025.10.03_israel-hamas-conflict_report.pdf#page=24"
+    },
+    {
+      "id": "racial",
+      "percent": 52,
+      "measure": "Strongly or somewhat support Black Lives Matter",
+      "construct": "Movement support",
+      "question": "From what you’ve read and heard, how do you feel about the Black Lives Matter movement?",
+      "question_item": "",
+      "response": "Strongly support + Somewhat support",
+      "components": [
+        {
+          "label": "Strongly support",
+          "percent": 20
+        },
+        {
+          "label": "Somewhat support",
+          "percent": 32
+        }
+      ],
+      "aggregation_method": "sum",
+      "rounding_note": "Published rounded shares; totals may not sum to 100%.",
+      "fieldwork_start": "2025-02-10",
+      "fieldwork_end": "2025-02-17",
+      "fieldwork_display": "10–17 Feb 2025",
+      "sample_n": 5097,
+      "population": "US adults",
+      "method": "American Trends Panel; national random sampling of residential addresses. Online or live-interviewer telephone. Weighted to US adults.",
+      "moe_pp": 1.6,
+      "uncertainty": "Full-sample sampling margin: ±1.6 percentage points at 95% confidence; not an item-specific interval. Other survey errors remain.",
+      "pollster": "Pew Research Center",
+      "source_url": "https://www.pewresearch.org/wp-content/uploads/sites/20/2025/05/ST_2025.05.07_George-Floyd_topline.pdf#page=8",
+      "source_locator": "Topline p. 8; sample p. 1",
+      "article_url": "https://www.pewresearch.org/race-and-ethnicity/2025/05/07/views-of-race-policing-and-black-lives-matter-in-the-5-years-since-george-floyds-killing",
+      "fit_note": "Support for a named movement, not a measure of dissatisfaction. Black Lives Matter does not cover every racial-justice or police-accountability demand.",
+      "label": "Racial justice / police accountability",
+      "event_note": "Recurring demonstrations and broader rallies can contribute event-days; categories overlap."
+    },
+    {
+      "fieldwork_start": "2025-07-10",
+      "fieldwork_end": "2025-07-14",
+      "fieldwork_display": "10–14 Jul 2025",
+      "sample_n": 1437,
+      "population": "US adults",
+      "method": "Probability-based AmeriSpeak Omnibus; weighted to U.S. adults; age 18-29 oversampled. 1357 web and 80 telephone; English and Spanish.",
+      "moe_pp": 3.6,
+      "uncertainty": "Full-sample sampling margin: ±3.6 percentage points at 95% confidence; not an item-specific interval. Other survey errors remain.",
+      "pollster": "AP-NORC",
+      "article_url": "https://apnorc.org/wp-content/uploads/2025/07/July-W1-Topline-abortion.pdf",
+      "id": "abortion",
+      "percent": 64,
+      "measure": "Say abortion should be legal in all or most cases",
+      "construct": "Policy position",
+      "question": "Which comes closest to your opinion on abortion? Abortion should be...",
+      "question_item": "",
+      "response": "Legal in all cases + Legal in most cases (published Legal NET)",
+      "components": [
+        {
+          "label": "Legal in all cases",
+          "percent": 25
+        },
+        {
+          "label": "Legal in most cases",
+          "percent": 38
+        }
+      ],
+      "aggregation_method": "published_net",
+      "rounding_note": "Use the pollster’s published Legal NET of 64%. Separately rounded components are 25% and 38%, which sum to 63%; do not replace the published net with that sum.",
+      "source_url": "https://apnorc.org/wp-content/uploads/2025/07/July-W1-Topline-abortion.pdf#page=15",
+      "source_locator": "Topline p. 15, ABO1; sample p. 1 and methods p. 23",
+      "fit_note": "A legal-policy position, not dissatisfaction with existing laws or support for every reproductive-rights demand. Selected over pro-choice identity because it measures a concrete policy direction.",
+      "label": "Abortion / reproductive rights",
+      "event_note": "Recurring demonstrations and broader rallies can contribute event-days; categories overlap."
+    },
+    {
+      "id": "climate",
+      "percent": 63,
+      "measure": "Worry a great deal or a fair amount about climate change",
+      "construct": "Personal concern",
+      "question": "I'm going to read you a list of environmental problems. As I read each one, please tell me if you personally worry about this problem a great deal, a fair amount, only a little, or not at all. First, how much do you personally worry about -- [RANDOM ORDER]?",
+      "question_item": "Global warming or Climate change",
+      "response": "Great deal + Fair amount",
+      "components": [
+        {
+          "label": "Great deal",
+          "percent": 40
+        },
+        {
+          "label": "Fair amount",
+          "percent": 23
+        }
+      ],
+      "aggregation_method": "sum",
+      "rounding_note": "Published rounded shares.",
+      "fieldwork_start": "2025-03-03",
+      "fieldwork_end": "2025-03-16",
+      "fieldwork_display": "3–16 Mar 2025",
+      "sample_n": 1002,
+      "population": "US adults",
+      "method": "Random-digit-dial telephone sample; minimum 80% cellphone and 20% landline respondents; weighted. Telephone; ReconMR fieldwork; Spanish interviews for primarily Spanish-speaking respondents.",
+      "moe_pp": 4,
+      "uncertainty": "Full-sample sampling margin: ±4 percentage points at 95% confidence; not an item-specific interval. Other survey errors remain.",
+      "pollster": "Gallup",
+      "source_url": "https://news.gallup.com/file/poll/659441/20250416GlobalWarming.pdf#page=2",
+      "source_locator": "Topline p. 2, Q14; methodology p. 1",
+      "article_url": "https://news.gallup.com/poll/659387/record-high-call-global-warming-serious-threat.aspx",
+      "fit_note": "Concern is only an indirect proxy. It does not establish support for climate-action policies, the movement or its protests.",
+      "label": "Climate action",
+      "event_note": "Recurring demonstrations and broader rallies can contribute event-days; categories overlap."
+    },
+    {
+      "id": "immigrant",
+      "percent": 40,
+      "measure": "Oppose deporting all immigrants living in the US illegally",
+      "construct": "Policy opposition",
+      "question": "Would you favor, neither favor nor oppose, or oppose each of the following policies?",
+      "question_item": "Deporting all immigrants living in the U.S. illegally",
+      "response": "Somewhat oppose + Strongly oppose",
+      "components": [
+        {
+          "label": "Somewhat oppose",
+          "percent": 18
+        },
+        {
+          "label": "Strongly oppose",
+          "percent": 22
+        }
+      ],
+      "aggregation_method": "sum",
+      "rounding_note": "Published rounded shares.",
+      "fieldwork_start": "2025-07-10",
+      "fieldwork_end": "2025-07-14",
+      "fieldwork_display": "10–14 Jul 2025",
+      "sample_n": 1437,
+      "population": "US adults",
+      "method": "Probability-based AmeriSpeak Omnibus; weighted to U.S. adults; age 18-29 oversampled. 1357 web and 80 telephone; English and Spanish.",
+      "moe_pp": 3.6,
+      "uncertainty": "Full-sample sampling margin: ±3.6 percentage points at 95% confidence; not an item-specific interval. Other survey errors remain.",
+      "pollster": "AP-NORC",
+      "source_url": "https://apnorc.org/wp-content/uploads/2025/07/July-W1-Topline-abortion.pdf#page=14",
+      "source_locator": "Topline p. 14, POLICIES2; sample p. 1 and methods p. 23",
+      "article_url": "https://apnorc.org/wp-content/uploads/2025/07/July-W1-Topline-abortion.pdf",
+      "fit_note": "Opposition to this blanket policy, not to every deportation. It does not cover all immigrant-rights demands; neutral responses are not counted as opposition.",
+      "label": "Immigrant rights / anti-deportation",
+      "event_note": "Recurring demonstrations and broader rallies can contribute event-days; categories overlap."
+    },
+    {
+      "id": "ukraine",
+      "percent": 52,
+      "measure": "Prefer US support for Ukraine reclaiming territory, even if war lasts longer",
+      "construct": "Conditional policy preference",
+      "question": "Which would you prefer the U.S. to do in the Russia-Ukraine conflict — try and end the conflict as quickly as possible, even if it means allowing Russia to keep territory it has captured from Ukraine (or) support Ukraine in reclaiming territory Russia has captured, even if it results in a more prolonged conflict between the two nations?",
+      "question_item": "",
+      "response": "Support Ukraine reclaiming territory",
+      "components": [
+        {
+          "label": "Support Ukraine reclaiming territory",
+          "percent": 52
+        }
+      ],
+      "aggregation_method": "single_response",
+      "rounding_note": "Published rounded shares.",
+      "fieldwork_start": "2025-08-01",
+      "fieldwork_end": "2025-08-15",
+      "fieldwork_display": "1–15 Aug 2025",
+      "sample_n": 2132,
+      "population": "US adults",
+      "method": "Random sample of probability-recruited Gallup Panel members; weighted to the U.S. adult population. Self-administered web survey.",
+      "moe_pp": 3,
+      "uncertainty": "Full-sample sampling margin: ±3 percentage points at 95% confidence; not an item-specific interval. Other survey errors remain.",
+      "pollster": "Gallup",
+      "source_url": "https://datawrapper.dwcdn.net/vHXvl/3/",
+      "source_locator": "Gallup-linked chart, August 2025; article Survey Methods",
+      "article_url": "https://news.gallup.com/poll/694496/americans-widely-pessimistic-ukraine-russia-peace-deal.aspx?version=print",
+      "fit_note": "A conditional choice about US policy, not general sympathy for Ukraine or support for every solidarity protest. People preferring a quick end may still support Ukraine.",
+      "label": "Ukraine solidarity",
+      "event_note": "Recurring demonstrations and broader rallies can contribute event-days; categories overlap."
+    }
+  ]
+}

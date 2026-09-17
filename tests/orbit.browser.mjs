@@ -34,7 +34,8 @@ test('Sections expose Weekender, preserved Design collections and a draft Approa
   const page=await browser.newPage({reducedMotion:'reduce'});
   await page.goto(base+'work/');
   assert.equal(await page.getByRole('heading',{name:'Weekender',exact:true}).count(),1,'Work must feature Weekender');
-  assert.equal(await page.locator('[data-work-item]').count(),1,'Only one current project');
+  assert.equal(await page.locator('[data-work-item]').count(),2,'Weekender and Growth Toolbox are the two current entries');
+ assert.equal(await page.locator('a[href="growth-toolbox/"]').count(),1);
   assert.equal(await page.locator('a[href="https://weekender.arvidscarff.workers.dev"]').count(),1);
   await page.goto(base+'design/');
   assert.equal(await page.locator('.archive-card').count(),5,'Design must expose all five collections');

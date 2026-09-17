@@ -1,0 +1,21 @@
+{
+  "scope": "Two documented US actions on 8 March 2026, selected to test the claim that no street mobilisation occurred. Not a census, attendance estimate, time series, or evidence of nationwide turnout.",
+  "events": [
+    {
+      "date": "2026-03-08",
+      "place": "New York City, NY",
+      "title": "“Believe Survivors”",
+      "text": "Demonstrators gather outside Trump Tower for a “Believe Survivors” march on International Women’s Day.",
+      "attendance": null,
+      "source": "nyc"
+    },
+    {
+      "date": "2026-03-08",
+      "place": "Outside Zorro Ranch, NM",
+      "title": "Zorro Ranch",
+      "text": "Virginia Giuffre's brothers join activists outside Epstein's former ranch, calling for unredacted records and further investigation.",
+      "attendance": null,
+      "source": "ranch"
+    }
+  ]
+}

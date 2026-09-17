@@ -1,0 +1,62 @@
+{
+  "scope": "Selected US criminal-accountability milestones, 2007–2022, read from sources available by 8 March 2026. Not an exhaustive list of proceedings, civil settlements, institutions or later developments.",
+  "events": [
+    {
+      "date": "2007-09-24",
+      "display_date": "24 Sep 2007",
+      "status": "Agreement",
+      "title": "Non-prosecution deal",
+      "text": "Federal prosecutors agree not to prosecute in return for a state-based resolution. Victims are not informed before the deal is signed.",
+      "source": "opr"
+    },
+    {
+      "date": "2008-06-30",
+      "display_date": "30 Jun 2008",
+      "status": "Guilty plea",
+      "title": "Florida conviction",
+      "text": "Epstein pleads guilty to two state charges, including procuring a minor for prostitution. Sentenced to 18 months, he serves less than 13 and receives work release.",
+      "source": "opr"
+    },
+    {
+      "date": "2019-07-06",
+      "display_date": "6 Jul 2019",
+      "status": "Arrest / charges",
+      "title": "Federal charges",
+      "text": "Epstein is arrested on charges of sex trafficking of minors and conspiracy. Prosecutors announce the charges on 8 July.",
+      "source": "charges",
+      "additional_source": "opr"
+    },
+    {
+      "date": "2019-08-10",
+      "display_date": "10 Aug 2019",
+      "status": "Death before trial",
+      "title": "Death in custody",
+      "text": "Epstein dies before trial. A judge dismisses the federal indictment on 29 August without a verdict on those charges.",
+      "source": "opr"
+    },
+    {
+      "date": "2020-11-12",
+      "display_date": "Nov 2020",
+      "status": "Official review",
+      "title": "DOJ review of Acosta",
+      "text": "The DOJ finds poor judgment, but no professional misconduct or evidence that Epstein's wealth or connections drove the decision.",
+      "source": "opr"
+    },
+    {
+      "date": "2021-12-29",
+      "display_date": "29 Dec 2021",
+      "status": "Conviction",
+      "title": "Maxwell convicted",
+      "text": "A jury convicts Ghislaine Maxwell for helping recruit and groom minors for sexual abuse by Epstein.",
+      "source": "maxwell"
+    },
+    {
+      "date": "2022-06-28",
+      "display_date": "28 Jun 2022",
+      "status": "Sentence",
+      "title": "20-year sentence",
+      "text": "A federal court sentences Maxwell to 20 years in prison.",
+      "source": "maxwell"
+    }
+  ]
+}

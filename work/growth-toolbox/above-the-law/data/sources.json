@@ -1,0 +1,66 @@
+[
+  {
+    "id": "navigator",
+    "publisher": "Navigator / Global Strategy Group",
+    "title": "Epstein accountability survey · February 2026",
+    "url": "https://navigatorresearch.org/wp-content/uploads/2026/02/Navigator-Update-03.02.2026.pdf#page=3",
+    "type": "Primary · survey report",
+    "note": "Headline and Epstein comparison: 72% choose more prosecutions and investigations, 11% not sure, 17% enough accountability/time to move on. Fieldwork 19–23 February 2026; 1,000 US registered voters; opt-in online panel verified against a voter file. Publisher reports ±3.1 pp (95%). Exact wording p. 3; methods and additional interviews p. 16. Not willingness to protest or proof of wrongdoing."
+  },
+  {
+    "id": "poll",
+    "publisher": "Reuters / Ipsos",
+    "title": "Core Political survey · February 2026",
+    "url": "https://www.ipsos.com/sites/default/files/ct/news/documents/2026-02/Reuters%20Ipsos%20Core%20Political%20Topline%20February%202026_1.pdf",
+    "type": "Primary · survey topline",
+    "note": "Qtk_1–Qtk_4, pp. 14–15; sample and margins of error, p. 1; methodology and weighting, p. 16. Fieldwork 13–16 February 2026. All four Qtk statements included."
+  },
+  {
+    "id": "opr",
+    "publisher": "US Department of Justice · OPR",
+    "title": "Investigation into the 2006–2008 federal investigation · executive summary",
+    "url": "https://www.justice.gov/opr/page/file/1336471/dl",
+    "type": "Primary · official review, November 2020",
+    "note": "2007 agreement, 2008 plea and sentence, 2019 arrest and dismissal; conclusions on poor judgment and professional misconduct. Official assessment, not an independent adjudication of every allegation."
+  },
+  {
+    "id": "charges",
+    "publisher": "US Attorney · Southern District of New York",
+    "title": "Jeffrey Epstein charged with sex trafficking of minors",
+    "url": "https://www.justice.gov/usao-sdny/pr/jeffrey-epstein-charged-manhattan-federal-court-sex-trafficking-minors",
+    "type": "Primary · prosecution announcement, 8 July 2019",
+    "note": "Charges are allegations, not convictions. The release states the presumption of innocence."
+  },
+  {
+    "id": "maxwell",
+    "publisher": "US Attorney · Southern District of New York",
+    "title": "Ghislaine Maxwell sentenced to 20 years in prison",
+    "url": "https://www.justice.gov/usao-sdny/pr/ghislaine-maxwell-sentenced-20-years-prison-conspiring-jeffrey-epstein-sexually-abuse",
+    "type": "Primary · sentencing announcement, 28 June 2022",
+    "note": "Reports the December 2021 jury conviction and June 2022 sentence. Historical milestone, not a current appeal-status tracker."
+  },
+  {
+    "id": "nyc",
+    "publisher": "Al Jazeera / news agencies",
+    "title": "International Women’s Day marches denounce abuse and oppression",
+    "url": "https://www.aljazeera.com/news/2026/3/8/marches-for-international-womens-day-denounce-war-abuse-and-oppression",
+    "type": "Secondary · event reporting, 8 March 2026",
+    "note": "Reports the “Believe Survivors” action outside Trump Tower and an Epstein-accountability demand. The article covers many global events; only its New York event is used here."
+  },
+  {
+    "id": "ranch",
+    "publisher": "Reuters · syndicated by MarketScreener",
+    "title": "Brothers of Epstein accuser Virginia Giuffre visit New Mexico ranch",
+    "url": "https://sa.marketscreener.com/news/brothers-of-epstein-accuser-virginia-giuffre-visit-new-mexico-ranch-demand-unredacted-documents-ce7e5fd9da8af327",
+    "type": "Secondary · event reporting, 8 March 2026",
+    "note": "Reports the gathering outside Zorro Ranch with survivors and family members, calling for unredacted documents. Syndicated Reuters text; no attendance total used."
+  },
+  {
+    "id": "ccc",
+    "publisher": "Crowd Counting Consortium · Harvard Dataverse",
+    "title": "U.S. Protest Event Data, 2025– · Version 18.0",
+    "url": "https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/RI9JFU&version=18.0",
+    "type": "Primary · protest event records",
+    "note": "Analysis: 2025 in-person records in the 50 states and DC. Analyst-reviewed demand phrases; counts include recurring event-days and overlapping causes. CCC retains scheduled repeats that may not be individually reconfirmed. Not a census or attendance measure. Released 10 September 2026."
+  }
+]
