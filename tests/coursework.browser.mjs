@@ -57,6 +57,8 @@ for(const nested of [false,true])test(`Weekender links navigate without requirin
     assert.match(await page.title(),/Weekender/i);
     assert.equal(page.context().pages().length,1,'No extra tab required');
     await page.goBack({waitUntil:'domcontentloaded'});
+    // A cached history restore can resolve goBack before the URL event arrives.
+    await page.waitForURL(url+route,{timeout:10000,waitUntil:'domcontentloaded'});
     assert.equal(page.url(),url+route,'Back returns to portfolio');
    }
   }
