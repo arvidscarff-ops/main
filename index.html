@@ -22,6 +22,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <link rel="canonical" href="https://arvidscarff-ops.github.io/main/">
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="assets/css/orbit.css">
   <title>Arvid Shane Scarff</title>
   <script>try{document.documentElement.dataset.theme=localStorage.getItem('ass-theme')||((matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark')}catch(e){}</script>
 </head>
@@ -32,23 +33,29 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
   <a class="skip-link" href="#main">Skip to content</a>
   <div class="site-frame" aria-hidden="true"></div>
-  <header class="site-header">
-    <nav class="nav-island" aria-label="Primary navigation" data-nav>
-      <button class="nav-island__trigger" type="button" aria-expanded="false" aria-controls="primary-links"><span class="nav-island__mark" aria-hidden="true"></span><span class="sr-only">Open navigation</span></button>
-      <div class="nav-island__links" id="primary-links"><a aria-current="page" href="./">Index</a><a href="work/">Work</a><a href="lab/">Lab</a><a href="about/">About</a><a href="contact/">Contact</a></div>
-    </nav>
-  </header>
-  <main id="main" class="home-stage">
-    <div class="video-system" aria-hidden="true" data-video-system>
-      <video class="camera is-active" data-camera="0" muted playsinline loop preload="auto" poster="assets/media/home/camera-01-poster.jpg"></video>
-      <video class="camera" data-camera="1" muted playsinline loop preload="auto" poster="assets/media/home/camera-02-poster.jpg"></video>
-      <video class="camera" data-camera="2" muted playsinline loop preload="auto" poster="assets/media/home/camera-03-poster.jpg"></video>
-      <div class="video-wash"></div><div class="cut-tear"></div>
+  <main id="main" class="home-stage" tabindex="-1">
+    <h1 class="sr-only">Arvid Shane Scarff — Portfolio</h1>
+    <div class="video-system" aria-hidden="true">
+      <video class="camera is-active" data-landscape muted playsinline loop preload="none" poster="assets/media/home/camera-01-poster.jpg"></video>
+      <div class="video-wash"></div>
     </div>
-    <canvas class="tracking-layer" data-tracking aria-hidden="true"></canvas>
-    <h1 class="home-name bloom-medium">Arvid Shane Scarff</h1>
+    <nav class="orbit" data-orbit data-state="fallback" aria-label="Portfolio sections">
+      <button class="eagle" type="button" data-eagle aria-expanded="true" aria-controls="constellation" aria-label="Close navigation">
+        <img src="assets/icons/eagle.webp" alt="" width="600" height="569" draggable="false">
+      </button>
+      <div id="constellation" class="constellation">
+        <a class="orbit-star" data-star href="work/"><span class="star-hit"><img src="assets/icons/orbit-star.webp" alt="" width="40" height="39" draggable="false"><span class="star-label">work</span></span></a>
+        <a class="orbit-star" data-star href="approach/"><span class="star-hit"><img src="assets/icons/orbit-star.webp" alt="" width="40" height="39" draggable="false"><span class="star-label">approach</span></span></a>
+        <a class="orbit-star" data-star href="design/"><span class="star-hit"><img src="assets/icons/orbit-star.webp" alt="" width="40" height="39" draggable="false"><span class="star-label">design</span></span></a>
+        <a class="orbit-star" data-star href="about/"><span class="star-hit"><img src="assets/icons/orbit-star.webp" alt="" width="40" height="39" draggable="false"><span class="star-label">about</span></span></a>
+        <a class="orbit-star" data-star href="contact/"><span class="star-hit"><img src="assets/icons/orbit-star.webp" alt="" width="40" height="39" draggable="false"><span class="star-label">contact</span></span></a>
+        <a class="orbit-star" data-star href="redacted/"><span class="star-hit"><img src="assets/icons/orbit-star.webp" alt="" width="40" height="39" draggable="false"><span class="star-label">[redacted]</span></span></a>
+      </div>
+      <p class="sr-only" data-orbit-status aria-live="polite"></p>
+    </nav>
   </main>
   <div class="frame-controls" aria-label="Display controls">
+    <button class="frame-control" type="button" data-motion-toggle aria-pressed="false">Pause motion</button>
     <button class="frame-control" type="button" data-theme-toggle aria-label="Switch color theme"><span data-theme-label>Light</span></button>
     <button class="frame-control" type="button" data-sound-toggle aria-pressed="false"><span aria-hidden="true" data-sound-icon>○</span> Sound <span data-sound-label>off</span></button>
   </div>
