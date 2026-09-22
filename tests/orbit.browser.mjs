@@ -28,13 +28,14 @@ test('Keypad rejects wrong codes, supports erase and keyboard, opens an empty ro
  } finally {await browser.close();}
 });
 
-test('Sections expose Weekender, preserved Design collections and a draft Approach',async()=>{
+test('Sections expose Agoos, Weekender, preserved Design collections and a concise Approach',async()=>{
  const browser=await chromium.launch({headless:true});
  try {
   const page=await browser.newPage({reducedMotion:'reduce'});
   await page.goto(base+'work/');
+  assert.equal(await page.getByRole('heading',{name:'Agoos Apparel',exact:true}).count(),1,'Work must feature Agoos Apparel');
   assert.equal(await page.getByRole('heading',{name:'Weekender',exact:true}).count(),1,'Work must feature Weekender');
-  assert.equal(await page.locator('[data-work-item]').count(),2,'Weekender and Growth Toolbox are the two current entries');
+  assert.equal(await page.locator('[data-work-item]').count(),3,'Agoos, Weekender and Growth Toolbox are the current entries');
  assert.equal(await page.locator('a[href="growth-toolbox/"]').count(),1);
   assert.equal(await page.locator('a[href="https://weekender.arvidscarff.workers.dev"]').count(),1);
   await page.goto(base+'design/');
@@ -44,7 +45,8 @@ test('Sections expose Weekender, preserved Design collections and a draft Approa
    assert.equal(response.status(),200);
   }
   await page.goto(base+'approach/');
-  assert.match(await page.locator('main').innerText(),/Draft for review/);
+  assert.equal(await page.locator('.principles section').count(),3);
+  assert.doesNotMatch(await page.locator('main').innerText(),/Draft for review|personal manifesto/);
   await page.goto(base+'about/');
   assert.match(await page.locator('main').innerText(),/graphic design/i);
   assert.doesNotMatch(await page.locator('main').innerText(),/to be added/i);
