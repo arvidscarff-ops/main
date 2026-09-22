@@ -38,7 +38,7 @@ test('Theme changes are quiet, not glitch effects',()=>run({},async page=>{
  assert.equal(await page.locator('body').evaluate(b=>b.classList.contains('theme-glitch')),false);
 }));
 
-test('Logo stays still, expansion follows continuous paths, settles and reverses cleanly',()=>run({viewport:{width:1440,height:900}},async page=>{
+test('Logo stays still and five stars assemble in a straight row',()=>run({viewport:{width:1440,height:900}},async page=>{
  await page.goto(base);
  const first=page.locator('[data-star]').first();
  const logo=page.locator('[data-home-logo]');
@@ -73,12 +73,12 @@ for(const viewport of [{width:390,height:844},{width:320,height:568},{width:844,
   await page.locator('[data-eagle]').tap();await bounds(page,'[data-star], [data-eagle], .star-label');
   if(viewport.width===390) await page.screenshot({path:path.join(evidence,'mobile-menu.png')});
   const stars=await page.locator('[data-star]').evaluateAll(nodes=>nodes.map(n=>({name:n.textContent.trim(),href:n.getAttribute('href')})));
-  assert.equal(stars.length,6);
+  assert.equal(stars.length,5);
   for(const {href} of stars) {
    await page.goto(new URL(href,base).href);assert.equal(await page.locator('main h1').count(),1);
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'No horizontal document overflow');
    await bounds(page,'.index-link,.section-menu summary');
-   await page.locator('.section-menu summary').click();assert.equal(await page.locator('.section-menu nav a:visible').count(),6);
+   await page.locator('.section-menu summary').click();assert.equal(await page.locator('.section-menu nav a:visible').count(),5);
    if(viewport.width===390&&href==='work/')await page.screenshot({path:path.join(evidence,'mobile-work.png')});
    await page.getByRole('link',{name:'Index',exact:true}).click();await page.waitForURL('**/#navigation');
    assert.equal(await page.locator('[data-orbit]').getAttribute('data-state'),'open');
@@ -105,26 +105,26 @@ test('Reduced motion prevents video loading and orbit movement; no-JS keeps link
   assert.equal(await page.locator('[data-motion-toggle]').isDisabled(),true);
  });
  await run({javaScriptEnabled:false,viewport:{width:390,height:844}},async page=>{
-  await page.goto(base);assert.equal(await page.locator('[data-star]').count(),6);
+  await page.goto(base);assert.equal(await page.locator('[data-star]').count(),5);
   await bounds(page,'.star-label');
   await page.locator('[data-star]').first().click();await page.waitForURL('**/work/');
  });
 });
 
-test('Home and keypad survive blocked browser storage',()=>run({reducedMotion:'reduce'},async(page,context)=>{
+test('Home and AI Labs survive blocked browser storage',()=>run({reducedMotion:'reduce'},async(page,context)=>{
  await context.addInitScript(()=>Object.defineProperty(window,'localStorage',{get(){throw new DOMException('Blocked','SecurityError');}}));
  await page.goto(base);await page.locator('[data-eagle]').click();assert.equal(await page.locator('[data-orbit]').getAttribute('data-state'),'open');
- await page.getByRole('link',{name:'[redacted]',exact:true}).click();await page.waitForURL('**/redacted/');
- await page.keyboard.type('777111');await page.keyboard.press('Enter');assert.equal(await page.locator('[data-empty-room]').isVisible(),true);
+ await page.getByRole('link',{name:'AI labs',exact:true}).click();await page.waitForURL('**/ai-labs/');
+ assert.equal(await page.getByRole('heading',{name:'AI Labs',exact:true}).count(),1);
 }));
 
-test('GitHub Pages subdirectory resolves homepage, all six destinations and logo assets',()=>run({reducedMotion:'reduce'},async(page,context)=>{
+test('GitHub Pages subdirectory resolves homepage, all five destinations and logo assets',()=>run({reducedMotion:'reduce'},async(page,context)=>{
  await context.route('http://portfolio.test/main/**',async route=>{
   const url=new URL(route.request().url());const response=await context.request.get(new URL(url.pathname.slice('/main/'.length)+url.search,base).href);
   await route.fulfill({response});
  });
  await page.goto('http://portfolio.test/main/');await page.locator('[data-eagle]').click();
  const urls=await page.locator('[data-star]').evaluateAll(ns=>ns.map(n=>n.href));
- assert.equal(urls.length,6);
+ assert.equal(urls.length,5);
  for(const url of urls){assert.ok(url.startsWith('http://portfolio.test/main/'));await page.goto(url);assert.equal(await page.locator('main h1').count(),1);}
 }));

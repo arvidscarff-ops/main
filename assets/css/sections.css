@@ -31,20 +31,10 @@
 .principles { max-width:1050px; }
 .principles section { display:grid; grid-template-columns:70px 1fr; gap:24px; border-top:1px solid var(--line); padding:32px 0 42px; }
 .principles section>span { font:10px/1.5 var(--mono); color:var(--muted); padding-top:9px; }
-.principles h2 { font-size:clamp(26px,3.5vw,44px); font-weight:400; letter-spacing:-.04em; margin:0 0 20px; }
+.principles h2,.principles h3 { font-size:clamp(26px,3.5vw,44px); font-weight:400; letter-spacing:-.04em; margin:0 0 20px; }
 .principles p { font-size:clamp(17px,1.8vw,23px); line-height:1.45; max-width:700px; color:var(--muted); margin:0; }
-.keypad { width:min(292px,100%); margin:clamp(12px,4vh,65px) auto 0; text-align:center; }
-.keypad h1 { font-size:34px; letter-spacing:-.06em; font-weight:400; margin:0 0 14px; }
-.keypad .page-kicker { font-size:8px; }
-.keypad-prompt { color:var(--muted); font-size:12px; }
-.code-display { margin:32px 0; font:17px/1.5 var(--mono); letter-spacing:3px; }
-.keypad-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
-.keypad-grid button { min-height:64px; border:1px solid var(--line); border-radius:5px; background:transparent; cursor:pointer; font-size:20px; transition:background 150ms,transform 150ms; }
-.keypad-grid button[data-enter] { font-size:12px; }
-.keypad-grid button:hover { background:var(--surface-raised); }
-.keypad-grid button:active { transform:scale(.96); }
-.keypad-status { min-height:3em; margin-top:22px; color:var(--muted); font-size:12px; line-height:1.5; }
-.empty-room { min-height:65vh; outline:none; }
+.about-approach { margin-top:clamp(80px,13vw,180px); }
+.about-approach>h2 { margin:0 0 32px; font:10px/1.4 var(--mono); letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
 [hidden] { display:none!important; }
 .case-study { --case-gap:clamp(54px,9vw,140px); }
 .case-hero { padding-bottom:var(--case-gap); }
