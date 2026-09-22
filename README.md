@@ -13,9 +13,10 @@ Open http://127.0.0.1:5190/. All site URLs are relative and support GitHub Pages
 ## Navigation and content
 
 - `index.html` — eagle and six orbiting stars. The eagle's eye retains the seventh star. First activation opens the two-row navigation; subsequent star activation follows its section. Eagle or Escape closes it. Back and section Index links restore the open menu.
-- `work/` — Weekender and Growth Toolbox coursework, with no invented results or completion claims.
+- `work/` — Agoos Apparel, Weekender and Growth Toolbox, with no invented results or completion claims.
+- `work/agoos/` — compact editorial archive of Agoos clothing, the Skogrejv collaboration and Arvid's design, production and operational role.
 - `work/growth-toolbox/` — coursework hub; static reading pages, updated investigation and curated downloads. The earlier `attention-gap/` and Design archive remain unchanged.
-- `approach/` — clearly labelled editorial draft, awaiting the author's approval.
+- `approach/` — three concise working principles.
 - `design/` — earlier graphic-design index, linking the five preserved collections at their original URLs.
 - `about/` — concise profile, distinct from Approach.
 - `contact/` — existing contact details and copy interaction.
@@ -28,7 +29,7 @@ Original archive URLs under `work/graphic-design/` remain valid. Older Lab and s
 - `assets/js/home.js` — requestAnimationFrame orbit and reversible, position-preserving opening/closing transitions. Pauses animation while hidden. No animation library.
 - `assets/css/orbit.css` — responsive menu sizing, hover/press feedback, and usable no-JavaScript fallback.
 - `assets/icons/eagle.webp`, `orbit-star.webp` — tightly cropped, transparent, resized derivatives of the supplied artwork.
-- `assets/css/sections.css` — Index/Sections navigation, Work, draft Approach and keypad layouts.
+- `assets/css/sections.css` — Index/Sections navigation, Work, Agoos editorial layouts, Approach and keypad layouts.
 - `assets/js/keypad.js` — public, decorative gate; digits, erase, Enter and Escape support.
 - `assets/js/site.js` — themes, optional sound, clipboard and calm page transitions.
 
