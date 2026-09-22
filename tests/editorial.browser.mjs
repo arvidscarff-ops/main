@@ -64,9 +64,10 @@ test('Inner pages load one versioned light canvas stylesheet last and remove amb
  for(const route of ['work/','design/','about/','contact/','ai-labs/','work/agoos/','work/growth-toolbox/']){
   await page.goto(base+route);
   const styles=await page.locator('link[rel="stylesheet"]').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('href')));
-  assert.match(styles.at(-1),/editorial\.css\?v=3$/,'The canvas stylesheet must load after page-specific CSS');
+  assert.match(styles.at(-1),/editorial\.css\?v=4$/,'The canvas stylesheet must load after page-specific CSS');
   assert.equal(await page.locator('[data-theme-toggle],[data-sound-toggle]').count(),0,'Inner pages have no homepage ambience controls');
-  const colors=await page.evaluate(()=>({body:getComputedStyle(document.body).backgroundColor,main:getComputedStyle(document.querySelector('main')).backgroundColor}));
+  const colors=await page.evaluate(()=>({body:getComputedStyle(document.body).backgroundColor,main:getComputedStyle(document.querySelector('main')).backgroundColor,label:getComputedStyle(document.querySelector('.index-link'),'::before').content}));
+  assert.doesNotMatch(colors.label,/ASS/i,'Never use the owner’s initials as a brand label');
   assert.doesNotMatch(colors.body,/rgb\((?:0|8), (?:0|9), (?:0|8)\)/);
   assert.doesNotMatch(colors.main,/rgb\((?:0|8), (?:0|9), (?:0|8)\)/);
  }

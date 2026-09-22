@@ -14,7 +14,7 @@ body.page--inner .section-header{
  display:flex;align-items:center;justify-content:space-between;gap:24px;border:0;border-radius:0;color:var(--fg);background:rgba(245,243,236,.96);backdrop-filter:blur(10px);
 }
 body.page--inner .index-link{position:static;display:flex;align-items:center;min-height:44px;padding:0;border:0!important;border-radius:0;background:none;color:inherit;font:10px/1.2 var(--mono);letter-spacing:.05em;text-decoration:none;white-space:nowrap}
-body.page--inner .index-link::before{content:'ASS / ';color:var(--muted)}
+body.page--inner .index-link::before{content:none}
 body.page--inner .section-menu{position:static;margin:0}
 body.page--inner .section-menu summary{min-height:44px;padding:0;border:0!important;border-radius:0;background:none;color:inherit;font:10px/1 var(--mono);letter-spacing:.05em;cursor:pointer}
 body.page--inner .section-menu summary::after{content:'  +'}
