@@ -59,6 +59,30 @@ test('Coursework contents reveal one assignment and honour direct hashes',()=>ru
  await page.goBack();assert.equal(await page.locator('#content').isVisible(),true);
 }));
 
+test('Inner pages load one versioned light canvas stylesheet last and remove ambient controls',()=>run(async page=>{
+ await page.addInitScript(()=>localStorage.setItem('ass-theme','dark'));
+ for(const route of ['work/','design/','about/','contact/','ai-labs/','work/agoos/','work/growth-toolbox/']){
+  await page.goto(base+route);
+  const styles=await page.locator('link[rel="stylesheet"]').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('href')));
+  assert.match(styles.at(-1),/editorial\.css\?v=3$/,'The canvas stylesheet must load after page-specific CSS');
+  assert.equal(await page.locator('[data-theme-toggle],[data-sound-toggle]').count(),0,'Inner pages have no homepage ambience controls');
+  const colors=await page.evaluate(()=>({body:getComputedStyle(document.body).backgroundColor,main:getComputedStyle(document.querySelector('main')).backgroundColor}));
+  assert.doesNotMatch(colors.body,/rgb\((?:0|8), (?:0|9), (?:0|8)\)/);
+  assert.doesNotMatch(colors.main,/rgb\((?:0|8), (?:0|9), (?:0|8)\)/);
+ }
+}));
+
+test('Large desktop uses a capped exhibition canvas and restrained scale',()=>run(async page=>{
+ await page.goto(base+'work/');
+ const shell=await page.evaluate(()=>{const main=document.querySelector('main').getBoundingClientRect(),title=document.querySelector('h1').getBoundingClientRect(),header=document.querySelector('.section-header').getBoundingClientRect();return {main,title,header,links:[...document.querySelectorAll('.section-menu nav a')].filter(a=>getComputedStyle(a).display!=='none').length,indexBorder:getComputedStyle(document.querySelector('.index-link')).borderTopWidth};});
+ assert.ok(shell.main.width<=1600,'Canvas content is capped on large monitors');
+ assert.ok(shell.main.left>=100&&shell.main.right<=2460,'Canvas remains centred');
+ assert.ok(shell.title.height<100,'Section title is restrained');
+ assert.equal(shell.links,5);
+ assert.equal(shell.indexBorder,'0px','Top-left navigation is not a boxed button');
+ for(const card of await page.locator('[data-work-item]').all()){const r=await card.boundingBox();assert.ok(r.y<1200,'All projects remain immediately discoverable');}
+},{viewport:{width:2560,height:1440}}));
+
 test('Desktop section navigation remains usable without JavaScript',()=>run(async page=>{
  await page.goto(base+'design/');
  await page.locator('.section-menu summary').click();
@@ -69,9 +93,9 @@ test('Desktop section navigation remains usable without JavaScript',()=>run(asyn
 test('Section shell is paper-light with open desktop navigation and normal document scrolling',()=>run(async page=>{
  await page.goto(base+'work/');
  const style=await page.locator('main').evaluate(n=>({bg:getComputedStyle(n).backgroundColor,position:getComputedStyle(n).position,radius:getComputedStyle(n).borderRadius}));
- assert.equal(style.bg,'rgb(246, 245, 239)');
+ assert.equal(style.bg,'rgb(245, 243, 236)');
  assert.notEqual(style.position,'fixed');assert.equal(style.radius,'0px');
  assert.equal(await page.locator('.section-menu nav a:visible').count(),5);
- await page.locator('[data-theme-toggle]').click();
- assert.notEqual(await page.locator('main').evaluate(n=>getComputedStyle(n).backgroundColor),style.bg);
+ assert.equal(await page.locator('[data-theme-toggle],[data-sound-toggle]').count(),0);
+ assert.equal(await page.evaluate(()=>getComputedStyle(document.body).overflowY),'auto');
 }));

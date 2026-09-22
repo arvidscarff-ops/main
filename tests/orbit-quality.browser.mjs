@@ -80,7 +80,7 @@ for(const viewport of [{width:390,height:844},{width:320,height:568},{width:844,
    await bounds(page,'.index-link,.section-menu summary');
    if(viewport.width<900)await page.locator('.section-menu summary').click();assert.equal(await page.locator('.section-menu nav a:visible').count(),5);
    if(viewport.width===390&&href==='work/')await page.screenshot({path:path.join(evidence,'mobile-work.png')});
-   await page.getByRole('link',{name:'Index',exact:true}).click();await page.waitForURL('**/#navigation');
+   await page.locator('.index-link').click();await page.waitForURL('**/#navigation');
    assert.equal(await page.locator('[data-orbit]').getAttribute('data-state'),'open');
   }
  }));
