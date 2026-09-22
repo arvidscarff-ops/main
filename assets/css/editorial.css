@@ -65,6 +65,7 @@ body.page--inner .archive-card{min-width:0;padding:0!important;color:inherit;tex
 body.page--inner .archive-card:nth-child(even){padding-top:34px!important}
 body.page--inner .archive-cover{border:0;background:none;overflow:hidden}
 body.page--inner .archive-cover img{display:block;width:100%;height:clamp(120px,11vw,165px);object-fit:contain;background:var(--surface);transition:transform 180ms ease}
+body.page--inner .archive-card[href$="/textur/"] .archive-cover img{view-transition-name:textur-artwork}
 body.page--inner .archive-card:hover .archive-cover img,body.page--inner .archive-card:focus-visible .archive-cover img{transform:scale(.97)}
 body.page--inner .archive-card-caption{display:grid;grid-template-columns:1fr auto;gap:7px;margin-top:13px}
 body.page--inner .archive-number{grid-column:1/-1;font:8px/1 var(--mono)}

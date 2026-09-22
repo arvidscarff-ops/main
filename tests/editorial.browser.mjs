@@ -18,10 +18,10 @@ test('Work gives three compact choices with optional context',()=>run(async page
  assert.equal(await context.evaluate(n=>n.open),true);
 }));
 
-test('Design is a contact sheet, with an accessible image viewer in each collection',()=>run(async page=>{
+test('Design is a contact sheet, with an accessible viewer on non-world collections',()=>run(async page=>{
  await page.goto(base+'design/');
  for(const card of await page.locator('.archive-card').all()){const r=await card.boundingBox();assert.ok(r.y+r.height<850,'Five collections should fit on the overview');}
- await page.locator('.archive-card').first().click();await page.waitForURL('**/textur/');
+ await page.locator('.archive-card').nth(1).click();await page.waitForURL('**/event-festival/');
  const first=page.locator('.archive-image-link').first();
  await first.click();const viewer=page.locator('dialog.image-viewer');
  assert.equal(await viewer.isVisible(),true);
@@ -34,21 +34,92 @@ test('Design is a contact sheet, with an accessible image viewer in each collect
  assert.equal(await first.evaluate(n=>n===document.activeElement),true);
 }));
 
-test('TEXTUR opens as an immersive scene instead of a document and thumbnail row',()=>run(async page=>{
+test('TEXTUR opens with complete artwork and controls inside the first viewport',()=>run(async page=>{
  await page.goto(base+'work/graphic-design/textur/');
  assert.equal(await page.locator('[data-project-world="identity"]').count(),1);
  assert.equal(await page.locator('[data-world-scene]').count(),6);
  assert.equal(await page.locator('[data-world-scene]:visible').count(),1);
- const stage=await page.locator('[data-world-stage]').boundingBox();
- const image=await page.locator('[data-world-scene]:visible img').boundingBox();
- const title=await page.locator('h1').boundingBox();
- assert.ok(stage.height>500,'The first viewport is an immersive stage');
- assert.ok(image.width>700&&image.height>390,'Project media, not copy, dominates the stage');
- assert.ok(title.height<80,'Project title remains a label rather than a billboard');
- const atmosphere=await page.evaluate(()=>({canvas:getComputedStyle(document.querySelector('main')).backgroundColor,backdrop:getComputedStyle(document.querySelector('[data-world-stage]'),'::before').backgroundImage}));
- assert.equal(atmosphere.canvas,'rgb(1, 1, 31)','The project world must replace the pale document canvas');
- assert.notEqual(atmosphere.backdrop,'none','The active artwork supplies the stage atmosphere');
  assert.equal(await page.locator('[data-world-nav] a').count(),6);
+ const geometry=await page.evaluate(()=>{
+  const box=n=>{const r=n.getBoundingClientRect();return {top:r.top,bottom:r.bottom,width:r.width,height:r.height};};
+  const image=document.querySelector('[data-world-scene]:not([hidden]) img');
+  return {viewport:innerHeight,scroll:document.documentElement.scrollHeight,stage:box(document.querySelector('[data-world-stage]')),image:box(image),natural:image.naturalWidth/image.naturalHeight,title:box(document.querySelector('h1')),fit:getComputedStyle(image).objectFit};
+ });
+ assert.ok(geometry.stage.top<230,'The work must begin near the top instead of below a large introduction');
+ assert.ok(geometry.stage.bottom<=geometry.viewport-24,'Stage and navigator must fit inside the first viewport');
+ assert.ok(geometry.image.top>=geometry.stage.top&&geometry.image.bottom<=geometry.stage.bottom,'The complete artwork must stay inside the stage');
+ assert.ok(Math.abs(geometry.image.width/geometry.image.height-geometry.natural)<.02,'The image element must preserve the artwork aspect ratio rather than crop it');
+ assert.equal(geometry.fit,'contain');
+ assert.ok(geometry.title.height<46,'Project title remains a compact orientation label');
+ assert.ok(geometry.scroll<=geometry.viewport+2,'The initial project scene must not require document scrolling');
+ const atmosphere=await page.evaluate(()=>({canvas:getComputedStyle(document.querySelector('main')).backgroundColor,backdrop:getComputedStyle(document.querySelector('[data-world-stage]'),'::before').backgroundImage}));
+ assert.equal(atmosphere.canvas,'rgb(1, 1, 31)');assert.notEqual(atmosphere.backdrop,'none');
+}));
+
+test('TEXTUR inspects artwork inside its project world instead of a generic popup',()=>run(async page=>{
+ await page.goto(base+'work/graphic-design/textur/#scene-4');
+ const opener=page.locator('[data-world-scene]:visible .archive-image-link');
+ await opener.click();
+ assert.equal(await page.locator('dialog.image-viewer').count(),0,'Project worlds must not create the generic white viewer');
+ assert.equal(await page.locator('[data-world-focus]').isVisible(),true);
+ assert.equal(await page.locator('body').evaluate(n=>n.classList.contains('world-focus')),true);
+ const canvas=await page.locator('main').evaluate(n=>{const r=n.getBoundingClientRect(),c=getComputedStyle(n);return{x:r.x,y:r.y,width:r.width,height:r.height,padding:c.padding};});
+ assert.deepEqual(canvas,{x:0,y:0,width:1440,height:900,padding:'0px'},'Focus canvas must replace the full viewport without exposing the page shell');
+ const focused=await page.evaluate(()=>{const image=document.querySelector('[data-world-scene]:not([hidden]) img').getBoundingClientRect();return{top:image.top,bottom:image.bottom,height:innerHeight,bg:getComputedStyle(document.querySelector('main')).backgroundColor};});
+ assert.ok(focused.top>=0&&focused.bottom<=focused.height,'Focus mode initially shows the complete artwork');
+ assert.equal(focused.bg,'rgb(1, 1, 31)','Focus mode remains inside the project atmosphere');
+ await page.getByRole('button',{name:'Zoom artwork'}).click();assert.equal(await page.locator('body').getAttribute('data-world-zoomed'),'true');
+ await page.getByRole('button',{name:'Fit artwork'}).click();assert.equal(await page.locator('body').getAttribute('data-world-zoomed'),null);
+ await page.getByRole('button',{name:'Close focus mode'}).click();
+ assert.equal(await page.locator('body').evaluate(n=>n.classList.contains('world-focus')),false);
+ assert.equal(await opener.evaluate(n=>n===document.activeElement),true,'Closing restores focus to the artwork');
+ await opener.click();await page.goBack();
+ assert.equal(await page.locator('body').evaluate(n=>n.classList.contains('world-focus')),false,'Browser Back closes focus mode without leaving the project');
+ assert.match(page.url(),/#scene-4$/);
+}));
+
+test('TEXTUR has one compact navigator, overlay notes and clear neighbouring routes',()=>run(async page=>{
+ await page.goto(base+'work/graphic-design/textur/');
+ assert.equal(await page.locator('[data-world-nav]').isHidden(),true,'Scene overview stays out of the artwork until requested');
+ const stageBefore=await page.locator('[data-world-stage]').boundingBox();
+ await page.getByRole('button',{name:/Scene overview/}).click();
+ assert.equal(await page.locator('[data-world-nav]').isVisible(),true);
+ assert.equal(await page.locator('[data-world-nav] a').count(),6);
+ await page.getByLabel('Project notes').click();
+ const stageAfter=await page.locator('[data-world-stage]').boundingBox();
+ assert.deepEqual(stageAfter,stageBefore,'Notes must overlay the stage rather than push the artwork down');
+ assert.equal(await page.getByRole('link',{name:'Back to Design'}).isVisible(),true);
+ assert.equal(await page.getByRole('link',{name:/Next project: Event/}).isVisible(),true);
+}));
+
+test('Returning from TEXTUR restores the Design overview position',()=>run(async page=>{
+ await page.goto(base+'design/');await page.evaluate(()=>scrollTo(0,document.documentElement.scrollHeight));
+ const card=page.locator('.archive-card').first();await card.scrollIntoViewIfNeeded();const before=await page.evaluate(()=>scrollY);
+ await card.click();await page.waitForURL('**/textur/');
+ await page.getByRole('link',{name:'Back to Design'}).click();await page.waitForURL('**/design/');
+ await page.waitForFunction(expected=>Math.abs(scrollY-expected)<3,before);
+ assert.ok(Math.abs(await page.evaluate(()=>scrollY)-before)<3,'Returning should preserve the visitor’s place in the overview');
+},{viewport:{width:390,height:844}}));
+
+test('Mobile project stage supports deliberate horizontal scene swipes',()=>run(async page=>{
+ await page.goto(base+'work/graphic-design/textur/');
+ const stage=page.locator('[data-world-stage]');
+ const placement=await page.evaluate(()=>{const stage=document.querySelector('[data-world-stage]').getBoundingClientRect(),image=document.querySelector('[data-world-scene]:not([hidden]) img').getBoundingClientRect();return{offset:image.top-stage.top};});
+ assert.ok(placement.offset<60,'Mobile artwork must begin near the top of the stage rather than float far down');
+ await stage.dispatchEvent('pointerdown',{pointerType:'touch',clientX:320,clientY:360,pointerId:1});
+ await stage.dispatchEvent('pointerup',{pointerType:'touch',clientX:90,clientY:365,pointerId:1});
+ assert.match(page.url(),/#scene-2$/);
+ assert.equal(await page.locator('[data-world-scene]:visible').getAttribute('data-world-id'),'scene-2');
+},{viewport:{width:390,height:844},hasTouch:true}));
+
+test('Portfolio routes preload on intent and share native visual continuity',()=>run(async page=>{
+ await page.goto(base+'design/');
+ const card=page.locator('.archive-card').first(),target=await card.getAttribute('href');
+ assert.equal(await card.locator('img').evaluate(n=>getComputedStyle(n).viewTransitionName),'textur-artwork');
+ await card.hover();
+ assert.equal(await page.locator(`link[rel="prefetch"][href="${target}"]`).count(),1);
+ await card.click();await page.waitForURL('**/textur/');
+ assert.equal(await page.locator('[data-world-scene]:visible img').evaluate(n=>getComputedStyle(n).viewTransitionName),'textur-artwork');
 }));
 
 test('Project scenes support keyboard, URL history and no-JS access',async t=>{
