@@ -1,4 +1,5 @@
 import { reducedMotion, sound } from './site.js';
+import { startStarRotation } from './star-rotation.js';
 
 const orbit=document.querySelector('[data-orbit]');
 const stars=[...orbit.querySelectorAll('[data-star]')];
@@ -9,6 +10,7 @@ const motionToggle=document.querySelector('[data-motion-toggle]');
 let expanded=false;
 let closeTimer=0;
 let motionPaused=false;
+const rotation=startStarRotation([logo,...stars]);
 
 function setExpanded(open,instant=false) {
   expanded=open;
@@ -33,17 +35,21 @@ function setExpanded(open,instant=false) {
 }
 
 function loadVideo() {
-  if(reducedMotion.matches||video.getAttribute('src'))return;
-  video.src=innerWidth<=700?'assets/media/home/camera-01-mobile.mp4':'assets/media/home/camera-01-desktop.mp4';
-  video.load();
-  if(!motionPaused)video.play().catch(()=>{});
+  if(reducedMotion.matches||motionPaused||document.hidden)return;
+  if(!video.getAttribute('src')) {
+    video.src=innerWidth<=700?'assets/media/home/camera-01-mobile.mp4':'assets/media/home/camera-01-desktop.mp4';
+    video.load();
+  }
+  video.play().catch(()=>{});
 }
 function syncMotion() {
   const reduce=reducedMotion.matches;
+  const suspended=motionPaused||reduce||document.hidden;
+  rotation.setPaused(suspended);
   motionToggle.disabled=reduce;
   motionToggle.setAttribute('aria-pressed',String(motionPaused||reduce));
   motionToggle.textContent=reduce?'Motion reduced':motionPaused?'Play motion':'Pause motion';
-  if(reduce||motionPaused)video.pause();else loadVideo();
+  if(suspended)video.pause();else loadVideo();
 }
 
 logo.addEventListener('click',()=>setExpanded(!expanded));
@@ -62,6 +68,7 @@ window.addEventListener('pageshow',event=>{
 window.addEventListener('pagehide',()=>clearTimeout(closeTimer));
 motionToggle.addEventListener('click',()=>{motionPaused=!motionPaused;syncMotion();});
 reducedMotion.addEventListener?.('change',syncMotion);
+document.addEventListener('visibilitychange',syncMotion);
 
 document.documentElement.classList.add('has-js');
 stars.forEach(star=>star.setAttribute('aria-label',star.querySelector('.star-label').textContent.trim()));

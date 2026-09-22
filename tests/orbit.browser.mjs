@@ -25,7 +25,7 @@ test('Sections expose the work, preserve Design and fold Approach into About',as
   assert.equal(await page.getByRole('heading',{name:'Agoos Apparel',exact:true}).count(),1,'Work must feature Agoos Apparel');
   assert.equal(await page.getByRole('heading',{name:'Weekender',exact:true}).count(),1,'Work must feature Weekender');
   assert.equal(await page.locator('[data-work-item]').count(),3,'Agoos, Weekender and Growth Toolbox are the current entries');
- assert.equal(await page.locator('a[href="growth-toolbox/"]').count(),1);
+ assert.equal(await page.getByRole('link',{name:'Open coursework',exact:true}).count(),1);
   assert.equal(await page.locator('a[href="https://weekender.arvidscarff.workers.dev"]').count(),1);
   await page.goto(base+'design/');
   assert.equal(await page.locator('.archive-card').count(),5,'Design must expose all five collections');
@@ -41,6 +41,7 @@ test('Sections expose the work, preserve Design and fold Approach into About',as
   await page.goto(base+'contact/');
   assert.equal(await page.locator('a[href="mailto:arvidscarff@gmail.com"]').count(),1);
   await page.getByRole('link',{name:'Index',exact:true}).click();
+  await page.waitForFunction(()=>document.querySelector('[data-orbit]')?.dataset.state==='open');
   assert.equal(await page.locator('[data-orbit]').getAttribute('data-state'),'open');
  } finally {await browser.close();}
 });
@@ -79,8 +80,6 @@ test('Five stars assemble without morphing or overlapping',async()=>{
    const stars=[...document.querySelectorAll('[data-star]')];
    const logoStar=document.querySelector('.logo-star img');
    if(document.querySelector('.morph-seed'))throw new Error('Old morphing element still exists');
-   if(getComputedStyle(logoStar).animationDuration!=='18s')throw new Error('Logo star is not rotating slowly');
-   if(getComputedStyle(stars[0].querySelector('img')).animationDuration!=='18s')throw new Error('Navigation stars are not rotating slowly');
    logo.click();
    const frames=[];
    for(let i=0;i<40;i++){

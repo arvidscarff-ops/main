@@ -51,6 +51,7 @@ for(const nested of [false,true])test(`Weekender links navigate without requirin
   for(const route of ['work/',section]){
    for(const destination of ['https://weekender.arvidscarff.workers.dev','https://weekender.arvidscarff.workers.dev/about']){
     await page.goto(url+route);
+    if(route===section)await page.locator('.assignment-index a[href="#mashup"]').click();
     const link=page.locator(`a[href="${destination}"]`);
     await link.click();
     await page.waitForURL(destination.replace(/\/$/,'')+(destination.endsWith('/about')?'':'/'),{timeout:10000,waitUntil:'domcontentloaded'});
@@ -58,8 +59,8 @@ for(const nested of [false,true])test(`Weekender links navigate without requirin
     assert.equal(page.context().pages().length,1,'No extra tab required');
     await page.goBack({waitUntil:'domcontentloaded'});
     // A cached history restore can resolve goBack before the URL event arrives.
-    await page.waitForURL(url+route,{timeout:10000,waitUntil:'domcontentloaded'});
-    assert.equal(page.url(),url+route,'Back returns to portfolio');
+    await page.waitForURL(u=>u.href.split('#')[0]===url+route,{timeout:10000,waitUntil:'domcontentloaded'});
+    assert.equal(page.url().split('#')[0],url+route,'Back returns to portfolio');
    }
   }
  }finally{await browser.close();}
@@ -98,6 +99,8 @@ for(const nested of [false,true]) test(`Coursework visitor path, navigation, dow
   }
   for(const d of downloads){
    await page.goto(url+section+d.page);
+   const assignment=await page.locator(`a[download][href="${d.raw}"]`).first().evaluate(n=>n.closest('.assignment')?.id);
+   if(assignment)await page.locator(`.assignment-index a[href="#${assignment}"]`).click();
    // Some source-data downloads live in closed methodology disclosures.
    for(const detail of await page.locator('details').all()) {
     if(!await detail.evaluate(el=>el.open)) await detail.locator('summary').first().click();
