@@ -57,20 +57,48 @@ test('Sections expose Agoos, Weekender, preserved Design collections and a conci
  } finally {await browser.close();}
 });
 
-test('First star activation reveals six destinations without navigating; eagle collapses',async()=>{
+test('Temporary griffin logo opens six destinations and closes again',async()=>{
  const browser=await chromium.launch({headless:true});
  try {
   const page=await browser.newPage({viewport:{width:1440,height:900},reducedMotion:'reduce'});
   await page.goto(base);
   const stars=page.locator('[data-star]');
-  assert.equal(await stars.count(),6,'Six orbiting stars must be present');
+  assert.equal(await page.locator('[data-home-logo]').count(),1,'The supplied griffin logo must be the homepage control');
+  assert.match(await page.locator('[data-home-logo] .home-logo__art').getAttribute('src'),/temporary-logo\.webp$/);
+  assert.equal(await stars.count(),6,'Six destination stars must be present');
   assert.equal(await page.locator('[data-orbit]').getAttribute('data-state'),'closed');
-  await stars.first().click();
-  assert.equal(page.url(),base,'First click must not navigate');
+  await page.locator('[data-home-logo]').click();
+  assert.equal(page.url(),base,'Opening the logo must not navigate');
   assert.equal(await page.locator('[data-orbit]').getAttribute('data-state'),'open');
   assert.deepEqual(await stars.locator('.star-label').allTextContents(),['work','approach','design','about','contact','[redacted]']);
   for(const label of await stars.locator('.star-label').all()) assert.equal(await label.evaluate(el=>getComputedStyle(el).opacity),'1');
-  await page.locator('[data-eagle]').click();
+  await page.locator('[data-home-logo]').click();
   assert.equal(await page.locator('[data-orbit]').getAttribute('data-state'),'closed');
+ } finally {await browser.close();}
+});
+
+test('Visible star clones separate before they appear during organic expansion',async()=>{
+ const browser=await chromium.launch({headless:true});
+ try {
+  const page=await browser.newPage({viewport:{width:1440,height:900},reducedMotion:'no-preference'});
+  await page.goto(base);
+  const samples=await page.evaluate(async()=>{
+   const logo=document.querySelector('[data-home-logo]');
+   const stars=[...document.querySelectorAll('[data-star]')];
+   logo.click();
+   const frames=[];
+   for(let i=0;i<80;i++){
+    const visible=stars.map(node=>{const r=node.getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2,opacity:Number(getComputedStyle(node).opacity)}}).filter(item=>item.opacity>.08);
+    frames.push(visible);
+    if(document.querySelector('[data-orbit]').dataset.state==='open')break;
+    await new Promise(requestAnimationFrame);
+   }
+   return frames;
+  });
+  assert.ok(samples.some(frame=>frame.length===6),'All six stars should become visible');
+  for(const frame of samples) for(let i=0;i<frame.length;i++) for(let j=i+1;j<frame.length;j++) {
+   const distance=Math.hypot(frame[i].x-frame[j].x,frame[i].y-frame[j].y);
+   assert.ok(distance>=38,`Visible star shapes must not overlap while expanding; got ${distance.toFixed(1)}px`);
+  }
  } finally {await browser.close();}
 });
