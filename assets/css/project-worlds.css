@@ -74,6 +74,26 @@ body.project-world--textur [data-world-scene]::before{content:'';position:absolu
 body.project-world--textur [data-world-scene] img{position:relative}
 body.project-world--textur [data-world-id="scene-1"]:not([hidden]) img{view-transition-name:textur-artwork}
 
+/* Campaign switchboard: three identities stay visible as channels while one owns the stage. */
+body.project-world--campaign{--world-bg:#070826;--world-accent:#3155ff}
+body.project-world--campaign[data-active-scene="2"]{--world-bg:#18080d;--world-accent:#e33245}
+body.project-world--campaign[data-active-scene="3"]{--world-bg:#172219;--world-accent:#b9d76d}
+body.project-world--campaign [data-world-scene]{right:clamp(230px,21vw,310px);width:auto}
+body.project-world--campaign .world-controls{display:none}
+body.project-world--campaign .world-nav--campaign{top:14px;right:14px;bottom:14px;left:auto;width:clamp(200px,19vw,280px);grid-template-columns:1fr;grid-template-rows:repeat(3,1fr);gap:8px;padding:0;border:0;background:transparent;box-shadow:none;backdrop-filter:none}
+body.project-world--campaign .world-nav--campaign a{position:relative;display:grid;min-height:0;padding:0;overflow:hidden;border:1px solid rgba(255,255,255,.15);grid-template-columns:1fr;grid-template-rows:1fr auto;color:#fff;background:#080817}
+body.project-world--campaign .world-nav--campaign a[aria-current]{border-color:var(--world-accent);box-shadow:0 0 0 1px var(--world-accent)}
+body.project-world--campaign .world-nav--campaign img{width:100%;height:100%;min-height:0;object-fit:cover;opacity:.48;filter:saturate(.55);transition:opacity 180ms ease,filter 180ms ease}
+body.project-world--campaign .world-nav--campaign a:hover img,body.project-world--campaign .world-nav--campaign a:focus-visible img,body.project-world--campaign .world-nav--campaign a[aria-current] img{opacity:1;filter:none}
+body.project-world--campaign .world-nav--campaign span{position:absolute;top:8px;left:9px;padding:4px 5px;background:rgba(0,0,0,.55)}
+body.project-world--campaign .world-nav--campaign strong{padding:7px 9px;background:rgba(0,0,0,.72);font-size:9px;text-transform:uppercase;letter-spacing:.06em}
+
+@media(max-width:700px){
+ body.project-world--campaign [data-world-scene]{right:0;bottom:108px}
+ body.project-world--campaign .world-nav--campaign{top:calc(clamp(18px,4svh,32px) + 56.25vw);right:8px;bottom:auto;left:8px;width:auto;height:92px;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr;gap:6px}
+ body.project-world--campaign .world-nav--campaign strong{padding:5px;font-size:8px}
+}
+
 @media(max-width:700px){
  body.project-world main.world-shell{width:100%;height:calc(100dvh - 56px);min-height:0;margin:0;padding:8px 12px 8px}
  body.project-world .archive-breadcrumb{max-width:64%;min-height:20px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -96,6 +116,86 @@ body.project-world--textur [data-world-id="scene-1"]:not([hidden]) img{view-tran
  body.project-world.world-focus [data-world-scene] img{max-width:calc(100% - 24px);max-height:calc(100% - 80px)}
  body.project-world.world-focus[data-world-zoomed] [data-world-scene] .archive-image-link{padding:60px 18px 18px}
  body.project-world .archive-next{font-size:16px}
+}
+
+/* Screening room: one film owns the screen; the timeline is the only navigation. */
+body.project-world--screening{--world-bg:#070708;--world-fg:#fbf7f0;--world-muted:#aaa39d;--world-accent:#ff35b7}
+body.project-world--screening .archive-guide,body.project-world--screening .world-controls{display:none}
+body.project-world--screening [data-world-scene]{bottom:104px;height:auto}
+body.project-world--screening [data-world-scene] video{display:block;width:auto!important;height:min(620px,calc(100dvh - 325px))!important;max-width:calc(100% - 40px);max-height:none;aspect-ratio:auto;object-fit:contain;background:#000;box-shadow:0 24px 80px rgba(0,0,0,.58)}
+body.project-world--screening [data-world-scene] figcaption{right:20px;bottom:8px;left:20px}
+body.project-world--screening .world-nav--screening{top:auto;right:12px;bottom:10px;left:12px;height:86px;grid-template-columns:repeat(9,minmax(0,1fr));gap:7px;padding:0;border:0;background:transparent;box-shadow:none;backdrop-filter:none}
+body.project-world--screening .world-nav--screening a{position:relative;display:block;min-height:0;padding:0;overflow:hidden;border:1px solid rgba(255,255,255,.14);background:#000}
+body.project-world--screening .world-nav--screening a[aria-current]{border-color:var(--world-accent);box-shadow:0 0 0 1px var(--world-accent)}
+body.project-world--screening .world-nav--screening img{width:100%;height:100%;object-fit:cover;opacity:.48;filter:grayscale(.45)}
+body.project-world--screening .world-nav--screening a[aria-current] img,body.project-world--screening .world-nav--screening a:hover img,body.project-world--screening .world-nav--screening a:focus-visible img{opacity:1;filter:none}
+body.project-world--screening .world-nav--screening span{position:absolute;top:5px;left:5px;padding:3px;background:rgba(0,0,0,.72);color:#fff}
+body.project-world--screening .world-nav--screening strong{position:absolute;right:5px;bottom:5px;padding:3px;background:rgba(0,0,0,.72);color:#fff;font-size:8px}
+
+@media(max-width:700px){
+ body.project-world--screening [data-world-scene]{bottom:90px}
+ body.project-world--screening [data-world-scene] video{height:calc(100dvh - 260px)!important;max-width:100%;max-height:none}
+ body.project-world--screening .world-nav--screening{height:76px;overflow-x:auto;grid-template-columns:repeat(9,72px);scroll-snap-type:x mandatory;scrollbar-width:none}
+ body.project-world--screening .world-nav--screening a{scroll-snap-align:center}
+}
+
+/* Mark constellation: the selected identity holds the centre; the others remain on its perimeter. */
+body.project-world--constellation{--world-bg:#070707;--world-fg:#f8f4e9;--world-muted:#aaa59c;--world-accent:#f8f4e9}
+body.project-world--constellation .world-controls{display:none}
+body.project-world--constellation [data-world-scene] img{max-width:62%;max-height:64%;box-shadow:0 24px 90px rgba(0,0,0,.56)}
+body.project-world--constellation .world-nav--constellation{display:contents}
+body.project-world--constellation .world-nav--constellation a{position:absolute;z-index:5;width:clamp(110px,12vw,176px);height:72px;min-height:0;padding:0;overflow:hidden;border:1px solid rgba(255,255,255,.18);color:#fff;background:#000;transition:opacity 160ms ease,border-color 160ms ease,transform 160ms ease}
+body.project-world--constellation .world-nav--constellation a:hover,body.project-world--constellation .world-nav--constellation a:focus-visible{z-index:6;transform:scale(1.04)}
+body.project-world--constellation .world-nav--constellation a[aria-current]{border-color:#fff;box-shadow:0 0 0 1px #fff}
+body.project-world--constellation .world-nav--constellation img{width:100%;height:100%;object-fit:cover;opacity:.42}
+body.project-world--constellation .world-nav--constellation a[aria-current] img,body.project-world--constellation .world-nav--constellation a:hover img,body.project-world--constellation .world-nav--constellation a:focus-visible img{opacity:1}
+body.project-world--constellation .world-nav--constellation span,body.project-world--constellation .world-nav--constellation strong{position:absolute;padding:3px;background:rgba(0,0,0,.76);font-size:8px}
+body.project-world--constellation .world-nav--constellation span{top:4px;left:4px}
+body.project-world--constellation .world-nav--constellation strong{right:4px;bottom:4px;max-width:90%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body.project-world--constellation .world-nav--constellation a:nth-child(1){top:14px;left:14px}
+body.project-world--constellation .world-nav--constellation a:nth-child(2){top:14px;left:25%}
+body.project-world--constellation .world-nav--constellation a:nth-child(3){top:14px;right:25%}
+body.project-world--constellation .world-nav--constellation a:nth-child(4){top:14px;right:14px}
+body.project-world--constellation .world-nav--constellation a:nth-child(5){bottom:14px;left:14px}
+body.project-world--constellation .world-nav--constellation a:nth-child(6){bottom:14px;left:25%}
+body.project-world--constellation .world-nav--constellation a:nth-child(7){right:25%;bottom:14px}
+body.project-world--constellation .world-nav--constellation a:nth-child(8){right:14px;bottom:14px}
+body.project-world--constellation.world-focus .world-nav--constellation a{opacity:0;pointer-events:none}
+body.project-world--constellation.world-focus [data-world-scene] img{max-width:calc(100% - 48px);max-height:calc(100% - 96px)}
+
+@media(max-width:700px){
+ body.project-world--constellation [data-world-scene]{bottom:88px;height:auto}
+ body.project-world--constellation [data-world-scene] img{max-width:96%;max-height:72%}
+ body.project-world--constellation .world-nav--constellation{position:absolute;z-index:5;top:calc(clamp(18px,4svh,32px) + 56.25vw);right:8px;bottom:auto;left:8px;display:grid;height:72px;grid-template-columns:repeat(8,72px);gap:6px;padding:0;overflow-x:auto;background:transparent;box-shadow:none;scroll-snap-type:x mandatory}
+ body.project-world--constellation .world-nav--constellation a,body.project-world--constellation .world-nav--constellation a:nth-child(n){position:static;width:72px;height:72px;scroll-snap-align:center}
+ body.project-world--constellation .world-nav--constellation strong{display:none}
+}
+
+/* Brand-bible reader: chapter tabs at the spine, page edges along the foot. */
+body.project-world--reader{--world-bg:#d8d7d3;--world-fg:#171916;--world-muted:#5f625c;--world-accent:#f7ed54}
+body.project-world--reader .world-controls{display:none}
+body.project-world--reader [data-world-scene]{left:178px;bottom:46px;width:auto;height:auto}
+body.project-world--reader [data-world-scene] img{max-width:97%;max-height:94%;background:#dedede;box-shadow:0 20px 58px rgba(20,22,18,.2)}
+body.project-world--reader .world-chapters{position:absolute;z-index:6;top:14px;bottom:54px;left:14px;display:grid;width:148px;grid-template-rows:repeat(4,1fr);gap:6px}
+body.project-world--reader .world-chapters a{display:flex;align-items:flex-end;padding:12px;border:1px solid rgba(23,25,22,.2);color:var(--world-fg);font:10px/1.2 var(--mono);text-transform:uppercase;letter-spacing:.08em;background:rgba(255,255,255,.28)}
+body.project-world--reader .world-chapters a[aria-current]{color:#111;background:var(--world-accent);border-color:#111}
+body.project-world--reader .world-nav--reader{top:auto;right:14px;bottom:10px;left:178px;display:grid;height:28px;grid-template-columns:repeat(24,minmax(0,1fr));gap:3px;padding:0;border:0;background:transparent;box-shadow:none;backdrop-filter:none}
+body.project-world--reader .world-nav--reader a{display:grid;min-height:0;padding:0;border:0;color:var(--world-muted);background:rgba(255,255,255,.36);place-items:center}
+body.project-world--reader .world-nav--reader a[aria-current]{color:#fff;background:#171916}
+body.project-world--reader .world-nav--reader img,body.project-world--reader .world-nav--reader strong{display:none}
+body.project-world--reader .world-nav--reader span{font-size:7px}
+body.project-world--reader.world-focus .world-chapters,body.project-world--reader.world-focus .world-nav--reader{opacity:0;pointer-events:none}
+body.project-world--reader.world-focus [data-world-scene]{left:0;bottom:0}
+body.project-world--reader.world-focus [data-world-scene] img{max-width:calc(100% - 48px);max-height:calc(100% - 96px)}
+
+@media(max-width:700px){
+ body.project-world--reader [data-world-scene]{top:46px;right:0;bottom:42px;left:0;width:auto;height:auto}
+ body.project-world--reader [data-world-scene] .archive-image-link{align-items:flex-start;padding-top:8px}
+ body.project-world--reader [data-world-scene] img{max-width:100%;max-height:93%}
+ body.project-world--reader .world-chapters{top:6px;right:6px;bottom:auto;left:6px;width:auto;height:34px;grid-template-columns:repeat(4,1fr);grid-template-rows:1fr;gap:4px}
+ body.project-world--reader .world-chapters a{align-items:center;justify-content:center;padding:4px;font-size:7px;text-align:center}
+ body.project-world--reader .world-nav--reader{top:calc(54px + 56.25vw);right:6px;bottom:auto;left:6px;height:28px;grid-template-columns:repeat(24,26px);overflow-x:auto;scrollbar-width:none;scroll-snap-type:x mandatory}
+ body.project-world--reader .world-nav--reader a{scroll-snap-align:center}
 }
 
 @media(prefers-reduced-motion:no-preference){

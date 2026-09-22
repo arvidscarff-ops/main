@@ -18,19 +18,19 @@ test('Work gives three compact choices with optional context',()=>run(async page
  assert.equal(await context.evaluate(n=>n.open),true);
 }));
 
-test('Design is a contact sheet, with an accessible viewer on non-world collections',()=>run(async page=>{
+test('Design is a contact sheet whose collections open inside their project worlds',()=>run(async page=>{
  await page.goto(base+'design/');
  for(const card of await page.locator('.archive-card').all()){const r=await card.boundingBox();assert.ok(r.y+r.height<850,'Five collections should fit on the overview');}
  await page.locator('.archive-card').nth(1).click();await page.waitForURL('**/event-festival/');
- const first=page.locator('.archive-image-link').first();
- await first.click();const viewer=page.locator('dialog.image-viewer');
- assert.equal(await viewer.isVisible(),true);
- const src=await viewer.locator('img').getAttribute('src');
- await viewer.getByRole('button',{name:'Next image',exact:true}).click();
- assert.notEqual(await viewer.locator('img').getAttribute('src'),src);
- await page.keyboard.press('ArrowLeft');assert.equal(await viewer.locator('img').getAttribute('src'),src);
- assert.equal(await viewer.getByRole('link',{name:'Open original'}).getAttribute('href'),await first.getAttribute('href'));
- await page.keyboard.press('Escape');assert.equal(await viewer.isVisible(),false);
+ const first=page.locator('[data-world-scene]:visible .archive-image-link');
+ await first.click();
+ assert.equal(await page.locator('dialog.image-viewer').count(),0);
+ assert.equal(await page.locator('body').evaluate(n=>n.classList.contains('world-focus')),true);
+ const focus=page.locator('[data-world-focus]');
+ assert.equal(await focus.isVisible(),true);
+ assert.equal(await focus.getByRole('link',{name:'Original ↗'}).evaluate(n=>n.href),await first.evaluate(n=>n.href));
+ await page.keyboard.press('Escape');
+ assert.equal(await page.locator('body').evaluate(n=>n.classList.contains('world-focus')),false);
  assert.equal(await first.evaluate(n=>n===document.activeElement),true);
 }));
 
@@ -120,6 +120,99 @@ test('Portfolio routes preload on intent and share native visual continuity',()=
  assert.equal(await page.locator(`link[rel="prefetch"][href="${target}"]`).count(),1);
  await card.click();await page.waitForURL('**/textur/');
  assert.equal(await page.locator('[data-world-scene]:visible img').evaluate(n=>getComputedStyle(n).viewTransitionName),'textur-artwork');
+}));
+
+test('Event & Festival is a three-channel campaign world, not a thumbnail page',()=>run(async page=>{
+ await page.goto(base+'work/graphic-design/event-festival/');
+ assert.equal(await page.locator('body').getAttribute('data-world-layout'),'campaign');
+ assert.equal(await page.locator('[data-world-scene]:visible').count(),1);
+ const stage=await page.locator('[data-world-stage]').boundingBox();
+ assert.ok(stage.y<230&&stage.y+stage.height<=876,'Campaign artwork and controls must fit the opening viewport');
+ const switcher=page.locator('.world-nav--campaign');
+ assert.equal(await switcher.isVisible(),true);
+ assert.equal(await switcher.locator('a').count(),3);
+ assert.equal(await switcher.locator('img').count(),3,'Campaign navigation previews each distinct visual world');
+ await switcher.getByRole('link',{name:/Popenair/}).click();
+ assert.match(page.url(),/#scene-3$/);
+ assert.equal(await page.locator('[data-world-scene]:visible').getAttribute('data-world-label'),'Popenair');
+ assert.equal(await page.locator('[data-world-focus]').count(),1);
+}));
+
+test('Motion Graphics is a single-screen cinema with a persistent filmstrip',()=>run(async page=>{
+ await page.goto(base+'work/graphic-design/motion-graphics/');
+ assert.equal(await page.locator('body').getAttribute('data-world-layout'),'screening');
+ assert.equal(await page.locator('[data-world-scene]').count(),9);
+ assert.equal(await page.locator('[data-world-scene]:visible video').count(),1);
+ assert.equal(await page.locator('[data-world-scene]:not(:visible) video').evaluateAll(videos=>videos.every(video=>video.paused)),true);
+ const filmstrip=page.locator('.world-nav--screening');
+ assert.equal(await filmstrip.isVisible(),true);
+ assert.equal(await filmstrip.locator('a').count(),9);
+ assert.equal(await filmstrip.locator('img').count(),9);
+ const stage=await page.locator('[data-world-stage]').boundingBox();
+ assert.ok(stage.y<230&&stage.y+stage.height<=876,'The screening room must fit the opening viewport');
+ await filmstrip.getByRole('link',{name:/08 — Film 08/}).click();
+ assert.match(page.url(),/#scene-8$/);
+ const portrait=await page.locator('[data-world-scene]:visible video').boundingBox();
+ assert.ok(portrait.y>=stage.y&&portrait.y+portrait.height<=stage.y+stage.height-80,'Portrait film must fit above the filmstrip');
+}));
+
+test('Logofolio is a central mark plane with constellation navigation',()=>run(async page=>{
+ await page.goto(base+'work/graphic-design/logofolio/');
+ assert.equal(await page.locator('body').getAttribute('data-world-layout'),'constellation');
+ assert.equal(await page.locator('[data-world-scene]').count(),8);
+ assert.equal(await page.locator('[data-world-scene]:visible').count(),1);
+ const map=page.locator('.world-nav--constellation');
+ assert.equal(await map.isVisible(),true);
+ assert.equal(await map.locator('a').count(),8);
+ assert.equal(await map.locator('img').count(),8);
+ assert.equal(await page.locator('.archive-endnote').count(),0,'Immersive mark navigation must not retain the stale archive endnote');
+ assert.equal(await map.evaluate(n=>getComputedStyle(n).display),'contents');
+ const active=await page.locator('[data-world-scene]:visible img').boundingBox();
+ assert.ok(active.y<710&&active.y+active.height<=820,'The selected mark must stay in the central viewing plane');
+ await map.getByRole('link',{name:/06 — Koicha/}).click();
+ assert.match(page.url(),/#scene-6$/);
+ assert.equal(await page.locator('[data-world-scene]:visible').getAttribute('data-world-label'),'Koicha');
+ await page.locator('[data-world-scene]:visible .archive-image-link').click();
+ assert.equal(await page.locator('body').evaluate(n=>n.classList.contains('world-focus')),true,'A mark can still be inspected without leaving its world');
+}));
+
+test('Karnevalen reads as a chaptered brand bible with a page edge',()=>run(async page=>{
+ await page.goto(base+'work/graphic-design/karnevalen/');
+ assert.equal(await page.locator('body').getAttribute('data-world-layout'),'reader');
+ assert.equal(await page.locator('[data-world-scene]').count(),24);
+ assert.equal(await page.locator('[data-world-scene]:visible').count(),1);
+ const chapters=page.locator('.world-chapters');
+ assert.equal(await chapters.isVisible(),true);
+ assert.deepEqual(await chapters.locator('a').allTextContents(),['Story','Visual language','Content','Manual']);
+ const edge=page.locator('.world-nav--reader');
+ assert.equal(await edge.isVisible(),true);
+ assert.equal(await edge.locator('a').count(),24);
+ assert.equal(await edge.locator('img:visible').count(),0,'The page edge must not become another thumbnail grid');
+ await chapters.getByRole('link',{name:'Content'}).click();
+ assert.match(page.url(),/#scene-16$/);
+ assert.equal(await page.locator('[data-world-scene]:visible').getAttribute('data-world-label'),'Page 16');
+ assert.equal(await chapters.getByRole('link',{name:'Content'}).getAttribute('aria-current'),'true');
+ await edge.getByRole('link',{name:/24 — Page 24/}).click();
+ assert.match(page.url(),/#scene-24$/);
+ const image=await page.locator('[data-world-scene]:visible img').boundingBox();
+ const stage=await page.locator('[data-world-stage]').boundingBox();
+ assert.ok(image.y>=stage.y&&image.y+image.height<=stage.y+stage.height-40,'The full publication page must stay above its edge index');
+}));
+
+test('Landscape worlds keep their mobile navigator attached to the artwork',()=>run(async page=>{
+ await page.setViewportSize({width:390,height:844});
+ for(const [route,navSelector] of [
+  ['event-festival/#scene-2','.world-nav--campaign'],
+  ['logofolio/#scene-6','.world-nav--constellation'],
+  ['karnevalen/#scene-16','.world-nav--reader']
+ ]){
+  await page.goto(base+'work/graphic-design/'+route);
+  const image=page.locator('[data-world-scene]:visible img');
+  await image.evaluate(img=>img.complete?true:new Promise(resolve=>img.addEventListener('load',()=>resolve(true),{once:true})));
+  const media=await image.boundingBox();
+  const nav=await page.locator(navSelector).boundingBox();
+  assert.ok(nav.y>=media.y+media.height-4&&nav.y<=media.y+media.height+40,`${route} navigator must follow its landscape artwork without a dead band`);
+ }
 }));
 
 test('Project scenes support keyboard, URL history and no-JS access',async t=>{
