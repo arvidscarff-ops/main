@@ -24,6 +24,27 @@ document.querySelectorAll('.principles section').forEach(section=>{
  summary.append(title);details.append(summary);while(container.firstChild)details.append(container.firstChild);container.append(details);
 });
 document.querySelectorAll('.archive-copy').forEach(copy=>{if(!copy.textContent.trim())return;const details=document.createElement('details');details.className='project-context archive-notes';const summary=document.createElement('summary');summary.textContent='Project notes';copy.before(details);details.append(summary,copy);});
+// Shared project-world scene engine. Original scenes remain readable without JS.
+const world=document.querySelector('[data-project-world]');
+if(world){
+ const stage=world.querySelector('[data-world-stage]'),scenes=[...world.querySelectorAll('[data-world-scene]')];
+ if(stage&&scenes.length){
+  const nav=document.createElement('nav');nav.className='world-nav';nav.dataset.worldNav='';nav.setAttribute('aria-label','Project scenes');
+  const links=scenes.map((scene,index)=>{const a=document.createElement('a'),number=document.createElement('span'),label=document.createElement('strong');a.href=`#${scene.dataset.worldId}`;number.textContent=String(index+1).padStart(2,'0');label.textContent=scene.dataset.worldLabel||`Scene ${index+1}`;a.append(number,label);nav.append(a);return a;});
+  const controls=document.createElement('div'),prev=document.createElement('button'),status=document.createElement('p'),next=document.createElement('button');controls.className='world-controls';prev.type=next.type='button';prev.dataset.worldPrev=next.dataset.worldNext='';prev.ariaLabel='Previous scene';next.ariaLabel='Next scene';prev.textContent='←';next.textContent='→';status.dataset.worldStatus='';status.setAttribute('aria-live','polite');controls.append(prev,status,next);
+  stage.after(nav,controls);
+  let index=0;
+  function requestedIndex(){const found=scenes.findIndex(scene=>`#${scene.dataset.worldId}`===location.hash);return found<0?0:found;}
+  function render(){index=requestedIndex();scenes.forEach((scene,i)=>scene.hidden=i!==index);links.forEach((link,i)=>i===index?link.setAttribute('aria-current','true'):link.removeAttribute('aria-current'));const source=scenes[index].querySelector('img');if(source)stage.style.setProperty('--world-image',`url("${source.currentSrc||source.src}")`);controls.querySelector('[data-world-status]').textContent=`${String(index+1).padStart(2,'0')} / ${String(scenes.length).padStart(2,'0')} — ${scenes[index].dataset.worldLabel}`;world.dataset.worldReady='';}
+  function go(next){const target=(next+scenes.length)%scenes.length;history.pushState(null,'',`${location.pathname}${location.search}#${scenes[target].dataset.worldId}`);render();scenes[target].focus({preventScroll:true});}
+  links.forEach((link,i)=>link.addEventListener('click',event=>{if(event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;event.preventDefault();go(i);}));
+  controls.querySelector('[data-world-prev]').addEventListener('click',()=>go(index-1));controls.querySelector('[data-world-next]').addEventListener('click',()=>go(index+1));
+  window.addEventListener('popstate',render);window.addEventListener('hashchange',render);
+  document.addEventListener('keydown',event=>{if(document.querySelector('dialog[open]')||/INPUT|TEXTAREA|SELECT/.test(event.target.tagName))return;if(event.key==='ArrowRight'){event.preventDefault();go(index+1);}if(event.key==='ArrowLeft'){event.preventDefault();go(index-1);}});
+  scenes.forEach(scene=>scene.tabIndex=-1);render();if(location.hash)requestAnimationFrame(()=>scrollTo(0,0));
+ }
+}
+
 // Original image links remain usable without JS.
 const links=[...document.querySelectorAll('.archive-image-link, [data-image-viewer]')];
 if(links.length){

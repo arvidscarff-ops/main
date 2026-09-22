@@ -34,6 +34,41 @@ test('Design is a contact sheet, with an accessible image viewer in each collect
  assert.equal(await first.evaluate(n=>n===document.activeElement),true);
 }));
 
+test('TEXTUR opens as an immersive scene instead of a document and thumbnail row',()=>run(async page=>{
+ await page.goto(base+'work/graphic-design/textur/');
+ assert.equal(await page.locator('[data-project-world="identity"]').count(),1);
+ assert.equal(await page.locator('[data-world-scene]').count(),6);
+ assert.equal(await page.locator('[data-world-scene]:visible').count(),1);
+ const stage=await page.locator('[data-world-stage]').boundingBox();
+ const image=await page.locator('[data-world-scene]:visible img').boundingBox();
+ const title=await page.locator('h1').boundingBox();
+ assert.ok(stage.height>500,'The first viewport is an immersive stage');
+ assert.ok(image.width>700&&image.height>390,'Project media, not copy, dominates the stage');
+ assert.ok(title.height<80,'Project title remains a label rather than a billboard');
+ const atmosphere=await page.evaluate(()=>({canvas:getComputedStyle(document.querySelector('main')).backgroundColor,backdrop:getComputedStyle(document.querySelector('[data-world-stage]'),'::before').backgroundImage}));
+ assert.equal(atmosphere.canvas,'rgb(1, 1, 31)','The project world must replace the pale document canvas');
+ assert.notEqual(atmosphere.backdrop,'none','The active artwork supplies the stage atmosphere');
+ assert.equal(await page.locator('[data-world-nav] a').count(),6);
+}));
+
+test('Project scenes support keyboard, URL history and no-JS access',async t=>{
+ await t.test('enhanced navigation',()=>run(async page=>{
+  await page.goto(base+'work/graphic-design/textur/#scene-4');
+  assert.equal(await page.evaluate(()=>scrollY),0,'Direct scene links must open at the project perimeter, not crop the canvas');
+  await page.goto(base+'work/graphic-design/textur/');
+  const first=await page.locator('[data-world-scene]:visible img').getAttribute('src');
+  await page.keyboard.press('ArrowRight');
+  assert.match(page.url(),/#scene-2$/);
+  assert.notEqual(await page.locator('[data-world-scene]:visible img').getAttribute('src'),first);
+  await page.goBack();await page.waitForFunction(()=>!location.hash);
+  assert.equal(await page.locator('[data-world-scene]:visible img').getAttribute('src'),first);
+ }));
+ await t.test('fallback',()=>run(async page=>{
+  await page.goto(base+'work/graphic-design/textur/');
+  assert.equal(await page.locator('[data-world-scene]:visible').count(),6);
+ },{javaScriptEnabled:false}));
+});
+
 test('Agoos chapters and About topics open only when selected',()=>run(async page=>{
  await page.goto(base+'work/agoos/');
  assert.equal(await page.locator('.agoos-spread:visible').count(),0);
