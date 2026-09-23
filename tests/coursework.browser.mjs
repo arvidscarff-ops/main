@@ -81,7 +81,7 @@ for(const nested of [false,true]) test(`Coursework visitor path, navigation, dow
   await page.goto(url);await page.locator('[data-eagle]').click();
   await page.getByRole('link',{name:'work',exact:true}).click();await page.waitForURL('**/work/');
   await page.locator('#growth-toolbox summary').click();
-  await page.getByRole('link',{name:/Open coursework/}).click();await page.waitForURL('**/growth-toolbox/');
+  await page.getByRole('link',{name:/Browse the coursework/}).click();await page.waitForURL('**/growth-toolbox/');
   const downloads=[];
   for(const route of routes){
    await page.goto(url+section+route);

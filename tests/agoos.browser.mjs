@@ -13,7 +13,7 @@ test('Agoos is reachable from Work with an honest role and readable case study',
   const page=await context.newPage();
   await page.goto(base+'work/');
   await page.locator('#agoos summary').click();
-  const link=page.getByRole('link',{name:'Explore Agoos'});
+  const link=page.getByRole('link',{name:'See the clothes, prints and process'});
   assert.equal(await link.count(),1,'Work must link to the new Agoos case study');
   await link.click();await page.waitForURL('**/work/agoos/');
   assert.equal((await page.locator('h1').innerText()).replace(/\s+/g,' '),'Agoos Apparel');

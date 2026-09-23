@@ -4,33 +4,52 @@
 .work-practice__intro .page-title{margin:0!important}
 .work-practice__intro>p{max-width:48ch;margin:0 0 6px;font-size:clamp(16px,1.7vw,23px);line-height:1.38;letter-spacing:-.025em}
 .practice-map{border-bottom:1px solid var(--line)}
-.practice-entry{border-top:1px solid var(--line)}
-.practice-entry>summary{display:grid;grid-template-columns:36px minmax(180px,1.2fr) minmax(180px,.8fr) 24px;gap:12px;align-items:center;min-height:53px;padding:4px 0;cursor:pointer;list-style:none}
+.practice-entry{--project-accent:#555;--project-wash:#efede6;position:relative;border-top:1px solid var(--line)}
+.practice-entry[data-project-tone="coral"]{--project-accent:#b84b3b;--project-wash:#f5ddd6}
+.practice-entry[data-project-tone="sky"]{--project-accent:#3974a8;--project-wash:#dceaf4}
+.practice-entry[data-project-tone="acid"]{--project-accent:#657900;--project-wash:#edf2cb}
+.practice-entry[data-project-tone="lilac"]{--project-accent:#77519f;--project-wash:#ece3f2}
+.practice-entry[data-project-tone="orange"]{--project-accent:#ad5d00;--project-wash:#f5e4cf}
+.practice-entry[data-project-tone="yellow"]{--project-accent:#725f00;--project-wash:#f7efbd}
+.practice-entry[data-project-tone="mint"]{--project-accent:#1f725b;--project-wash:#dceee7}
+.practice-entry>summary{display:grid;grid-template-columns:36px minmax(180px,1.2fr) minmax(180px,.8fr) 34px;gap:12px;align-items:center;min-height:58px;margin:0 -14px;padding:7px 14px;cursor:pointer;list-style:none;transition:background-color 140ms ease}
 .practice-entry>summary::-webkit-details-marker{display:none}
-.practice-entry__number,.practice-entry__role{font:9px/1.3 var(--mono);text-transform:uppercase;letter-spacing:.055em;color:var(--muted)}
-.practice-entry h2{margin:0;font-size:clamp(20px,2vw,31px);font-weight:450;line-height:1;letter-spacing:-.04em}
-.practice-entry__mark{position:relative;width:20px;height:20px;justify-self:end}
-.practice-entry__mark::before,.practice-entry__mark::after{content:"";position:absolute;top:9px;left:3px;width:14px;height:1px;background:currentColor;transition:transform 180ms ease}
-.practice-entry__mark::after{transform:rotate(90deg)}
-.practice-entry[open] .practice-entry__mark::after{transform:rotate(0)}
-.practice-entry__body{display:grid;grid-template-columns:minmax(280px,1.4fr) minmax(180px,.8fr);gap:clamp(26px,5vw,74px);padding:16px 36px 30px}
-.practice-entry__story p{max-width:64ch;margin:0 0 12px;font-size:14px;line-height:1.58}
+.practice-entry>summary:hover,.practice-entry>summary:focus-visible,.practice-entry[open]>summary{background:var(--project-wash)}
+.practice-entry__number{font:9px/1.3 var(--mono);letter-spacing:.055em;color:var(--project-accent)}
+.practice-entry__role{font:11px/1.3 var(--sans);letter-spacing:.01em;color:var(--muted)}
+.practice-entry h2{margin:0;font-size:clamp(20px,2vw,31px);font-weight:500;line-height:1;letter-spacing:-.04em}
+.practice-entry[open] h2{color:var(--project-accent)}
+.practice-entry__mark{width:28px;height:28px;justify-self:end;color:var(--project-accent);font:22px/28px var(--sans);text-align:center}
+.practice-entry__mark::before{content:'↘'}
+.practice-entry[open] .practice-entry__mark::before{content:'↖'}
+.practice-entry__body{display:grid;grid-template-columns:minmax(280px,1.35fr) minmax(180px,.85fr);gap:clamp(26px,5vw,74px);margin:0 -14px;padding:24px 50px 36px;background:var(--project-wash)}
+.practice-entry__story p{max-width:64ch;margin:0 0 12px;font-size:15px;line-height:1.58}
 .practice-entry__story a{text-decoration:underline;text-underline-offset:3px}
-.practice-skills{display:flex;flex-wrap:wrap;align-content:flex-start;gap:6px;margin:0;padding:0;list-style:none}
-.practice-skills li{padding:6px 8px;border:1px solid var(--line);font:9px/1.2 var(--mono);text-transform:uppercase;letter-spacing:.045em}
-.practice-entry__link,.practice-entry__links{grid-column:1/-1;font:10px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.04em}
-.practice-entry__links{display:flex;flex-wrap:wrap;gap:12px 26px}
-.practice-entry__link{width:max-content;border-bottom:1px solid currentColor;padding-bottom:3px}
+.practice-skills{display:flex;flex-wrap:wrap;align-content:flex-start;gap:8px 10px;margin:0;padding:0;list-style:none}
+.practice-skills li{--skill-color:#ddd;padding:5px 9px;border:0;background-color:color-mix(in srgb,var(--skill-color) 74%,white);clip-path:polygon(2% 7%,100% 0,98% 91%,0 100%);font:500 12px/1.25 var(--sans);letter-spacing:-.01em}
+.practice-skills li[data-skill-tone="creative"]{--skill-color:#ffb7aa}
+.practice-skills li[data-skill-tone="growth"]{--skill-color:#b8df91}
+.practice-skills li[data-skill-tone="product"]{--skill-color:#9ed9cf}
+.practice-skills li[data-skill-tone="making"]{--skill-color:#efd275}
+.practice-skills li[data-skill-tone="technical"]{--skill-color:#a9cbe9}
+.practice-skills li[data-skill-tone="operations"]{--skill-color:#cbb8e4}
+.practice-skills li[data-skill-tone="people"]{--skill-color:#ebb3d1}
+.practice-entry__link,.practice-entry__links{grid-column:1/-1}
+.practice-entry__links{display:flex;flex-wrap:wrap;gap:12px 30px}
+.practice-entry__link{display:inline-flex;width:max-content;align-items:center;gap:10px;padding:3px 0;border:0;font:550 clamp(16px,1.35vw,20px)/1.25 var(--sans);letter-spacing:-.025em;text-transform:none;text-decoration:none}
+.practice-entry__link span{color:var(--project-accent);font-size:1.15em;transition:transform 140ms ease}
+.practice-entry__link:hover span,.practice-entry__link:focus-visible span{transform:translateX(4px)}
 @media(max-width:700px){
  .work-practice__intro{grid-template-columns:1fr;gap:18px;margin-bottom:30px}
- .practice-entry>summary{grid-template-columns:27px 1fr 20px;gap:8px;min-height:62px}
- .practice-entry__role{grid-column:2;font-size:8px;margin-top:-7px}
+ .practice-entry>summary{grid-template-columns:27px 1fr 26px;gap:8px;min-height:66px;margin:0 -8px;padding:8px}
+ .practice-entry__role{grid-column:2;font-size:10px;margin-top:-7px}
  .practice-entry__mark{grid-column:3;grid-row:1/3}
  .practice-entry h2{font-size:23px}
- .practice-entry__body{grid-template-columns:1fr;padding:14px 0 28px}
- .practice-entry__story p{font-size:14px}
+ .practice-entry__body{grid-template-columns:1fr;margin:0 -8px;padding:20px 20px 30px}
+ .practice-entry__story p{font-size:15px}
+ .practice-skills{margin:3px 0 5px}
 }
-@media(prefers-reduced-motion:reduce){.practice-entry__mark::before,.practice-entry__mark::after{transition:none}}
+@media(prefers-reduced-motion:reduce){.practice-entry>summary,.practice-entry__link span{transition:none}}
 
 /* Noisey Neighbours: an event plan drawn like a load-bearing system. */
 body.case-noisey{--paper:#11110f;--ink:#f0efe8;--signal:#eaff36;--faint:rgba(240,239,232,.19)}

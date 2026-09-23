@@ -89,8 +89,8 @@ test('AI Labs leads with a real Hermes system rather than an unsupported genius 
  assert.match(landing,/latest obsession/i);
  assert.match(landing,/workflows/i);
  assert.doesNotMatch(landing,/genius/i);
- assert.equal(await page.getByRole('link',{name:/Explore the system/i}).count(),1);
- await page.getByRole('link',{name:/Explore the system/i}).click();
+ assert.equal(await page.getByRole('link',{name:/See how the system works/i}).count(),1);
+ await page.getByRole('link',{name:/See how the system works/i}).click();
  await page.waitForURL('**/ai-labs/hermes-system/');
  assert.equal(await page.getByRole('heading',{name:'A personal AI system that remembers what matters.',exact:true}).count(),1);
  const copy=await page.locator('main').innerText();
@@ -118,3 +118,20 @@ test('Narrative case studies keep their atmosphere and fit a mobile viewport',()
   assert.ok(state.width<=state.viewport+1,`${route} must not overflow horizontally`);
  }
 },{viewport:{width:390,height:844}}));
+
+test('Work uses project-specific invitations and color-coded skills instead of interface labels',()=>run(async page=>{
+ await page.goto(base+'work/');
+ assert.equal(await page.getByText(/^Explore\b/i).count(),0);
+ const invitations=['See the clothes, prints and process','Try the working app','Go inside the nights','See the six-week campaign','Browse the coursework'];
+ for(const label of invitations) assert.equal(await page.getByText(label,{exact:false}).count(),1,label);
+ const entries=page.locator('[data-work-item]');
+ assert.equal(new Set(await entries.evaluateAll(nodes=>nodes.map(n=>n.dataset.projectTone))).size,7);
+ const skills=page.locator('.practice-skills li');
+ assert.ok(await skills.count()>20);
+ assert.ok(new Set(await skills.evaluateAll(nodes=>nodes.map(n=>n.dataset.skillTone))).size>=5);
+ for(const skill of await skills.all()){
+  const style=await skill.evaluate(n=>({border:getComputedStyle(n).borderTopWidth,background:getComputedStyle(n).backgroundColor}));
+  assert.equal(style.border,'0px');
+  assert.notEqual(style.background,'rgba(0, 0, 0, 0)');
+ }
+}));
