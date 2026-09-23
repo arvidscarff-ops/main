@@ -9,6 +9,10 @@ body.project-world main.world-shell{
  width:min(1600px,calc(100% - 64px));max-width:1600px;height:calc(100dvh - 102px);min-height:0;margin:0 auto 24px;
  padding:12px clamp(22px,3vw,48px) 12px;overflow:hidden;background:var(--world-bg)!important;color:var(--world-fg);
 }
+body.page--inner.project-world[data-landscape-camera] main.world-shell{
+ width:min(1600px,calc(100% - clamp(40px,6vw,96px)));height:calc(100dvh - clamp(94px,9vw,150px));
+ margin:0 auto clamp(20px,3vw,48px);padding:12px clamp(22px,3vw,48px);background:var(--world-bg)!important;
+}
 body.project-world .archive-breadcrumb{position:static;z-index:2;min-height:22px;margin:0;color:var(--world-muted)}
 body.project-world .archive-breadcrumb a{color:inherit}
 body.project-world.has-section-js .archive-breadcrumb{display:none}
@@ -49,6 +53,7 @@ body.project-world .world-focus-bar button,body.project-world .world-focus-bar a
 body.project-world .world-focus-bar p{margin:0;color:var(--world-muted)}
 body.project-world.world-focus .section-header{opacity:0;pointer-events:none}
 body.project-world.world-focus main.world-shell{position:fixed;z-index:40;inset:0;width:100vw;max-width:none;height:100dvh;margin:0;padding:0;background:var(--world-bg)!important}
+body.page--inner.project-world[data-landscape-camera].world-focus main.world-shell{position:fixed;z-index:40;inset:0;width:100vw;max-width:none;height:100dvh;margin:0;padding:0;background:var(--world-bg)!important}
 body.project-world.world-focus .archive-breadcrumb,body.project-world.world-focus .world-utility,body.project-world.world-focus .world-intro,body.project-world.world-focus .project-context,body.project-world.world-focus .world-nav{display:none}
 body.project-world.world-focus .world-stage{grid-row:1/-1;height:100dvh}
 body.project-world.world-focus [data-world-scene] img{max-width:calc(100% - 96px);max-height:calc(100% - 96px);box-shadow:none}
@@ -196,6 +201,11 @@ body.project-world--reader.world-focus [data-world-scene] img{max-width:calc(100
  body.project-world--reader .world-chapters a{align-items:center;justify-content:center;padding:4px;font-size:7px;text-align:center}
  body.project-world--reader .world-nav--reader{top:calc(54px + 56.25vw);right:6px;bottom:auto;left:6px;height:28px;grid-template-columns:repeat(24,26px);overflow-x:auto;scrollbar-width:none;scroll-snap-type:x mandatory}
  body.project-world--reader .world-nav--reader a{scroll-snap-align:center}
+}
+
+@media(max-width:700px){
+ body.page--inner.project-world[data-landscape-camera] main.world-shell{width:calc(100% - 20px);height:calc(100dvh - 76px);margin:0 auto 10px;padding:8px 12px}
+ body.page--inner.project-world[data-landscape-camera].world-focus main.world-shell{width:100vw;height:100dvh;margin:0;padding:0}
 }
 
 @media(prefers-reduced-motion:no-preference){

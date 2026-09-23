@@ -1,5 +1,6 @@
 import './editorial.js';
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+if(document.body?.dataset?.landscapeCamera) import('./landscape-backdrop.js');
 
 class SoundSystem {
   constructor() {

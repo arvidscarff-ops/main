@@ -63,6 +63,7 @@ test('TEXTUR inspects artwork inside its project world instead of a generic popu
  assert.equal(await page.locator('dialog.image-viewer').count(),0,'Project worlds must not create the generic white viewer');
  assert.equal(await page.locator('[data-world-focus]').isVisible(),true);
  assert.equal(await page.locator('body').evaluate(n=>n.classList.contains('world-focus')),true);
+ await page.waitForFunction(()=>{const r=document.querySelector('main').getBoundingClientRect(),c=getComputedStyle(document.querySelector('main'));return r.x===0&&r.y===0&&Math.abs(r.width-innerWidth)<1&&Math.abs(r.height-innerHeight)<1&&c.padding==='0px';});
  const canvas=await page.locator('main').evaluate(n=>{const r=n.getBoundingClientRect(),c=getComputedStyle(n);return{x:r.x,y:r.y,width:r.width,height:r.height,padding:c.padding};});
  assert.deepEqual(canvas,{x:0,y:0,width:1440,height:900,padding:'0px'},'Focus canvas must replace the full viewport without exposing the page shell');
  const focused=await page.evaluate(()=>{const image=document.querySelector('[data-world-scene]:not([hidden]) img').getBoundingClientRect();return{top:image.top,bottom:image.bottom,height:innerHeight,bg:getComputedStyle(document.querySelector('main')).backgroundColor};});
@@ -80,6 +81,8 @@ test('TEXTUR inspects artwork inside its project world instead of a generic popu
 
 test('TEXTUR has one compact navigator, overlay notes and clear neighbouring routes',()=>run(async page=>{
  await page.goto(base+'work/graphic-design/textur/');
+ await page.waitForFunction(()=>document.body.hasAttribute('data-world-ready'));
+ await page.evaluate(async()=>{await document.fonts.ready;await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));});
  assert.equal(await page.locator('[data-world-nav]').isHidden(),true,'Scene overview stays out of the artwork until requested');
  const stageBefore=await page.locator('[data-world-stage]').boundingBox();
  await page.getByRole('button',{name:/Scene overview/}).click();
@@ -296,12 +299,13 @@ test('Desktop section navigation remains usable without JavaScript',()=>run(asyn
  assert.match(await page.locator('main').innerText(),/Understand the problem/);
 },{javaScriptEnabled:false}));
 
-test('Section shell is paper-light with open desktop navigation and normal document scrolling',()=>run(async page=>{
+test('Section shell is one landscape glass window with normal document scrolling',()=>run(async page=>{
  await page.goto(base+'work/');
- const style=await page.locator('main').evaluate(n=>({bg:getComputedStyle(n).backgroundColor,position:getComputedStyle(n).position,radius:getComputedStyle(n).borderRadius}));
- assert.equal(style.bg,'rgb(245, 243, 236)');
- assert.notEqual(style.position,'fixed');assert.equal(style.radius,'0px');
+ const style=await page.evaluate(()=>{const main=getComputedStyle(document.querySelector('main')),frame=getComputedStyle(document.querySelector('.site-frame'));return{mainBg:main.backgroundColor,position:main.position,mainRadius:main.borderRadius,frameRadius:frame.borderRadius,blur:frame.backdropFilter||frame.webkitBackdropFilter};});
+ assert.equal(style.mainBg,'rgba(0, 0, 0, 0)');
+ assert.notEqual(style.position,'fixed');assert.equal(style.mainRadius,'0px');
+ assert.notEqual(style.frameRadius,'0px');assert.notEqual(style.blur,'none');
  assert.equal(await page.locator('.section-menu nav a:visible').count(),5);
- assert.equal(await page.locator('[data-theme-toggle],[data-sound-toggle]').count(),0);
+ assert.equal(await page.locator('[data-landscape-motion]').count(),0,'Reduced-motion test context keeps the static poster and needs no pause control');
  assert.equal(await page.evaluate(()=>getComputedStyle(document.body).overflowY),'auto');
 }));

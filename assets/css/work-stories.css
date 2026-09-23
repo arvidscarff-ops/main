@@ -4,14 +4,14 @@
 .work-practice__intro .page-title{margin:0!important}
 .work-practice__intro>p{max-width:48ch;margin:0 0 6px;font-size:clamp(16px,1.7vw,23px);line-height:1.38;letter-spacing:-.025em}
 .practice-map{border-bottom:1px solid var(--line)}
-.practice-entry{--project-accent:#555;--project-wash:#efede6;position:relative;border-top:1px solid var(--line)}
-.practice-entry[data-project-tone="coral"]{--project-accent:#b84b3b;--project-wash:#f5ddd6}
-.practice-entry[data-project-tone="sky"]{--project-accent:#3974a8;--project-wash:#dceaf4}
-.practice-entry[data-project-tone="acid"]{--project-accent:#657900;--project-wash:#edf2cb}
-.practice-entry[data-project-tone="lilac"]{--project-accent:#77519f;--project-wash:#ece3f2}
-.practice-entry[data-project-tone="orange"]{--project-accent:#ad5d00;--project-wash:#f5e4cf}
-.practice-entry[data-project-tone="yellow"]{--project-accent:#725f00;--project-wash:#f7efbd}
-.practice-entry[data-project-tone="mint"]{--project-accent:#1f725b;--project-wash:#dceee7}
+.practice-entry{--project-accent:#c8ced2;--project-wash:rgba(31,37,22,.46);position:relative;border-top:1px solid var(--line)}
+.practice-entry[data-project-tone="coral"]{--project-accent:#b6ad91;--project-wash:rgba(66,61,44,.48)}
+.practice-entry[data-project-tone="sky"]{--project-accent:#8fa7bd;--project-wash:rgba(55,74,93,.5)}
+.practice-entry[data-project-tone="acid"]{--project-accent:#adb691;--project-wash:rgba(71,77,50,.5)}
+.practice-entry[data-project-tone="lilac"]{--project-accent:#9baab7;--project-wash:rgba(43,58,73,.5)}
+.practice-entry[data-project-tone="orange"]{--project-accent:#b7aa8c;--project-wash:rgba(66,61,44,.56)}
+.practice-entry[data-project-tone="yellow"]{--project-accent:#c0c5a5;--project-wash:rgba(71,77,50,.54)}
+.practice-entry[data-project-tone="mint"]{--project-accent:#9baa8e;--project-wash:rgba(58,67,42,.52)}
 .practice-entry>summary{display:grid;grid-template-columns:36px minmax(180px,1.2fr) minmax(180px,.8fr) 34px;gap:12px;align-items:center;min-height:58px;margin:0 -14px;padding:7px 14px;cursor:pointer;list-style:none;transition:background-color 140ms ease}
 .practice-entry>summary::-webkit-details-marker{display:none}
 .practice-entry>summary:hover,.practice-entry>summary:focus-visible,.practice-entry[open]>summary{background:var(--project-wash)}
@@ -26,14 +26,14 @@
 .practice-entry__story p{max-width:64ch;margin:0 0 12px;font-size:15px;line-height:1.58}
 .practice-entry__story a{text-decoration:underline;text-underline-offset:3px}
 .practice-skills{display:flex;flex-wrap:wrap;align-content:flex-start;gap:8px 10px;margin:0;padding:0;list-style:none}
-.practice-skills li{--skill-color:#ddd;padding:5px 9px;border:0;background-color:color-mix(in srgb,var(--skill-color) 74%,white);clip-path:polygon(2% 7%,100% 0,98% 91%,0 100%);font:500 12px/1.25 var(--sans);letter-spacing:-.01em}
-.practice-skills li[data-skill-tone="creative"]{--skill-color:#ffb7aa}
-.practice-skills li[data-skill-tone="growth"]{--skill-color:#b8df91}
-.practice-skills li[data-skill-tone="product"]{--skill-color:#9ed9cf}
-.practice-skills li[data-skill-tone="making"]{--skill-color:#efd275}
-.practice-skills li[data-skill-tone="technical"]{--skill-color:#a9cbe9}
-.practice-skills li[data-skill-tone="operations"]{--skill-color:#cbb8e4}
-.practice-skills li[data-skill-tone="people"]{--skill-color:#ebb3d1}
+.practice-skills li{--skill-color:#83827a;padding:5px 9px;border:0;color:#182016;background-color:color-mix(in srgb,var(--skill-color) 68%,#c8ced2);clip-path:polygon(2% 7%,100% 0,98% 91%,0 100%);font:600 12px/1.25 var(--sans);letter-spacing:-.01em}
+.practice-skills li[data-skill-tone="creative"]{--skill-color:#83827a}
+.practice-skills li[data-skill-tone="growth"]{--skill-color:#7d896b}
+.practice-skills li[data-skill-tone="product"]{--skill-color:#69827d}
+.practice-skills li[data-skill-tone="making"]{--skill-color:#9d9574}
+.practice-skills li[data-skill-tone="technical"]{--skill-color:#728ca9}
+.practice-skills li[data-skill-tone="operations"]{--skill-color:#566b7c}
+.practice-skills li[data-skill-tone="people"]{--skill-color:#a2aaa0}
 .practice-entry__link,.practice-entry__links{grid-column:1/-1}
 .practice-entry__links{display:flex;flex-wrap:wrap;gap:12px 30px}
 .practice-entry__link{display:inline-flex;width:max-content;align-items:center;gap:10px;padding:3px 0;border:0;font:550 clamp(16px,1.35vw,20px)/1.25 var(--sans);letter-spacing:-.025em;text-transform:none;text-decoration:none}
