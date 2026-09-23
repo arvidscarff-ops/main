@@ -36,6 +36,9 @@ test('Design is a contact sheet whose collections open inside their project worl
 
 test('TEXTUR opens with complete artwork and controls inside the first viewport',()=>run(async page=>{
  await page.goto(base+'work/graphic-design/textur/');
+ await page.waitForFunction(()=>document.querySelector('[data-project-world]')?.hasAttribute('data-world-ready'));
+ await page.locator('[data-world-scene]:visible img').evaluate(img=>img.complete?true:new Promise(resolve=>img.addEventListener('load',()=>resolve(true),{once:true})));
+ await page.evaluate(async()=>{await document.fonts.ready;await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));});
  assert.equal(await page.locator('[data-project-world="identity"]').count(),1);
  assert.equal(await page.locator('[data-world-scene]').count(),6);
  assert.equal(await page.locator('[data-world-scene]:visible').count(),1);

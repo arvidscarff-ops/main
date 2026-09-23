@@ -22,7 +22,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <link rel="canonical" href="https://arvidscarff-ops.github.io/main/">
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/css/site.css">
-  <link rel="stylesheet" href="assets/css/orbit.css">
+  <link rel="stylesheet" href="assets/css/orbit.css?v=2">
   <title>Arvid Shane Scarff</title>
   <script>try{document.documentElement.dataset.theme=localStorage.getItem('ass-theme')||((matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark')}catch(e){}</script>
 </head>
@@ -53,6 +53,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
       <p class="sr-only" data-orbit-status aria-live="polite"></p>
     </nav>
+    <aside class="current-work" data-current-work data-state="open" aria-labelledby="current-work-title">
+      <header class="current-work__bar">
+        <div>
+          <p class="current-work__eyebrow">Desk / 03 active</p>
+          <h2 id="current-work-title">Currently working on…</h2>
+        </div>
+        <button class="current-work__toggle" type="button" data-current-work-toggle aria-controls="current-work-list" aria-expanded="true" aria-label="Hide current work" hidden><span aria-hidden="true">−</span></button>
+      </header>
+      <ol class="current-work__list" id="current-work-list" data-current-work-list>
+        <li><a data-current-project href="work/growth-toolbox/"><small>01</small><span><strong>Growth Marketing</strong><span>Berghs</span></span><i aria-hidden="true">↗</i></a></li>
+        <li><a data-current-project href="work/#ghostwriting"><small>02</small><span><strong>Ghostwriting</strong><span>Consulting &amp; mentorship</span></span><i aria-hidden="true">↗</i></a></li>
+        <li><a data-current-project href="ai-labs/hermes-system/"><small>03</small><span><strong>Hermes</strong><span>Personal AI system</span></span><i aria-hidden="true">↗</i></a></li>
+      </ol>
+    </aside>
   </main>
   <div class="frame-controls" aria-label="Display controls">
     <button class="frame-control" type="button" data-motion-toggle aria-pressed="false">Pause motion</button>
@@ -60,6 +74,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <button class="frame-control" type="button" data-sound-toggle aria-pressed="false"><span aria-hidden="true" data-sound-icon>○</span> Sound <span data-sound-label>off</span></button>
   </div>
   <div class="page-transition" aria-hidden="true"></div>
-  <script type="module" src="assets/js/home.js"></script>
+  <script type="module" src="assets/js/home.js?v=2"></script>
 </body>
 </html>
