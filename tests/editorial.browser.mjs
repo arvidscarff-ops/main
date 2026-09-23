@@ -63,6 +63,7 @@ test('TEXTUR inspects artwork inside its project world instead of a generic popu
  assert.equal(await page.locator('dialog.image-viewer').count(),0,'Project worlds must not create the generic white viewer');
  assert.equal(await page.locator('[data-world-focus]').isVisible(),true);
  assert.equal(await page.locator('body').evaluate(n=>n.classList.contains('world-focus')),true);
+ assert.equal(await page.locator('.window-bar').evaluate(n=>n.inert),true,'Focus mode removes the persistent window bar from keyboard navigation');
  await page.waitForFunction(()=>{const r=document.querySelector('main').getBoundingClientRect(),c=getComputedStyle(document.querySelector('main'));return r.x===0&&r.y===0&&Math.abs(r.width-innerWidth)<1&&Math.abs(r.height-innerHeight)<1&&c.padding==='0px';});
  const canvas=await page.locator('main').evaluate(n=>{const r=n.getBoundingClientRect(),c=getComputedStyle(n);return{x:r.x,y:r.y,width:r.width,height:r.height,padding:c.padding};});
  assert.deepEqual(canvas,{x:0,y:0,width:1440,height:900,padding:'0px'},'Focus canvas must replace the full viewport without exposing the page shell');
@@ -210,6 +211,8 @@ test('Landscape worlds keep their mobile navigator attached to the artwork',()=>
   ['karnevalen/#scene-16','.world-nav--reader']
  ]){
   await page.goto(base+'work/graphic-design/'+route);
+  await page.waitForFunction(()=>document.querySelector('[data-project-world]')?.hasAttribute('data-world-ready'));
+  await page.evaluate(async()=>{await document.fonts.ready;await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));});
   const image=page.locator('[data-world-scene]:visible img');
   await image.evaluate(img=>img.complete?true:new Promise(resolve=>img.addEventListener('load',()=>resolve(true),{once:true})));
   await page.waitForFunction(({navSelector})=>{
@@ -272,10 +275,10 @@ test('Inner pages load one versioned light canvas stylesheet last and remove amb
  for(const route of ['work/','design/','about/','contact/','ai-labs/','work/agoos/','work/growth-toolbox/']){
   await page.goto(base+route);
   const styles=await page.locator('link[rel="stylesheet"]').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('href')));
-  assert.match(styles.at(-1),/editorial\.css\?v=4$/,'The canvas stylesheet must load after page-specific CSS');
+  assert.match(styles.at(-1),/editorial\.css\?v=5$/,'The canvas stylesheet must load after page-specific CSS');
   assert.equal(await page.locator('[data-theme-toggle],[data-sound-toggle]').count(),0,'Inner pages have no homepage ambience controls');
-  const colors=await page.evaluate(()=>({body:getComputedStyle(document.body).backgroundColor,main:getComputedStyle(document.querySelector('main')).backgroundColor,label:getComputedStyle(document.querySelector('.index-link'),'::before').content}));
-  assert.doesNotMatch(colors.label,/ASS/i,'Never use the owner’s initials as a brand label');
+  const colors=await page.evaluate(()=>({body:getComputedStyle(document.body).backgroundColor,main:getComputedStyle(document.querySelector('main')).backgroundColor,bar:document.querySelector('.window-bar')?.textContent||''}));
+  assert.doesNotMatch(colors.bar,/\bASS\b/i,'Never use the owner’s initials as a brand label');
   assert.doesNotMatch(colors.body,/rgb\((?:0|8), (?:0|9), (?:0|8)\)/);
   assert.doesNotMatch(colors.main,/rgb\((?:0|8), (?:0|9), (?:0|8)\)/);
  }
@@ -283,19 +286,19 @@ test('Inner pages load one versioned light canvas stylesheet last and remove amb
 
 test('Large desktop uses a capped exhibition canvas and restrained scale',()=>run(async page=>{
  await page.goto(base+'work/');
- const shell=await page.evaluate(()=>{const main=document.querySelector('main').getBoundingClientRect(),title=document.querySelector('h1').getBoundingClientRect(),header=document.querySelector('.section-header').getBoundingClientRect();return {main,title,header,links:[...document.querySelectorAll('.section-menu nav a')].filter(a=>getComputedStyle(a).display!=='none').length,indexBorder:getComputedStyle(document.querySelector('.index-link')).borderTopWidth};});
+ const shell=await page.evaluate(()=>{const main=document.querySelector('main').getBoundingClientRect(),title=document.querySelector('h1').getBoundingClientRect(),header=document.querySelector('.window-bar').getBoundingClientRect(),close=getComputedStyle(document.querySelector('.window-close'));return {main,title,header,globalLinks:document.querySelectorAll('.section-menu nav a').length,closeFont:parseFloat(close.fontSize)};});
  assert.ok(shell.main.width<=1600,'Canvas content is capped on large monitors');
  assert.ok(shell.main.left>=100&&shell.main.right<=2460,'Canvas remains centred');
  assert.ok(shell.title.height<100,'Section title is restrained');
- assert.equal(shell.links,5);
- assert.equal(shell.indexBorder,'0px','Top-left navigation is not a boxed button');
+ assert.equal(shell.globalLinks,0);
+ assert.ok(shell.closeFont>=14,'Window actions remain readable on a large monitor');
  for(const card of await page.locator('[data-work-item]').all()){const r=await card.boundingBox();assert.ok(r.y<1200,'All projects remain immediately discoverable');}
 },{viewport:{width:2560,height:1440}}));
 
 test('Desktop section navigation remains usable without JavaScript',()=>run(async page=>{
  await page.goto(base+'design/');
- await page.locator('.section-menu summary').click();
- await page.getByRole('link',{name:'About',exact:true}).click();await page.waitForURL('**/about/');
+ await page.locator('.window-bar [data-window-close]').click();await page.waitForURL('**/#navigation');
+ await page.locator('a[data-star][href="about/"]').click();await page.waitForURL('**/about/');
  assert.match(await page.locator('main').innerText(),/Understand the problem/);
 },{javaScriptEnabled:false}));
 
@@ -305,7 +308,8 @@ test('Section shell is one landscape glass window with normal document scrolling
  assert.equal(style.mainBg,'rgba(0, 0, 0, 0)');
  assert.notEqual(style.position,'fixed');assert.equal(style.mainRadius,'0px');
  assert.notEqual(style.frameRadius,'0px');assert.notEqual(style.blur,'none');
- assert.equal(await page.locator('.section-menu nav a:visible').count(),5);
+ assert.equal(await page.locator('.section-menu').count(),0);
+ assert.equal(await page.locator('.window-bar [data-window-close]').count(),1);
  assert.equal(await page.locator('[data-landscape-motion]').count(),0,'Reduced-motion test context keeps the static poster and needs no pause control');
  assert.equal(await page.evaluate(()=>getComputedStyle(document.body).overflowY),'auto');
 }));

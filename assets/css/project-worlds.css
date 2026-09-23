@@ -51,7 +51,7 @@ body.project-world .world-focus-bar{position:absolute;z-index:8;top:12px;right:1
 body.project-world .world-focus-bar[hidden]{display:none}
 body.project-world .world-focus-bar button,body.project-world .world-focus-bar a{display:inline-flex;min-height:44px;align-items:center;padding:0 14px;border:1px solid rgba(255,255,255,.2);background:rgba(1,1,31,.74);color:inherit;font:inherit;text-decoration:none;cursor:pointer;pointer-events:auto;backdrop-filter:blur(10px)}
 body.project-world .world-focus-bar p{margin:0;color:var(--world-muted)}
-body.project-world.world-focus .section-header{opacity:0;pointer-events:none}
+body.project-world.world-focus .window-bar{opacity:0;pointer-events:none}
 body.project-world.world-focus main.world-shell{position:fixed;z-index:40;inset:0;width:100vw;max-width:none;height:100dvh;margin:0;padding:0;background:var(--world-bg)!important}
 body.page--inner.project-world[data-landscape-camera].world-focus main.world-shell{position:fixed;z-index:40;inset:0;width:100vw;max-width:none;height:100dvh;margin:0;padding:0;background:var(--world-bg)!important}
 body.project-world.world-focus .archive-breadcrumb,body.project-world.world-focus .world-utility,body.project-world.world-focus .world-intro,body.project-world.world-focus .project-context,body.project-world.world-focus .world-nav{display:none}

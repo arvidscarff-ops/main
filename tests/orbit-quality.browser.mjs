@@ -77,10 +77,10 @@ for(const viewport of [{width:390,height:844},{width:320,height:568},{width:844,
   for(const {href} of stars) {
    await page.goto(new URL(href,base).href);assert.equal(await page.locator('main h1').count(),1);
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'No horizontal document overflow');
-   await bounds(page,'.index-link,.section-menu summary');
-   if(viewport.width<900)await page.locator('.section-menu summary').click();assert.equal(await page.locator('.section-menu nav a:visible').count(),5);
+   await bounds(page,'.window-bar a,.window-bar button');
+   assert.equal(await page.locator('.section-menu').count(),0);
    if(viewport.width===390&&href==='work/')await page.screenshot({path:path.join(evidence,'mobile-work.png')});
-   await page.locator('.index-link').click();await page.waitForURL('**/#navigation');
+   await page.locator('.window-bar [data-window-close]').click();await page.waitForURL('**/#navigation');
    assert.equal(await page.locator('[data-orbit]').getAttribute('data-state'),'open');
   }
  }));

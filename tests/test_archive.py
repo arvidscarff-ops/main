@@ -8,10 +8,11 @@ class Page(HTMLParser):
     def handle_starttag(self,tag,attrs): self.tags.append((tag,dict(attrs)))
     def handle_data(self,data): self.text.append(data)
 class ArchiveTests(unittest.TestCase):
-    def test_work_links_to_separate_earlier_design_archive(self):
+    def test_design_archive_remains_separate_from_work_window(self):
         work=Page(ROOT/'work/index.html')
         links=[a['href'] for t,a in work.tags if t=='a' and 'href' in a]
-        self.assertIn('../design/',links)
+        self.assertNotIn('../design/',links)
+        self.assertIn('../#navigation',links)
         archive=ROOT/'work/graphic-design/index.html'
         self.assertTrue(archive.exists(),'Archive landing must exist')
         page=Page(archive)
@@ -50,7 +51,10 @@ class ArchiveTests(unittest.TestCase):
                 p=ROOT/'work/graphic-design'/slug/'index.html'
                 self.assertTrue(p.exists()); s=p.read_text()
                 self.assertIn('src="../../../assets/js/site.js"',s)
-                self.assertIn('aria-current="page" href="../../../design/">Design',s)
+                self.assertIn('class="window-bar" data-window-level="project"',s)
+                self.assertIn('data-window-parent href="../../../design/"',s)
+                self.assertIn('data-window-close href="../../../#navigation"',s)
+                self.assertNotIn('section-menu',s)
                 self.assertNotIn('Project One',s)
                 self.assertIn('https://arvidscarff-ops.github.io/main/work/graphic-design/'+slug+'/',s)
     def test_source_contact_replaces_placeholder(self):
