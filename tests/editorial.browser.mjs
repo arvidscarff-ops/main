@@ -6,15 +6,15 @@ const {chromium}=require(process.env.PLAYWRIGHT_PATH||'playwright');
 const base=process.env.TEST_URL||'http://127.0.0.1:5190/';
 async function run(fn,opts={}){const browser=await chromium.launch({headless:true});try{const page=await browser.newPage({viewport:{width:1440,height:900},reducedMotion:'reduce',...opts});await page.route(/googletagmanager\.com|google-analytics\.com/,r=>r.abort());const errors=[];page.on('pageerror',e=>errors.push(e.message));await fn(page);assert.deepEqual(errors,[]);}finally{await browser.close();}}
 
-test('Work gives three compact choices with optional context',()=>run(async page=>{
+test('Work gives seven compact choices with optional context',()=>run(async page=>{
  await page.goto(base+'work/');
- assert.equal(await page.locator('[data-work-item] details').count(),3);
+ assert.equal(await page.locator('[data-work-item]').count(),7);
  for(const item of await page.locator('[data-work-item]').all()){
-  assert.equal(await item.locator('details').evaluate(n=>n.open),false);
-  const box=await item.boundingBox();assert.ok(box.y+box.height<860,'All three choices should be visible together');
+  assert.equal(await item.evaluate(n=>n.open),false);
+  const box=await item.boundingBox();assert.ok(box.y+box.height<900,'All seven choices should be visible together');
  }
- const context=page.locator('[data-work-item]').first().locator('details');
- await context.locator('summary').click();assert.match(await context.innerText(),/joined this small clothing project/);
+ const context=page.locator('[data-work-item]').first();
+ await context.locator('summary').click();assert.match(await context.innerText(),/head art director and designer/i);
  assert.equal(await context.evaluate(n=>n.open),true);
 }));
 
@@ -209,6 +209,12 @@ test('Landscape worlds keep their mobile navigator attached to the artwork',()=>
   await page.goto(base+'work/graphic-design/'+route);
   const image=page.locator('[data-world-scene]:visible img');
   await image.evaluate(img=>img.complete?true:new Promise(resolve=>img.addEventListener('load',()=>resolve(true),{once:true})));
+  await page.waitForFunction(({navSelector})=>{
+   const media=[...document.querySelectorAll('[data-world-scene] img')].find(img=>{const r=img.getBoundingClientRect(),s=getComputedStyle(img);return r.width>0&&r.height>0&&s.display!=='none'&&s.visibility!=='hidden';});
+   const nav=document.querySelector(navSelector);if(!media||!nav)return false;
+   const m=media.getBoundingClientRect(),n=nav.getBoundingClientRect();
+   return n.y>=m.y+m.height-4&&n.y<=m.y+m.height+40;
+  },{navSelector},{timeout:3000});
   const media=await image.boundingBox();
   const nav=await page.locator(navSelector).boundingBox();
   assert.ok(nav.y>=media.y+media.height-4&&nav.y<=media.y+media.height+40,`${route} navigator must follow its landscape artwork without a dead band`);

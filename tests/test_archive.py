@@ -16,7 +16,9 @@ class ArchiveTests(unittest.TestCase):
         self.assertTrue(archive.exists(),'Archive landing must exist')
         page=Page(archive)
         self.assertIn('Earlier work',' '.join(page.text))
-        self.assertIn('graphic designer',' '.join(page.text))
+        copy=' '.join(page.text).lower()
+        self.assertIn('started with one fascination: branding',copy)
+        self.assertIn('graphic design was where i began',copy)
     def test_every_collection_has_its_complete_gallery(self):
         expected={'textur':6,'event-festival':3,'motion-graphics':9,'logofolio':8,'karnevalen':24}
         index=Page(ROOT/'work/graphic-design/index.html')

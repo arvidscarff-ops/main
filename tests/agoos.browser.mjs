@@ -12,15 +12,19 @@ test('Agoos is reachable from Work with an honest role and readable case study',
   await context.route(/googletagmanager\.com|google-analytics\.com/,r=>r.abort());
   const page=await context.newPage();
   await page.goto(base+'work/');
-  const link=page.getByRole('link',{name:'Explore Agoos Apparel'});
+  await page.locator('#agoos summary').click();
+  const link=page.getByRole('link',{name:'Explore Agoos'});
   assert.equal(await link.count(),1,'Work must link to the new Agoos case study');
   await link.click();await page.waitForURL('**/work/agoos/');
   assert.equal((await page.locator('h1').innerText()).replace(/\s+/g,' '),'Agoos Apparel');
   const copy=await page.locator('main').innerText();
   assert.match(copy,/Art direction, design & operations/);
-  assert.match(copy,/joined Agoos and later took over running it/);
+  assert.match(copy,/head art director and designer/i);
+  assert.match(copy,/later took over running/i);
+  assert.match(copy,/customer support/i);
   assert.match(copy,/Skogrejv/);
   assert.doesNotMatch(copy,/founder|CEO|second.biggest/i);
+  assert.equal(await page.locator('a[href="https://www.instagram.com/skogrejv/"]').count(),1);
   await page.getByRole('link',{name:'Back to Work',exact:true}).click();
   await page.waitForURL('**/work/');
  }finally{await browser.close();}

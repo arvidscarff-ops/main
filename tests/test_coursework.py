@@ -21,7 +21,7 @@ class CourseworkTest(unittest.TestCase):
     def test_work_opens_coursework_alongside_weekender(self):
         page = Page(ROOT / 'work/index.html')
         self.assertTrue(any(a.get('href') == 'growth-toolbox/' for a in page.links), 'Work needs a coursework entry')
-        self.assertEqual(page.items, 3)
+        self.assertEqual(page.items, 7)
         self.assertTrue(any(a.get('href') == 'https://weekender.arvidscarff.workers.dev' for a in page.links))
         self.assertTrue((COURSE / 'index.html').is_file(), 'Coursework destination must exist')
 

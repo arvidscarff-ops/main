@@ -52,6 +52,7 @@ for(const nested of [false,true])test(`Weekender links navigate without requirin
    for(const destination of ['https://weekender.arvidscarff.workers.dev','https://weekender.arvidscarff.workers.dev/about']){
     await page.goto(url+route);
     if(route===section)await page.locator('.assignment-index a[href="#mashup"]').click();
+    else await page.locator('#weekender summary').click();
     const link=page.locator(`a[href="${destination}"]`);
     await link.click();
     await page.waitForURL(destination.replace(/\/$/,'')+(destination.endsWith('/about')?'':'/'),{timeout:10000,waitUntil:'domcontentloaded'});
@@ -79,6 +80,7 @@ for(const nested of [false,true]) test(`Coursework visitor path, navigation, dow
  try{
   await page.goto(url);await page.locator('[data-eagle]').click();
   await page.getByRole('link',{name:'work',exact:true}).click();await page.waitForURL('**/work/');
+  await page.locator('#growth-toolbox summary').click();
   await page.getByRole('link',{name:/Open coursework/}).click();await page.waitForURL('**/growth-toolbox/');
   const downloads=[];
   for(const route of routes){
