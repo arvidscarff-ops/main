@@ -86,11 +86,11 @@ test('Karnevalen campaign connects the creative system to sourced results',()=>r
 test('AI Labs leads with a real Hermes system rather than an unsupported genius claim',()=>run(async page=>{
  await page.goto(base+'ai-labs/');
  const landing=await page.locator('main').innerText();
- assert.match(landing,/latest obsession/i);
- assert.match(landing,/workflows/i);
+ assert.match(landing,/working systems/i);
+ assert.match(landing,/experiments/i);
  assert.doesNotMatch(landing,/genius/i);
- assert.equal(await page.getByRole('link',{name:/See how the system works/i}).count(),1);
- await page.getByRole('link',{name:/See how the system works/i}).click();
+ assert.equal(await page.getByRole('link',{name:/Inspect the system/i}).count(),1);
+ await page.getByRole('link',{name:/Inspect the system/i}).click();
  await page.waitForURL('**/ai-labs/hermes-system/');
  assert.equal(await page.getByRole('heading',{name:'A personal AI system that remembers what matters.',exact:true}).count(),1);
  const copy=await page.locator('main').innerText();
@@ -98,7 +98,7 @@ test('AI Labs leads with a real Hermes system rather than an unsupported genius 
  assert.equal(await page.locator('[data-system-node]').count(),6);
  assert.ok(await page.locator('[data-status="live"]').count()>=5);
  assert.equal(await page.locator('[data-status="development"]').count(),1);
- assert.match(copy,/live now/i);
+ assert.doesNotMatch(copy,/live now/i);
  assert.match(copy,/being built/i);
  assert.match(copy,/Workforce/i);
  assert.doesNotMatch(copy,/api[_ -]?key|token\s*=|password|\/Users\/|\.env/i);

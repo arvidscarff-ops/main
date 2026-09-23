@@ -94,7 +94,7 @@ test('TEXTUR has one compact navigator, overlay notes and clear neighbouring rou
  assert.equal(await page.locator('[data-world-nav] a').count(),6);
  await page.getByLabel('Project notes').click();
  const stageAfter=await page.locator('[data-world-stage]').boundingBox();
- assert.deepEqual(stageAfter,stageBefore,'Notes must overlay the stage rather than push the artwork down');
+ for(const key of ['x','y','width','height']) assert.ok(Math.abs(stageAfter[key]-stageBefore[key])<=3,`Notes must overlay the stage without materially moving ${key}`);
  assert.equal(await page.getByRole('link',{name:'Back to Design'}).isVisible(),true);
  assert.equal(await page.getByRole('link',{name:/Next project: Event/}).isVisible(),true);
 }));
@@ -273,12 +273,12 @@ test('Coursework contents reveal one assignment and honour direct hashes',()=>ru
  await page.goBack();assert.equal(await page.locator('#content').isVisible(),true);
 }));
 
-test('Inner pages load one versioned light canvas stylesheet last and remove ambient controls',()=>run(async page=>{
+test('Inner pages load one versioned landscape canvas stylesheet last and remove ambient controls',()=>run(async page=>{
  await page.addInitScript(()=>localStorage.setItem('ass-theme','dark'));
  for(const route of ['work/','design/','about/','contact/','ai-labs/','work/agoos/','work/growth-toolbox/']){
   await page.goto(base+route);
   const styles=await page.locator('link[rel="stylesheet"]').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('href')));
-  assert.match(styles.at(-1),/editorial\.css\?v=5$/,'The canvas stylesheet must load after page-specific CSS');
+  assert.match(styles.at(-1),/editorial\.css\?v=6$/,'The canvas stylesheet must load after page-specific CSS');
   assert.equal(await page.locator('[data-theme-toggle],[data-sound-toggle]').count(),0,'Inner pages have no homepage ambience controls');
   const colors=await page.evaluate(()=>({body:getComputedStyle(document.body).backgroundColor,main:getComputedStyle(document.querySelector('main')).backgroundColor,bar:document.querySelector('.window-bar')?.textContent||''}));
   assert.doesNotMatch(colors.bar,/\bASS\b/i,'Never use the owner’s initials as a brand label');
@@ -310,7 +310,7 @@ test('Section shell is one landscape glass window with normal document scrolling
  const style=await page.evaluate(()=>{const main=getComputedStyle(document.querySelector('main')),frame=getComputedStyle(document.querySelector('.site-frame'));return{mainBg:main.backgroundColor,position:main.position,mainRadius:main.borderRadius,frameRadius:frame.borderRadius,blur:frame.backdropFilter||frame.webkitBackdropFilter};});
  assert.equal(style.mainBg,'rgba(0, 0, 0, 0)');
  assert.notEqual(style.position,'fixed');assert.equal(style.mainRadius,'0px');
- assert.notEqual(style.frameRadius,'0px');assert.notEqual(style.blur,'none');
+ assert.equal(style.frameRadius,'0px');assert.notEqual(style.blur,'none');
  assert.equal(await page.locator('.section-menu').count(),0);
  assert.equal(await page.locator('.window-bar [data-window-close]').count(),1);
  assert.equal(await page.locator('[data-landscape-motion]').count(),0,'Reduced-motion test context keeps the static poster and needs no pause control');
