@@ -41,7 +41,7 @@ test('Sections expose the work, preserve Design and fold Approach into About',as
   assert.doesNotMatch(await page.locator('main').innerText(),/to be added/i);
   await page.goto(base+'contact/');
   assert.equal(await page.locator('a[href="mailto:arvidscarff@gmail.com"]').count(),1);
-  await page.locator('.index-link').click();
+  await page.locator('.window-bar [data-window-close]').click();
   await page.waitForFunction(()=>document.querySelector('[data-orbit]')?.dataset.state==='open');
   assert.equal(await page.locator('[data-orbit]').getAttribute('data-state'),'open');
  } finally {await browser.close();}

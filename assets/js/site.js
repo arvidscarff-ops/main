@@ -31,10 +31,6 @@ const readingPage=document.body.classList.contains('page--inner');
 const currentTheme=()=>readingPage?(document.body.dataset.readingTheme||'light'):document.documentElement.dataset.theme;
 const renderTheme=()=>{if(themeLabel)themeLabel.textContent=currentTheme()==='dark'?'Light':'Dark';}; renderTheme();
 themeButton?.addEventListener('click',()=>{const next=currentTheme()==='dark'?'light':'dark';if(readingPage)document.body.dataset.readingTheme=next;else{document.documentElement.dataset.theme=next;try{localStorage.setItem('ass-theme',next);}catch{}}sound.tick('theme');renderTheme();});
-const sectionMenu=document.querySelector('.section-menu');
-const desktopMenu=matchMedia('(min-width:900px)');
-function syncSectionMenu(){if(sectionMenu)sectionMenu.open=desktopMenu.matches;}
-syncSectionMenu();desktopMenu.addEventListener('change',syncSectionMenu);
 const scrollKey=`portfolio-scroll:${location.pathname}${location.search}`;
 function saveScrollPosition(){try{sessionStorage.setItem(scrollKey,String(scrollY));}catch{}}
 function restoreScrollPosition(event){try{const navigation=performance.getEntriesByType('navigation')[0];if(!event.persisted&&navigation?.type!=='back_forward')return;const saved=Number(sessionStorage.getItem(scrollKey));if(Number.isFinite(saved))requestAnimationFrame(()=>scrollTo(0,saved));}catch{}}

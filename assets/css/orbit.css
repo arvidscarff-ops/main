@@ -18,20 +18,39 @@
 .orbit-star:nth-child(4) { left:calc(50% + var(--row-width)/4); animation-delay:165ms!important; }
 .orbit-star:nth-child(5) { left:calc(50% + var(--row-width)/2); animation-delay:220ms!important; }
 .star-hit { position:absolute; left:50%; top:50%; width:100%; height:100%; transform:translate(-50%,-50%); }
-.star-label { position:absolute; top:calc(100% + 12px); left:50%; transform:translateX(-50%); white-space:nowrap; color:#fff; font:9px/1 var(--mono); letter-spacing:.18em; text-transform:uppercase; text-shadow:0 1px 6px rgba(0,0,0,.8); }
+.star-label { position:absolute; top:calc(100% + 12px); left:50%; transform:translateX(-50%); white-space:nowrap; color:#fff; font:12px/1 var(--mono); letter-spacing:.18em; text-transform:uppercase; text-shadow:0 1px 6px rgba(0,0,0,.8); }
 .orbit[data-state="open"] .orbit-star,.orbit[data-state="opening"] .orbit-star { opacity:1; transform:translate(-50%,calc(-50% + var(--row-y))) scale(1); pointer-events:auto; animation:star-arrive 180ms steps(3,end) both; }
 .orbit[data-state="closing"] .orbit-star { opacity:0; pointer-events:none; }
 .orbit[data-state="fallback"] .orbit-star { opacity:1; pointer-events:auto; transform:translate(-50%,calc(-50% + var(--row-y))); }
 .home-logo:focus-visible,.orbit-star:focus-visible { outline:2px solid #fff; outline-offset:7px; }
+.current-work { position:absolute; z-index:5; left:clamp(40px,3.4vw,66px); bottom:clamp(42px,4vw,70px); width:min(360px,calc(100% - 80px)); overflow:hidden; color:#f2f3ee; background:rgba(13,18,14,.94); border:1px solid rgba(235,240,232,.28); border-radius:0; box-shadow:none; backdrop-filter:none; -webkit-backdrop-filter:none; }
+.current-work__bar { display:flex; min-height:62px; align-items:center; justify-content:space-between; gap:20px; padding:10px 10px 10px 16px; border-bottom:1px solid rgba(235,240,232,.15); }
+.current-work h2 { margin:0; color:inherit; font:500 14px/1.2 var(--mono); letter-spacing:.01em; }
+.current-work__toggle { display:grid; flex:0 0 44px; width:44px; height:44px; padding:0; place-items:center; border:1px solid rgba(235,240,232,.3); border-radius:3px; color:inherit; background:#111610; font:20px/1 var(--sans); cursor:pointer; }
+.current-work__toggle:hover { background:#1b211b; }
+.current-work__toggle:focus-visible,.current-work a:focus-visible { outline:2px solid #fff; outline-offset:-3px; }
+.current-work__list { margin:0; padding:0; list-style:none; }
+.current-work__list li+li { border-top:1px solid rgba(235,240,232,.12); }
+.current-work__list a { display:grid; min-height:58px; grid-template-columns:minmax(0,1fr) 20px; align-items:center; gap:10px; padding:7px 14px 7px 16px; color:inherit; text-decoration:none; transition:background-color 150ms ease; }
+.current-work__list a:hover,.current-work__list a:focus-visible { background:rgba(255,255,255,.07); }
+.current-work__list a>span { display:grid; min-width:0; gap:4px; }
+.current-work__list strong { overflow:hidden; font:500 14px/1.15 var(--sans); letter-spacing:-.01em; text-overflow:ellipsis; white-space:nowrap; }
+.current-work__list a>span>span { overflow:hidden; color:rgba(242,243,238,.62); font:12px/1.15 var(--mono); text-overflow:ellipsis; white-space:nowrap; }
+.current-work__list i { color:rgba(242,243,238,.58); font:normal 12px/1 var(--mono); }
+.current-work[data-state="minimized"] .current-work__bar { border-bottom-color:transparent; }
 @keyframes star-arrive { from { opacity:0; } to { opacity:1; } }
 @media(max-width:600px) {
  .orbit { --logo-size:min(66vw,280px); --star-size:24px; --row-width:min(70vw,280px); --row-y:calc(var(--logo-size)*-.3 - 48px); }
  .page--home .home-stage::before { inset:18px; opacity:.13; }
- .star-label { font-size:8px; letter-spacing:.12em; }
+ .star-label { font-size:12px; letter-spacing:.12em; }
+ .current-work { right:18px; bottom:18px; left:18px; width:auto; }
+ .current-work__bar { min-height:58px; }
 }
 @media(max-height:520px) {
  .orbit { --logo-size:min(40vw,280px); --star-size:23px; --row-width:min(65vw,620px); --row-y:-100px; }
  .star-label { top:calc(100% + 7px); }
+ .current-work { left:24px; bottom:24px; width:320px; }
+ .current-work__bar { min-height:58px; }
 }
 @media(prefers-reduced-motion:reduce) {
  .logo-star img,.star-hit>img,.orbit[data-state="open"] .orbit-star { animation:none; }

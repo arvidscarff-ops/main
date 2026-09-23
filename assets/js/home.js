@@ -7,10 +7,30 @@ const logo=orbit.querySelector('[data-home-logo]');
 const status=orbit.querySelector('[data-orbit-status]');
 const video=document.querySelector('[data-landscape]');
 const motionToggle=document.querySelector('[data-motion-toggle]');
+const currentWork=document.querySelector('[data-current-work]');
+const currentWorkToggle=document.querySelector('[data-current-work-toggle]');
+const currentWorkList=document.querySelector('[data-current-work-list]');
 let expanded=false;
 let closeTimer=0;
 let motionPaused=false;
 const rotation=startStarRotation([logo,...stars]);
+
+if(currentWork&&currentWorkToggle&&currentWorkList){
+  const key='portfolio-current-work-minimized';
+  let saved=null;
+  try{saved=sessionStorage.getItem(key);}catch{}
+  let minimized=saved===null?matchMedia('(max-height:520px)').matches:saved==='true';
+  const render=()=>{
+    currentWork.dataset.state=minimized?'minimized':'open';
+    currentWorkList.hidden=minimized;
+    currentWorkToggle.hidden=false;
+    currentWorkToggle.setAttribute('aria-expanded',String(!minimized));
+    currentWorkToggle.setAttribute('aria-label',minimized?'Show current work':'Hide current work');
+    currentWorkToggle.firstElementChild.textContent=minimized?'+':'−';
+  };
+  currentWorkToggle.addEventListener('click',()=>{minimized=!minimized;try{sessionStorage.setItem(key,String(minimized));}catch{}render();sound.tick('soft');});
+  render();
+}
 
 function setExpanded(open,instant=false) {
   expanded=open;

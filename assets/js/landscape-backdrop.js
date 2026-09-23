@@ -21,8 +21,9 @@ body.prepend(backdrop);
 if(motionAllowed){
  const button=document.createElement('button');
  button.type='button';button.className='landscape-motion';button.dataset.landscapeMotion='';
- const header=document.querySelector('.section-header');
- header?.insertBefore(button,header.querySelector('.section-menu'));
+ const actions=document.querySelector('[data-window-actions]');
+ const close=actions?.querySelector('[data-window-close]');
+ actions?.insertBefore(button,close||null);
  let paused=false;
  try{paused=sessionStorage.getItem('portfolio-landscape-paused')==='true';}catch{}
  function render(){button.setAttribute('aria-pressed',String(paused));button.textContent=paused?'Play background':'Pause background';}
