@@ -12,12 +12,12 @@ function harness() {
     querySelectorAll: selector => selector === 'a[href="#main"]' ? [anchor] : [],
     getElementById: id => id === 'main' ? main : null,
     addEventListener: (name, fn) => {listeners[name] = fn;},
-    body: {classList: {remove: name => state.removed.push(name)}}
+    body: {classList: {contains:()=>false,add:()=>{},remove: name => state.removed.push(name)}}
   };
   const location = new URL('https://example.test/main/work/graphic-design/textur/');
   const source = fs.readFileSync(new URL('../assets/js/site.js', import.meta.url), 'utf8')
-    .replace('export const sound=', 'const sound=').replace('export { reducedMotion };', '');
-  vm.runInNewContext(source, {document, location, URL, matchMedia: () => ({matches: false}),
+    .replace("import './editorial.js';",'').replace('export const sound=', 'const sound=').replace('export { reducedMotion };', '');
+  vm.runInNewContext(source, {document, location, URL, matchMedia: () => ({matches: false,addEventListener:()=>{}}),
     localStorage: {getItem: () => null}, window: {addEventListener: (name, fn) => {windowListeners[name] = fn;}}, setTimeout});
   return {listeners, windowListeners, state, location};
 }

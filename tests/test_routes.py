@@ -37,7 +37,7 @@ class RoutesTest(unittest.TestCase):
                     self.assertTrue(destination.is_file(), f'Missing local target: {destination}')
                 if destination.suffix == '.html' and destination.is_file():
                     queue.append(destination)
-        self.assertTrue({ROOT / section / 'index.html' for section in ('work', 'approach', 'design', 'about', 'contact', 'redacted')}.issubset(visited))
+        self.assertTrue({ROOT / section / 'index.html' for section in ('work', 'design', 'about', 'contact', 'ai-labs')}.issubset(visited))
 
 if __name__ == '__main__':
     unittest.main()
