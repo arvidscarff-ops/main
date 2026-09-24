@@ -83,24 +83,21 @@ test('Karnevalen campaign connects the creative system to sourced results',()=>r
  assert.ok(await page.locator('a[href="../graphic-design/karnevalen/"]').count()>=1);
 }));
 
-test('AI Labs leads with a real Hermes system rather than an unsupported genius claim',()=>run(async page=>{
+test('AI Labs explains the real workflow with expandable what and why',()=>run(async page=>{
  await page.goto(base+'ai-labs/');
- const landing=await page.locator('main').innerText();
- assert.match(landing,/working systems/i);
- assert.match(landing,/experiments/i);
- assert.doesNotMatch(landing,/genius/i);
- assert.equal(await page.getByRole('link',{name:/Inspect the system/i}).count(),1);
- await page.getByRole('link',{name:/Inspect the system/i}).click();
+ assert.equal(await page.locator('[data-mindmap]').count(),1);
+ assert.doesNotMatch(await page.locator('main').innerText(),/genius/i);
+ await page.getByRole('link',{name:/Hermes system permalink/i}).click();
  await page.waitForURL('**/ai-labs/hermes-system/');
- assert.equal(await page.getByRole('heading',{name:'A personal AI system that remembers what matters.',exact:true}).count(),1);
+ assert.equal(await page.getByRole('heading',{name:'AI, organised around the work.',exact:true}).count(),1);
+ for(const node of await page.locator('.mind-node').all()) await node.locator('summary').click();
  const copy=await page.locator('main').innerText();
- for(const name of ['Hermes','Hindsight','QMD','Skills and tools','Model routing','Review boundaries']) assert.match(copy,new RegExp(name,'i'));
- assert.equal(await page.locator('[data-system-node]').count(),6);
- assert.ok(await page.locator('[data-status="live"]').count()>=5);
- assert.equal(await page.locator('[data-status="development"]').count(),1);
- assert.doesNotMatch(copy,/live now/i);
- assert.match(copy,/being built/i);
- assert.match(copy,/Workforce/i);
+ for(const name of ['Jarvis','Hermes','Hindsight','QMD','Skills & tools','Researcher','Builder','Critic','Learning coach','Coding loop','Gauntlet loop','Model choice']) assert.ok(copy.includes(name),name);
+ assert.equal(await page.locator('.mind-node[open]').count(),12);
+ assert.equal(await page.locator('.mind-detail b').filter({hasText:'Why'}).count(),12);
+ assert.match(copy,/not always-on bots/i);
+ assert.match(copy,/Publishing is a separate decision/i);
+ assert.match(copy,/PHASE visual workflow/i);
  assert.doesNotMatch(copy,/api[_ -]?key|token\s*=|password|\/Users\/|\.env/i);
  assert.equal(await page.locator('a[href^="https://hermes-agent.nousresearch.com/docs"]').count(),1);
 }));
@@ -109,7 +106,7 @@ test('Narrative case studies keep their atmosphere and fit a mobile viewport',()
  const cases=[
   ['work/noisey-neighbours/','rgb(17, 17, 15)'],
   ['work/karnevalen-campaign/','rgb(247, 237, 84)'],
-  ['ai-labs/hermes-system/','rgb(9, 11, 13)']
+  ['ai-labs/hermes-system/','rgba(0, 0, 0, 0)']
  ];
  for(const [route,background] of cases){
   await page.goto(base+route);
