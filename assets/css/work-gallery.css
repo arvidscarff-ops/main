@@ -1,0 +1,78 @@
+/* Work: a single image-led window. Shared pages stay untouched. */
+body.work-gallery-page[data-landscape-camera] {
+ --work-top:clamp(24px,10vh,150px);
+ --work-width:min(1600px,calc(100% - 64px));
+ background:#11170d url('../media/home/camera-01-poster.jpg') center/cover fixed!important;
+}
+body.work-gallery-page[data-landscape-camera] .site-frame {
+ top:var(--work-top);bottom:auto;width:var(--work-width);height:calc(clamp(420px,65vh,720px) + 88px);
+ background:rgba(20,27,21,.66);border:1px solid rgba(225,233,218,.23);border-radius:0;
+ box-shadow:0 28px 90px #050b0866;
+}
+body.work-gallery-page[data-landscape-camera] .window-bar {
+ top:var(--work-top);width:var(--work-width);margin-top:var(--work-top);padding-inline:24px;
+ background:rgba(27,35,27,.62);border-radius:0;border-bottom-color:#d5dcc51a;
+}
+body.work-gallery-page[data-landscape-camera] .work-gallery-main {
+ width:var(--work-width);min-height:0;padding:16px;margin-bottom:var(--work-top);
+}
+.work-gallery-title {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.work-gallery {display:flex;gap:8px;height:clamp(420px,65vh,720px)}
+.work-panel {position:relative;flex:1 1 0;min-width:0;overflow:hidden;border-radius:6px;background:#28332a;transition:flex-grow 650ms cubic-bezier(.22,1,.36,1)}
+.work-panel__link {position:relative;display:block;height:100%;min-height:100%;color:#fff;text-decoration:none;isolation:isolate}
+.work-panel__image {position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%;transition:transform 900ms cubic-bezier(.22,1,.36,1),filter 650ms ease;filter:saturate(.8)}
+.work-panel__link::after {content:'';position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,#0c161500 20%,#0a10083d 42%,#080e09d9 80%,#080e09f2)}
+.work-panel__copy {position:absolute;z-index:1;bottom:26px;left:16px;right:16px}
+.work-panel h2 {margin:0 0 9px;font-size:clamp(17px,1.25vw,23px);line-height:1.1;font-weight:550;letter-spacing:-.035em;overflow-wrap:normal}
+body.work-gallery-page .work-panel__subtitle {margin:0;color:#e1e7db;font-size:12px;line-height:1.4;letter-spacing:0}
+.work-panel__reveal {display:grid;grid-template-rows:0fr;opacity:0;max-height:0;overflow:hidden;transition:max-height 500ms cubic-bezier(.22,1,.36,1),opacity 240ms ease}
+body.work-gallery-page .work-panel__description {margin:22px 0 14px;color:#e4e9e0;font-size:14px;line-height:1.5;letter-spacing:0;opacity:0;transition:opacity 240ms ease;max-width:33ch}
+.work-panel__enter {display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;padding-top:10px;border-top:1px solid #e2ead644;font-size:13px;font-weight:550}
+.work-panel__enter span {font-size:22px}
+.work-panel.is-active,.work-gallery:not([data-ready]) .work-panel:focus-within {flex-grow:3.5}
+.work-panel.is-active .work-panel__image,.work-gallery:not([data-ready]) .work-panel:focus-within .work-panel__image {filter:saturate(1);transform:scale(1.035)}
+.work-panel.is-active .work-panel__reveal,.work-gallery:not([data-ready]) .work-panel:focus-within .work-panel__reveal {display:block;opacity:1;max-height:260px}
+.work-panel.is-active .work-panel__description,.work-gallery:not([data-ready]) .work-panel:focus-within .work-panel__description {opacity:1}
+body.work-gallery-page .work-panel__link:focus-visible {outline:2px solid #f1f5de;outline-offset:-4px;border-radius:6px}
+#agoos .work-panel__image {object-position:48% 50%;filter:brightness(1.35)}
+#weekender .work-panel__image {object-position:27% 15%}
+#noisey .work-panel__image {object-position:78% 30%}
+#personal-brand .work-panel__image {object-position:56% 40%}
+#ghostwriting .work-panel__image {object-position:20% 0}
+#ghostwriting .work-panel__link::after {background:linear-gradient(180deg,#0c161500 15%,#080e0966 42%,#080e09ee 78%,#080e09f7)}
+#growth-toolbox .work-panel__image {object-position:16% 0}
+@media(hover:hover) {
+ .work-gallery:not([data-ready]) .work-panel:hover {flex-grow:3.5}
+ .work-gallery:not([data-ready]) .work-panel:hover .work-panel__reveal {display:block;opacity:1;max-height:260px}
+ .work-gallery:not([data-ready]) .work-panel:hover .work-panel__description {opacity:1}
+}
+@media(max-width:1279px) {
+ body.work-gallery-page[data-landscape-camera] {--work-top:20px;--work-width:calc(100% - 40px)}
+ body.work-gallery-page[data-landscape-camera] .site-frame {height:auto;bottom:20px}
+ body.work-gallery-page[data-landscape-camera] .window-bar {position:sticky;top:20px}
+ .work-gallery {height:auto;flex-direction:column;gap:8px}
+ .work-panel {flex:none;height:112px;min-height:112px;transition:height 550ms cubic-bezier(.22,1,.36,1)}
+ .work-panel.is-active,.work-gallery:not([data-ready]) .work-panel:focus-within {height:360px}
+ .work-panel__copy {bottom:20px;left:22px;right:22px}
+ .work-panel h2 {font-size:22px;max-width:90%}
+ .work-panel__image {object-position:center 38%}
+ .work-panel__link::after {background:linear-gradient(90deg,#070f0be6,#0a100864),linear-gradient(0deg,#0a1008a6,transparent 80%)}
+ .work-panel__description {max-width:38ch}
+ .work-panel__enter {max-width:330px}
+ .work-panel {scroll-margin-top:96px}
+ .work-gallery:not([data-ready]) .work-panel {height:330px}
+ .work-gallery:not([data-ready]) .work-panel__reveal {display:block;opacity:1;max-height:260px}
+ .work-gallery:not([data-ready]) .work-panel__description {opacity:1}
+}
+@media(max-width:600px) {
+ body.work-gallery-page[data-landscape-camera] {--work-top:10px;--work-width:calc(100% - 20px)}
+ body.work-gallery-page[data-landscape-camera] .window-bar {top:10px;width:var(--work-width);padding-inline:16px}
+ body.work-gallery-page[data-landscape-camera] .site-frame {bottom:10px;width:var(--work-width)}
+ body.work-gallery-page[data-landscape-camera] .work-gallery-main {width:var(--work-width);padding:8px;margin-bottom:10px}
+ .work-panel__copy {left:17px;right:17px}
+ .work-panel h2 {font-size:22px}
+}
+@media(prefers-reduced-motion:reduce) {
+ .work-panel,.work-panel * {transition:none!important;scroll-behavior:auto!important}
+ .work-panel.is-active .work-panel__image,.work-gallery:not([data-ready]) .work-panel:focus-within .work-panel__image {transform:none}
+}

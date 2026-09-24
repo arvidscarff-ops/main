@@ -6,16 +6,17 @@ const {chromium}=require(process.env.PLAYWRIGHT_PATH||'playwright');
 const base=process.env.TEST_URL||'http://127.0.0.1:5190/';
 async function run(fn,opts={}){const browser=await chromium.launch({headless:true});try{const page=await browser.newPage({viewport:{width:1440,height:900},reducedMotion:'reduce',...opts});await page.route(/googletagmanager\.com|google-analytics\.com/,r=>r.abort());const errors=[];page.on('pageerror',e=>errors.push(e.message));await fn(page);assert.deepEqual(errors,[]);}finally{await browser.close();}}
 
-test('Work gives seven compact choices with optional context',()=>run(async page=>{
+test('Work gives seven image choices with short optional context',()=>run(async page=>{
  await page.goto(base+'work/');
  assert.equal(await page.locator('[data-work-item]').count(),7);
  for(const item of await page.locator('[data-work-item]').all()){
-  assert.equal(await item.evaluate(n=>n.open),false);
   const box=await item.boundingBox();assert.ok(box.y+box.height<900,'All seven choices should be visible together');
+  assert.equal(await item.locator('img').count(),1);
+  assert.ok((await item.locator('.work-panel__subtitle').innerText()).length>0);
  }
- const context=page.locator('[data-work-item]').first();
- await context.locator('summary').click();assert.match(await context.innerText(),/head art director and designer/i);
- assert.equal(await context.evaluate(n=>n.open),true);
+ const first=page.locator('[data-work-item]').first();
+ await first.hover();assert.match(await first.locator('.work-panel__description').innerText(),/art direction.*running the brand/i);
+ assert.equal(await first.evaluate(n=>n.classList.contains('is-active')),true);
 }));
 
 test('Design is a contact sheet whose collections open inside their project worlds',()=>run(async page=>{
@@ -131,6 +132,8 @@ test('Portfolio routes preload on intent and share native visual continuity',()=
 
 test('Event & Festival is a three-channel campaign world, not a thumbnail page',()=>run(async page=>{
  await page.goto(base+'work/graphic-design/event-festival/');
+ await page.locator('body.has-section-js').waitFor();
+ await page.waitForFunction(()=>getComputedStyle(document.querySelector('[data-world-stage]')).marginTop==='0px');
  assert.equal(await page.locator('body').getAttribute('data-world-layout'),'campaign');
  assert.equal(await page.locator('[data-world-scene]:visible').count(),1);
  const stage=await page.locator('[data-world-stage]').boundingBox();
@@ -278,7 +281,10 @@ test('Inner pages load one versioned landscape canvas stylesheet last and remove
  for(const route of ['work/','design/','about/','contact/','ai-labs/','work/agoos/','work/growth-toolbox/']){
   await page.goto(base+route);
   const styles=await page.locator('link[rel="stylesheet"]').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('href')));
-  assert.match(styles.at(-1),/editorial\.css\?v=6$/,'The canvas stylesheet must load after page-specific CSS');
+  if(route==='work/') {
+   assert.match(styles.at(-2),/editorial\.css\?v=6$/);
+   assert.match(styles.at(-1),/work-gallery\.css\?v=1$/,'Work adds its scoped accordion after the shared canvas');
+  } else assert.match(styles.at(-1),/editorial\.css\?v=6$/,'The canvas stylesheet must load after page-specific CSS');
   assert.equal(await page.locator('[data-theme-toggle],[data-sound-toggle]').count(),0,'Inner pages have no homepage ambience controls');
   const colors=await page.evaluate(()=>({body:getComputedStyle(document.body).backgroundColor,main:getComputedStyle(document.querySelector('main')).backgroundColor,bar:document.querySelector('.window-bar')?.textContent||''}));
   assert.doesNotMatch(colors.bar,/\bASS\b/i,'Never use the owner’s initials as a brand label');
