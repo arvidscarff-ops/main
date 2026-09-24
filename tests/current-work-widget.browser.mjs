@@ -11,8 +11,8 @@ test('Homepage presents three provisional current projects as a desktop widget',
  const widget=page.locator('[data-current-work]');
  assert.equal(await widget.isVisible(),true);
  assert.equal(await widget.getByRole('heading',{name:'Currently working on…'}).count(),1);
- assert.match(await page.locator('link[href*="orbit.css"]').getAttribute('href'),/orbit\.css\?v=2$/);
- assert.match(await page.locator('script[src*="home.js"]').getAttribute('src'),/home\.js\?v=2$/);
+ assert.match(await page.locator('link[href*="orbit.css"]').getAttribute('href'),/orbit\.css\?v=3$/);
+ assert.match(await page.locator('script[src*="home.js"]').getAttribute('src'),/home\.js\?v=3$/);
  assert.deepEqual(await widget.locator('[data-current-project]').evaluateAll(rows=>rows.map(row=>({title:row.querySelector('strong')?.textContent.trim(),detail:row.querySelector('strong+span')?.textContent.trim(),href:row.getAttribute('href')}))),[
   {title:'Growth Marketing',detail:'Berghs',href:'work/growth-toolbox/'},
   {title:'Ghostwriting',detail:'Consulting & mentorship',href:'work/#ghostwriting'},
@@ -41,7 +41,7 @@ test('Widget fits below the crest on portrait mobile and starts compact on short
  const geometry=await page.evaluate(()=>{const widget=document.querySelector('[data-current-work]').getBoundingClientRect(),logo=document.querySelector('[data-home-logo]').getBoundingClientRect();return{widget,logo,width:innerWidth,height:innerHeight,scroll:document.documentElement.scrollWidth};});
  assert.ok(geometry.widget.left>=8&&geometry.widget.right<=geometry.width-8);
  assert.ok(geometry.widget.bottom<=geometry.height-8);
- assert.ok(geometry.logo.bottom<=geometry.widget.top,'Current-work window must not cover the crest');
+ assert.ok(geometry.widget.bottom<=geometry.logo.top,'Current-work window sits above, not over, the supplied lockup');
  assert.ok(geometry.scroll<=geometry.width+1);
 },{viewport:{width:390,height:844}}));
 

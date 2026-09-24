@@ -54,7 +54,7 @@ test('Temporary griffin logo assembles five equally spaced destinations',async()
   await page.goto(base);
   const stars=page.locator('[data-star]');
   assert.equal(await page.locator('[data-home-logo]').count(),1,'The supplied griffin logo must be the homepage control');
-  assert.match(await page.locator('[data-home-logo] .home-logo__art').getAttribute('src'),/temporary-logo\.webp$/);
+  assert.match(await page.locator('[data-home-logo] .home-logo__art').getAttribute('src'),/scarff-lockup\.webp$/);
   assert.equal(await stars.count(),5,'Five destination stars must be present');
   assert.equal(await page.locator('[data-orbit]').getAttribute('data-state'),'closed');
   await page.locator('[data-home-logo]').click();
@@ -83,7 +83,8 @@ test('Five stars assemble without morphing or overlapping',async()=>{
    if(document.querySelector('.morph-seed'))throw new Error('Old morphing element still exists');
    logo.click();
    const frames=[];
-   for(let i=0;i<40;i++){
+   const start=performance.now();
+   while(performance.now()-start<1500){
     const visible=stars.map(node=>{const r=node.getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2,opacity:Number(getComputedStyle(node).opacity)}}).filter(item=>item.opacity>.08);
     frames.push(visible);
     await new Promise(requestAnimationFrame);

@@ -1,0 +1,52 @@
+/* Original poster reel trial. Only the motion-graphics screening room opts in. */
+body.motion-reel.has-section-js { --reel-height: 154px; }
+body.motion-reel.has-section-js .world-nav--screening {
+  display:flex; gap:12px; height:var(--reel-height);
+  left:4px; right:4px; bottom:4px; padding:4px 4px 12px;
+  overflow-x:auto; overflow-y:hidden; overscroll-behavior-x:contain;
+  scroll-snap-type:x proximity; scrollbar-width:thin;
+  scrollbar-color:var(--world-muted) var(--world-bg);
+}
+body.motion-reel.has-section-js .world-nav--screening::-webkit-scrollbar { display:block; height:6px; }
+body.motion-reel.has-section-js .world-nav--screening a {
+  flex:0 0 176px; height:100%; scroll-snap-align:center;
+  border:1px solid #5a5358;
+}
+body.motion-reel.has-section-js .world-nav--screening img {
+  object-fit:contain; opacity:.72; filter:none;
+}
+body.motion-reel.has-section-js .world-nav--screening a[aria-current] {
+  border-color:var(--world-accent); box-shadow:0 0 0 1px var(--world-accent);
+}
+body.motion-reel.has-section-js .world-nav--screening a:focus-visible {
+  outline:2px solid var(--world-fg); outline-offset:2px;
+}
+body.motion-reel.has-section-js [data-world-scene] {
+  bottom:calc(var(--reel-height) + 38px);
+  grid-template-rows:minmax(0,1fr) auto; gap:12px;
+}
+body.motion-reel.has-section-js [data-world-scene] video {
+  height:100%!important; max-width:100%; max-height:100%; min-height:0;
+}
+body.motion-reel.has-section-js [data-world-scene] figcaption {
+  position:static; width:100%; padding:4px; box-sizing:border-box;
+}
+body.motion-reel:not(.has-section-js) [data-world-scene] figcaption { position:static; margin-top:12px; }
+body.motion-reel.has-section-js .world-nav--screening { cursor:grab; }
+body.motion-reel.has-section-js .world-nav--screening a { cursor:inherit; user-select:none; -webkit-user-select:none; }
+body.motion-reel.has-section-js .world-nav--screening.is-dragging { cursor:grabbing; scroll-snap-type:none; }
+/* Keep the original-file link operable above, not behind, the reel. */
+body.motion-reel [data-world-scene] figcaption { pointer-events:auto; }
+@media(max-width:700px) {
+  body.motion-reel.has-section-js { --reel-height:120px; }
+  body.motion-reel.has-section-js .world-nav--screening a { flex-basis:132px; }
+  body.motion-reel [data-world-scene] figcaption { left:4px; right:4px; gap:8px; }
+}
+@media(max-height:600px) {
+  body.motion-reel.has-section-js main.world-shell { display:block; overflow-y:auto; }
+  body.motion-reel.has-section-js .world-stage { height:440px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  body.motion-reel .world-nav--screening { scroll-behavior:auto; }
+  body.motion-reel .world-nav--screening * { animation:none; transition:none; }
+}

@@ -1,5 +1,6 @@
 import { reducedMotion, sound } from './site.js';
-import { startStarRotation } from './star-rotation.js';
+import { initProjectPreviews } from './project-previews.js';
+initProjectPreviews();
 
 const orbit=document.querySelector('[data-orbit]');
 const stars=[...orbit.querySelectorAll('[data-star]')];
@@ -13,13 +14,13 @@ const currentWorkList=document.querySelector('[data-current-work-list]');
 let expanded=false;
 let closeTimer=0;
 let motionPaused=false;
-const rotation=startStarRotation([logo,...stars]);
+
 
 if(currentWork&&currentWorkToggle&&currentWorkList){
   const key='portfolio-current-work-minimized';
   let saved=null;
   try{saved=sessionStorage.getItem(key);}catch{}
-  let minimized=saved===null?matchMedia('(max-height:520px)').matches:saved==='true';
+  let minimized=saved===null?matchMedia('(max-width:700px), (max-height:760px)').matches:saved==='true';
   const render=()=>{
     currentWork.dataset.state=minimized?'minimized':'open';
     currentWorkList.hidden=minimized;
@@ -38,16 +39,17 @@ function setExpanded(open,instant=false) {
   logo.setAttribute('aria-expanded',String(open));
   logo.setAttribute('aria-label',open?'Close navigation':'Open navigation');
   stars.forEach(star=>star.tabIndex=open?0:-1);
+  orbit.querySelector('.constellation').inert=!open;
   if(open&&(instant||reducedMotion.matches)) {
     orbit.dataset.state='open';
   } else if(open) {
     orbit.dataset.state='opening';
-    closeTimer=window.setTimeout(()=>{if(expanded)orbit.dataset.state='open';},420);
+    closeTimer=window.setTimeout(()=>{if(expanded)orbit.dataset.state='open';},1800);
   } else if(instant||reducedMotion.matches) {
     orbit.dataset.state='closed';
   } else {
     orbit.dataset.state='closing';
-    closeTimer=window.setTimeout(()=>{if(!expanded)orbit.dataset.state='closed';},240);
+    closeTimer=window.setTimeout(()=>{if(!expanded)orbit.dataset.state='closed';},700);
   }
   status.textContent=open?'Navigation open. Choose a section.':'Navigation closed.';
   history.replaceState({...history.state,orbitOpen:open},'');
@@ -65,7 +67,7 @@ function loadVideo() {
 function syncMotion() {
   const reduce=reducedMotion.matches;
   const suspended=motionPaused||reduce||document.hidden;
-  rotation.setPaused(suspended);
+
   motionToggle.disabled=reduce;
   motionToggle.setAttribute('aria-pressed',String(motionPaused||reduce));
   motionToggle.textContent=reduce?'Motion reduced':motionPaused?'Play motion':'Pause motion';
@@ -73,6 +75,10 @@ function syncMotion() {
 }
 
 logo.addEventListener('click',()=>setExpanded(!expanded));
+// Empty desktop space opens navigation; existing controls retain their action.
+document.querySelector('.home-stage').addEventListener('click',event=>{
+  if(!expanded&&!event.target.closest('a,button,input,summary'))setExpanded(true);
+});
 logo.addEventListener('keydown',event=>{
   if(event.key==='ArrowDown'&&expanded){event.preventDefault();stars[0].focus();}
 });
@@ -93,4 +99,5 @@ document.addEventListener('visibilitychange',syncMotion);
 document.documentElement.classList.add('has-js');
 stars.forEach(star=>star.setAttribute('aria-label',star.querySelector('.star-label').textContent.trim()));
 setExpanded(Boolean(history.state?.orbitOpen||location.hash==='#navigation'),true);
+requestAnimationFrame(()=>requestAnimationFrame(()=>{orbit.dataset.ready='true';}));
 syncMotion();
