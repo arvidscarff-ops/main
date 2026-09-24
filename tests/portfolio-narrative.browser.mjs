@@ -28,29 +28,28 @@ test('Design presents branding as the foundation of the current practice',()=>ru
  }
 }));
 
-test('Work is a seven-entry practice map with optional exclusive depth',()=>run(async page=>{
+test('Work is a seven-entry image accordion with exclusive pointer selection',()=>run(async page=>{
  await page.goto(base+'work/');
- const entries=page.locator('[data-practice-map] [data-work-item]');
+ const entries=page.locator('[data-work-gallery] [data-work-item]');
  assert.equal(await entries.count(),7);
  const expected=['Agoos Apparel','Weekender','Noisey Neighbours','Personal brand consulting','Ghostwriting','Karnevalen campaign','Growth Toolbox'];
- assert.deepEqual(await entries.locator('summary h2').allTextContents(),expected);
- assert.equal(await entries.locator('details').count(),0,'Each work item is itself the progressive disclosure control');
- for(const entry of await entries.all()) assert.equal(await entry.evaluate(n=>n.open),false);
- await entries.nth(2).locator('summary').click();
- assert.equal(await entries.nth(2).evaluate(n=>n.open),true);
- await entries.nth(4).locator('summary').click();
- assert.equal(await entries.nth(2).evaluate(n=>n.open),false,'Opening a story should close the previous one');
- assert.equal(await entries.nth(4).evaluate(n=>n.open),true);
- assert.match(await entries.nth(4).innerText(),/\$200k\+/i);
- assert.match(await entries.nth(4).innerText(),/NDA/i);
+ assert.deepEqual(await entries.locator('h2').allTextContents(),expected);
+ await entries.nth(2).hover();
+ assert.equal(await entries.nth(2).evaluate(n=>n.classList.contains('is-active')),true);
+ await entries.nth(4).hover();
+ assert.equal(await entries.nth(2).evaluate(n=>n.classList.contains('is-active')),false);
+ assert.equal(await entries.nth(4).evaluate(n=>n.classList.contains('is-active')),true);
+ await entries.nth(4).locator('a').click();await page.waitForURL('**/ghostwriting/');
+ assert.match(await page.locator('main').innerText(),/\$200k\+/i);
+ assert.match(await page.locator('main').innerText(),/NDA/i);
 }));
 
 test('Work remains readable without JavaScript',()=>run(async page=>{
  await page.goto(base+'work/');
- const entries=page.locator('[data-practice-map] [data-work-item]');
+ const entries=page.locator('[data-work-gallery] [data-work-item]');
  assert.equal(await entries.count(),7);
- await entries.nth(3).locator('summary').click();
- assert.match(await entries.nth(3).innerText(),/seven months/i);
+ await entries.nth(3).locator('a').click();await page.waitForURL('**/personal-brand-consulting/');
+ assert.match(await page.locator('main').innerText(),/seven months/i);
 },{javaScriptEnabled:false}));
 
 test('Noisey Neighbours tells the origin and full operating story without invented metrics',()=>run(async page=>{
@@ -117,19 +116,16 @@ test('Narrative case studies keep their atmosphere and fit a mobile viewport',()
  }
 },{viewport:{width:390,height:844}}));
 
-test('Work uses project-specific invitations and color-coded skills instead of interface labels',()=>run(async page=>{
+test('Work uses meaningful subtitles, real destinations and no taxonomy clutter',()=>run(async page=>{
  await page.goto(base+'work/');
  assert.equal(await page.getByText(/^Explore\b/i).count(),0);
- const invitations=['See the clothes, prints and process','Try the working app','Go inside the nights','See the six-week campaign','Browse the coursework'];
- for(const label of invitations) assert.equal(await page.getByText(label,{exact:false}).count(),1,label);
  const entries=page.locator('[data-work-item]');
- assert.equal(new Set(await entries.evaluateAll(nodes=>nodes.map(n=>n.dataset.projectTone))).size,7);
- const skills=page.locator('.practice-skills li');
- assert.ok(await skills.count()>20);
- assert.ok(new Set(await skills.evaluateAll(nodes=>nodes.map(n=>n.dataset.skillTone))).size>=5);
- for(const skill of await skills.all()){
-  const style=await skill.evaluate(n=>({border:getComputedStyle(n).borderTopWidth,background:getComputedStyle(n).backgroundColor}));
-  assert.equal(style.border,'0px');
-  assert.notEqual(style.background,'rgba(0, 0, 0, 0)');
+ assert.equal(new Set(await entries.locator('img').evaluateAll(nodes=>nodes.map(n=>n.src))).size,7);
+ assert.equal(new Set(await entries.locator('a').evaluateAll(nodes=>nodes.map(n=>n.href))).size,7);
+ for(const entry of await entries.all()){
+  assert.ok((await entry.locator('.work-panel__subtitle').innerText()).trim());
+  await entry.hover();
+  assert.equal(await entry.locator('.work-panel__description').evaluate(n=>getComputedStyle(n).opacity),'1');
  }
+ assert.equal(await page.locator('.practice-skills,.section-footer').count(),0);
 }));

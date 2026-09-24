@@ -26,7 +26,7 @@ async function bounds(page,selector) {
 test('Page changes use a plain fade rather than the old scan-line effect',()=>run({},async page=>{
  await page.goto(base+'work/');
  const effect=await page.evaluate(()=>{
-  document.querySelector('.section-footer a').click();
+  document.querySelector('[data-window-close]').click();
   const style=getComputedStyle(document.querySelector('.page-transition'));
   return {blend:style.mixBlendMode,transform:style.transform};
  });
