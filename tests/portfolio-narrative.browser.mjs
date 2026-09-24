@@ -64,7 +64,8 @@ test('Noisey Neighbours tells the origin and full operating story without invent
  assert.match(copy,/logistics/i);
  assert.match(copy,/door.*bar.*wardrobe/is);
  assert.match(copy,/own music/i);
- assert.equal(await page.locator('[data-event-stage]').count(),5);
+ assert.equal(await page.locator('.noisey-case img').count(),9);
+ assert.equal(await page.locator('[data-event-stage]').count(),0,'The old five-stage text diagram is gone');
  assert.doesNotMatch(copy,/\b\d{3,}\s+(guests|attendees|tickets)\b/i);
  assert.ok(await page.getByRole('link',{name:'Back to Work',exact:true}).count()>=1);
 }));
