@@ -11,7 +11,7 @@ test('AI Labs is public and has no passcode gate',async()=>{
  try {
   const page=await browser.newPage({reducedMotion:'reduce'});
   await page.goto(base+'ai-labs/');
-  assert.equal(await page.getByRole('heading',{name:'AI Labs',exact:true}).count(),1);
+  assert.equal(await page.getByRole('heading',{name:'AI, organised around the work.',exact:true}).count(),1);
   assert.equal(await page.locator('[data-keypad]').count(),0,'No passcode UI remains');
   assert.doesNotMatch(await page.locator('main').innerText(),/restricted|passcode|six-digit|enter the code/i);
  } finally {await browser.close();}

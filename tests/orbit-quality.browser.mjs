@@ -115,7 +115,7 @@ test('Home and AI Labs survive blocked browser storage',()=>run({reducedMotion:'
  await context.addInitScript(()=>Object.defineProperty(window,'localStorage',{get(){throw new DOMException('Blocked','SecurityError');}}));
  await page.goto(base);await page.locator('[data-eagle]').click();assert.equal(await page.locator('[data-orbit]').getAttribute('data-state'),'open');
  await page.getByRole('link',{name:'AI labs',exact:true}).click();await page.waitForURL('**/ai-labs/');
- assert.equal(await page.getByRole('heading',{name:'AI Labs',exact:true}).count(),1);
+ assert.equal(await page.getByRole('heading',{name:'AI, organised around the work.',exact:true}).count(),1);
 }));
 
 test('GitHub Pages subdirectory resolves homepage, all five destinations and logo assets',()=>run({reducedMotion:'reduce'},async(page,context)=>{

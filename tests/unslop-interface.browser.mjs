@@ -95,8 +95,8 @@ test('About, Contact and AI Labs use content-specific first surfaces',async()=>{
   await page.goto(base+'ai-labs/',{waitUntil:'domcontentloaded'});
   assert.equal(await page.locator('.page-kicker').count(),0);
   assert.equal(await page.locator('.ai-feature__signal').count(),0);
-  assert.equal(await page.locator('.ai-system-preview').count(),1);
-  assert.ok(await page.locator('.ai-system-preview [data-preview-node]').count()>=4);
+  assert.equal(await page.locator('[data-mindmap]').count(),1);
+  assert.equal(await page.locator('.mind-branch').count(),3);
   const headingSize=await page.locator('h1').evaluate(el=>parseFloat(getComputedStyle(el).fontSize));
   assert.ok(headingSize<96,headingSize);
  }finally{await browser.close();}
@@ -121,22 +121,19 @@ test('Contact composer does not overlap at short landscape',async()=>{
  }finally{await browser.close();}
 });
 
-test('Hermes opens on a request trace and uses a connected architecture instead of feature cards',async()=>{
+test('Hermes opens directly on a connected expandable mind map',async()=>{
  const browser=await chromium.launch({headless:true});
  try{
   const page=await browser.newPage({viewport:{width:1440,height:900},reducedMotion:'reduce'});
   await page.goto(base+'ai-labs/hermes-system/',{waitUntil:'domcontentloaded'});
-  assert.equal(await page.locator('.hermes-pulse').count(),0);
-  assert.equal(await page.locator('.hermes-trace').count(),1);
-  assert.equal(await page.locator('.hermes-trace li').count(),4);
-  assert.equal(await page.locator('.system-map__nodes').count(),0);
-  assert.equal(await page.locator('.system-architecture').count(),1);
-  assert.equal(await page.locator('.system-architecture details').count(),6);
-  assert.equal(await page.locator('.system-architecture summary>span').count(),0);
-  const firstWidth=await page.locator('.system-architecture details').nth(0).evaluate(el=>el.getBoundingClientRect().width);
-  const secondWidth=await page.locator('.system-architecture details').nth(1).evaluate(el=>el.getBoundingClientRect().width);
-  assert.notEqual(Math.round(firstWidth),Math.round(secondWidth));
-  const headingSize=await page.locator('.hermes-hero h1').evaluate(el=>parseFloat(getComputedStyle(el).fontSize));
-  assert.ok(headingSize<100,headingSize);
+  assert.equal(await page.locator('.hermes-pulse,.hermes-trace,.hermes-hero').count(),0);
+  assert.equal(await page.locator('[data-mindmap]').count(),1);
+  assert.equal(await page.locator('.mind-node').count(),12);
+  assert.equal(await page.locator('.mind-node[open]').count(),0);
+  const headingSize=await page.locator('.mind-intro h1').evaluate(el=>parseFloat(getComputedStyle(el).fontSize));
+  assert.ok(headingSize<=32,headingSize);
+  const trunk=await page.locator('.mind-trunk').boundingBox();
+  const branches=await page.locator('.mind-branches').boundingBox();
+  assert.ok(trunk.y+trunk.height<branches.y);
  }finally{await browser.close();}
 });
