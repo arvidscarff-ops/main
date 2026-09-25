@@ -35,9 +35,66 @@ class CourseworkTest(unittest.TestCase):
             destination = (COURSE / unquote(url.path)).resolve()
             if destination.is_dir(): destination /= 'index.html'
             self.assertTrue(destination.is_file(), f'Missing coursework artifact: {url.path}')
-        self.assertIn('company/contact dataset is not published', (COURSE / 'index.html').read_text())
-        for name in ['foretag.txt', 'foretag.csv', 'inlamning-scraping.zip']:
-            self.assertFalse(list(COURSE.rglob(name)), f'Private submission leaked: {name}')
+        text = (COURSE / 'index.html').read_text()
+        self.assertNotIn('company/contact dataset is not published', text)
+        self.assertIn('122 distinct identifier strings', text)
+        self.assertIn('121 unmasked', text)
+        self.assertIn('one partly masked', text)
+        self.assertNotIn('122 unique organisation numbers', text)
+        for href in ['../../scraping/foretag.txt', '../../scraping/scraper.txt',
+                     'files/scraping/LAS-MIG.txt', 'files/scraping/scraper.js']:
+            self.assertTrue(any(a.get('href') == href and 'download' in a for a in page.links), href)
+        # Only this explicitly approved data export is public, at this exact path.
+        exports = {p.relative_to(ROOT).as_posix() for p in ROOT.rglob('foretag.*')
+                   if not {'.git', '.hermes'}.intersection(p.relative_to(ROOT).parts)}
+        self.assertEqual(exports, {'scraping/foretag.txt'})
+        for folder in [COURSE / 'files/scraping', ROOT / 'scraping']:
+            for pattern in ['*.csv', '*.zip', 'package*.json']:
+                self.assertFalse(list(folder.rglob(pattern)), f'Unapproved scraping artifact: {pattern}')
+        self.assertFalse(list(COURSE.rglob('inlamning-scraping.zip')))
+
+    def test_approved_scraping_txt_publication_preserves_bytes(self):
+        import csv
+        import hashlib
+        import io
+        import re
+        expected = {
+            'foretag.txt': (10559, '68f614b9236c90aef214de49356cd2aae29b13d82219481e2e7ef173458f0c51'),
+            'scraper.txt': (4955, 'a6754835c3736182e88b958e36a162ca57d4cd40337e2479235ba55cdf6f7837'),
+        }
+        folder = ROOT / 'scraping'
+        self.assertTrue(folder.is_dir(), 'Approved TXT publication is missing')
+        self.assertEqual({p.name for p in folder.iterdir()}, set(expected), 'Only the two approved TXT files belong here')
+        for name, (size, digest) in expected.items():
+            data = (folder / name).read_bytes()
+            self.assertEqual(len(data), size, name)
+            self.assertEqual(hashlib.sha256(data).hexdigest(), digest, name)
+        self.assertTrue((folder / 'scraper.txt').read_bytes() ==
+                        (COURSE / 'files/scraping/scraper.js').read_bytes(), 'TXT must contain the actual unchanged code')
+        rows = list(csv.reader(io.StringIO((folder / 'foretag.txt').read_text(encoding='utf-8')), delimiter='\t', strict=True))
+        self.assertEqual(rows[0], ['name', 'orgnr', 'phone', 'address'])
+        records = rows[1:]
+        self.assertEqual(len(records), 125)
+        self.assertTrue(all(len(row) == 4 for row in records))
+        identifiers = {row[1] for row in records}
+        self.assertEqual(len(identifiers), 122)
+        self.assertEqual(sum(bool(re.fullmatch(r'\d{6}-\d{4}', value)) for value in identifiers), 121)
+        self.assertEqual(sum(bool(re.fullmatch(r'\d{6}-X{4}', value)) for value in identifiers), 1)
+        self.assertEqual(len(records) - len({tuple(row) for row in records}), 3)
+        self.assertEqual(sum(not row[2] for row in records), 22)
+        self.assertEqual(sum(not row[3] for row in records), 7)
+
+    def test_weekender_is_embedded_on_the_portfolio(self):
+        page = COURSE / 'weekender/index.html'
+        self.assertTrue(page.is_file(), 'Portfolio API embed route is missing')
+        html = page.read_text()
+        self.assertIn('title="Weekender live API app"', html)
+        self.assertIn('src="https://weekender.arvidscarff.workers.dev"', html)
+        self.assertIn('href="../#mashup"', html)
+        self.assertIn('href="https://weekender.arvidscarff.workers.dev"', html)
+        self.assertIn('width:100%', html)
+        hub = Page(COURSE / 'index.html')
+        self.assertTrue(any(a.get('href') == 'weekender/' for a in hub.links))
 
     def test_public_copy_has_no_internal_handoff_notes(self):
         pages = [ROOT / 'work/index.html', COURSE / 'index.html']
