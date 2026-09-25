@@ -251,7 +251,7 @@ test('Project scenes support keyboard, URL history and no-JS access',async t=>{
  },{javaScriptEnabled:false}));
 });
 
-test('Agoos chapters and About topics open only when selected',()=>run(async page=>{
+test('Agoos chapters open on selection while the About story is directly readable',()=>run(async page=>{
  await page.goto(base+'work/agoos/');
  assert.equal(await page.locator('.agoos-spread:visible').count(),0);
  const choices=page.locator('.chapter-index a');assert.equal(await choices.count(),3);
@@ -262,9 +262,9 @@ test('Agoos chapters and About topics open only when selected',()=>run(async pag
  assert.equal(overlap,false,'Open chapter imagery must not cover the role line');
  await choices.first().click();assert.equal(await page.locator('.agoos-spread:visible').count(),1);
  await page.locator('.agoos-spread:visible [data-close-chapter]').click();assert.equal(await page.locator('.agoos-spread:visible').count(),0);
- await page.goto(base+'about/');assert.equal(await page.locator('.principles details').count(),3);
- assert.equal(await page.locator('.principles p:visible').count(),0);
- await page.locator('.principles summary').first().click();assert.equal(await page.locator('.principles p:visible').count(),1);
+ await page.goto(base+'about/');assert.equal(await page.locator('.about-story > p:visible').count(),4);
+ assert.equal(await page.locator('.principles').count(),0);
+ assert.equal(await page.locator('.about-portrait img:visible').count(),1);
 }));
 
 test('Coursework contents reveal one assignment and honour direct hashes',()=>run(async page=>{
