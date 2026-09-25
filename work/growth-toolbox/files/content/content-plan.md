@@ -41,11 +41,3 @@ The article and dashboard are prepared. The separate sample email and LinkedIn p
 ### What the reader should take away
 
 The reader should understand the main finding and why it could be worth reporting on. They should also understand that an event-day is a recorded protest on one date, not a participant, and that the earlier protest records cannot show whether the people surveyed in 2026 took action.
-
-Peter’s Day 2 material suggests checking whether people understand the work without a spoken explanation. No completed reader test is claimed here. A detailed questionnaire or outreach response target is not part of this plan.
-
-### Assignment scope
-
-Peter’s Day 2 brief asks for a content plan whose message could interest a journalist enough to write about it. For the final hand-in, Jesper’s Canvas instructions state “innehållsplan räcker”.
-
-The plan therefore explains the finding, message, journalistic angle and chosen content. Sending emails, publishing on LinkedIn, following up and counting journalist replies are not assignment requirements.

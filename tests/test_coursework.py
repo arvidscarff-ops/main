@@ -105,7 +105,10 @@ class CourseworkTest(unittest.TestCase):
                   'currently local', 'not completed by this package',
                   'not a teacher-set deadline', 'automated checks as reader feedback',
                   'requirement-to-artifact map', 'assignment fit and current status',
-                  'lärarens besked', 'nästa lektion', 'vid paketeringen', 'npm ci']
+                  'lärarens besked', 'nästa lektion', 'vid paketeringen', 'npm ci',
+                  'assignment scope', 'no completed reader test is claimed here',
+                  'the plan therefore explains', 'material suggests checking whether',
+                  'for the final hand-in, jesper']
         for page in pages:
             text = page.read_text().lower()
             for phrase in banned:
