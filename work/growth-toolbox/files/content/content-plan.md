@@ -12,11 +12,11 @@ The project looks at demand for accountability and recorded protest activity. Th
 
 ### Who I want to reach
 
-Journalists covering US politics, justice or protest movements. They could use the findings as a starting point for reporting on how calls for accountability become sustained public pressure.
+Journalists covering US politics, justice or protest movements. This is a chosen audience, not a researched persona. They could use the findings as a starting point for reporting on how calls for accountability become sustained public pressure.
 
-### What I want them to do
+### The message
 
-Read the article, inspect the charts and sources, and consider a follow-up story. A useful response would be a question about the data, a request to discuss the findings, or interest in further reporting.
+There is strong stated demand for accountability in the Epstein case. The protest records raise a question about what helps turn that demand into sustained public pressure. They do not prove that people failed to act.
 
 ### The story I can support
 
@@ -24,38 +24,28 @@ Navigator found that 72% of surveyed US registered voters chose more investigati
 
 These are different periods and demands. Most Epstein protest records concern disclosure or cover-ups, not explicit prosecution. An event-day is one recorded protest on one date, not a person; categories can overlap. The figures cannot tell us what share of supporters protested, rank how much people care, or establish anyone’s guilt. Sources and full methods are in the article’s data companion.
 
-### What I will use, and why
+### Journalistic angle
 
-**Chart-led article and interactive site:** the main explanation and evidence. The article gives a short route through the story; the site lets readers explore and check it.
+What helps turn calls for accountability into sustained public pressure? The contrast offers a starting point for a journalist to investigate, rather than an answer about why people do or do not protest. Reporting could explore how organisers, clear demands and news coverage shape public action. Protest evidence from the same period as the poll would be needed to examine that relationship more closely.
 
-**A short journalist email:** the direct route to the intended audience. It offers a clear finding, a reporting question and access to the evidence. Before sending, choose a journalist whose actual reporting fits the topic and tailor the opening to a verified article of theirs.
+## Content and clarity
 
-**One chart-led LinkedIn post:** a supporting route for sharing the project with professional contacts. It leads with the 72% finding and links to the article/site. It does not replace direct outreach or assume journalists will discover the post.
+### Chosen content
 
-This is a small launch around one story, not a recurring content calendar. The email and social post are sample copy for the proposed outreach.
+**A short, chart-led article:** introduces the finding, shows the comparison and explains the question it raises. It gives a journalist a readable starting point without treating the figures as proof of inaction.
 
-## Proposed outreach and evaluation
+**An interactive dashboard:** lets the reader explore all seven issues and inspect the data, definitions, sources and limitations. It supports the article rather than replacing the explanation.
 
-### Reader testing
+The article and dashboard are prepared. The separate sample email and LinkedIn post are optional extra examples, not required deliverables or commitments to contact anyone.
 
-Show the article and charts to classmates without talking them through it. Ask: What is the main finding? What does an event-day count? Can we tell whether the surveyed voters protested? What would you investigate next?
+### What the reader should take away
 
-Record their answers and any confusion. If they think the figures count people or prove that poll supporters did not protest, revise the wording or labels and test again.
+The reader should understand the main finding and why it could be worth reporting on. They should also understand that an event-day is a recorded protest on one date, not a participant, and that the earlier protest records cannot show whether the people surveyed in 2026 took action.
 
-Choose a journalist whose reporting fits the topic. Check whether the February poll still offers a timely angle and tailor the opening to their work.
+Peter’s Day 2 material suggests checking whether people understand the work without a spoken explanation. No completed reader test is claimed here. A detailed questionnaire or outreach response target is not part of this plan.
 
-### Outreach
+### Assignment scope
 
-Send the tailored email and share the supporting LinkedIn post. Both should point to the same evidence and invite readers to explore it. No paid promotion is planned.
+Peter’s Day 2 brief asks for a content plan whose message could interest a journalist enough to write about it. For the final hand-in, Jesper’s Canvas instructions state “innehållsplan räcker”.
 
-### Follow-up
-
-Review replies and questions after a few working days. Correct any misunderstanding in the content. Make at most one relevant email follow-up if the journalist has not replied; stop unless they engage.
-
-### How I would judge whether it works
-
-**Understanding:** classmates can explain the 72% finding and the limits of the protest comparison without help.
-
-**Journalist interest:** record substantive replies, data requests and any reporting interest. These matter more than likes.
-
-If the piece is understood but draws no interest, reconsider the recipient, timing or pitch.
+The plan therefore explains the finding, message, journalistic angle and chosen content. Sending emails, publishing on LinkedIn, following up and counting journalist replies are not assignment requirements.

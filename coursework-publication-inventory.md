@@ -2,11 +2,11 @@
 
 The bundle includes the coursework hub, three reading pages, the interactive investigation and archive, source data, content downloads, and scraper support files.
 
-The public content plan, sample outreach and PDF are portfolio editions. The investigation data and article retain their methodological limitations. Original coursework is retained separately. The approved unchanged company TXT and actual scraper code TXT are included under `/scraping`; company CSV, submission ZIPs, dependency packages, teacher briefs and private notes remain excluded. Weekender is embedded at `work/growth-toolbox/weekender/` with a direct-app fallback; Worker code is unchanged.
+The content plan now explains the finding, message, journalistic angle and chosen content; sample outreach is optional, not an assignment obligation. The plan, reading pages and PDF contain the same corrected content. The investigation data and article retain their methodological limitations. Original coursework is retained separately. The approved unchanged company TXT and actual scraper code TXT are included under `/scraping`; company CSV, submission ZIPs, dependency packages, teacher briefs and private notes remain excluded. Weekender is embedded at `work/growth-toolbox/weekender/` with a direct-app fallback; Worker code is unchanged.
 
 ## Files
 
-42 files, 4,933,879 bytes.
+42 files, 4,770,758 bytes.
 
 | File | Bytes |
 |---|---:|
@@ -40,17 +40,17 @@ The public content plan, sample outreach and PDF are portfolio editions. The inv
 | `work/growth-toolbox/above-the-law/index.html` | 50,024 |
 | `work/growth-toolbox/above-the-law/scripts/compile_protests.py` | 4,596 |
 | `work/growth-toolbox/article/index.html` | 10,475 |
-| `work/growth-toolbox/content-examples/index.html` | 5,673 |
-| `work/growth-toolbox/content-plan/index.html` | 7,324 |
-| `work/growth-toolbox/files/content/above-the-law-content-package.pdf` | 183,888 |
+| `work/growth-toolbox/content-examples/index.html` | 5,980 |
+| `work/growth-toolbox/content-plan/index.html` | 7,105 |
+| `work/growth-toolbox/files/content/above-the-law-content-package.pdf` | 20,555 |
 | `work/growth-toolbox/files/content/article.md` | 6,891 |
-| `work/growth-toolbox/files/content/content-examples.md` | 2,455 |
-| `work/growth-toolbox/files/content/content-plan.md` | 3,984 |
+| `work/growth-toolbox/files/content/content-examples.md` | 2,644 |
+| `work/growth-toolbox/files/content/content-plan.md` | 3,832 |
 | `work/growth-toolbox/files/content/social-chart.pdf` | 2,744 |
 | `work/growth-toolbox/files/content/social-chart.png` | 115,287 |
 | `work/growth-toolbox/files/scraping/LAS-MIG.txt` | 2,089 |
 | `work/growth-toolbox/files/scraping/scraper.js` | 4,955 |
-| `work/growth-toolbox/index.html` | 8,324 |
+| `work/growth-toolbox/index.html` | 8,411 |
 | `work/growth-toolbox/weekender/index.html` | 2,559 |
 
 ## TXT publication integrity — 25 September 2026
