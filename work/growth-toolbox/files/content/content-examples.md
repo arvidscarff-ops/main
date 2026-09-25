@@ -1,4 +1,6 @@
-# Getting the story out
+# Optional outreach examples
+
+These unsent examples are preserved as extra work. They are not required for the assignment and do not mean that any journalist contact or social publication is planned or completed.
 
 ## Sample journalist email
 
