@@ -50,7 +50,7 @@ Five original collections: TEXTUR, Event & Festival Social Media Design, Social 
 
 Open `/work/growth-toolbox/` through Work. The bundle includes **Above the law?**, its source data, the article, content plan, sample outreach copy, a downloadable content PDF and social visual (PNG/PDF), plus the scraper and method note. Weekender is hosted separately; links use same-tab navigation for compatibility with embedded browsers.
 
-The published plan, examples and PDF have been edited for the portfolio. Original coursework files are retained outside this repository. Raw company/contact exports, submission ZIPs, private notes and teacher briefs are excluded. GTM configuration is unchanged.
+The published plan, examples and PDF have been edited for the portfolio. Original coursework files are retained outside this repository. The approved company dataset and byte-identical scraper code are published as `scraping/foretag.txt` and `scraping/scraper.txt`; no company CSV, submission ZIP, dependency package, private note or teacher brief is included. Weekender also has a portfolio-hosted iframe route at `work/growth-toolbox/weekender/`, with a direct-app fallback. GTM configuration is unchanged.
 
 See `coursework-publication-inventory.md` for the file list. Browser checks cover coursework routes, actual downloads, chart controls, responsive layouts, keyboard access, no-JavaScript reading, and root and `/main/` hosting.
 
