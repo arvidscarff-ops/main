@@ -17,7 +17,7 @@ test('AI Labs is public and has no passcode gate',async()=>{
  } finally {await browser.close();}
 });
 
-test('Sections expose the work, preserve Design and fold Approach into About',async()=>{
+test('Sections expose the work, preserve Design and show the approved About story',async()=>{
  const browser=await chromium.launch({headless:true});
  try {
   const page=await browser.newPage({reducedMotion:'reduce'});
@@ -35,7 +35,8 @@ test('Sections expose the work, preserve Design and fold Approach into About',as
   }
   await page.goto(base+'about/');
   assert.match(await page.locator('main').innerText(),/graphic design/i);
-  assert.equal(await page.locator('.principles section').count(),3,'Approach principles now live on About');
+  assert.equal(await page.locator('.about-story > p').count(),4,'About shows the four approved autobiographical paragraphs');
+  assert.equal(await page.locator('.principles').count(),0,'The new story replaces the old Approach block');
   assert.equal(await page.locator('a[href="../approach/"]').count(),0,'Approach is no longer a section');
   assert.doesNotMatch(await page.locator('main').innerText(),/to be added/i);
   await page.goto(base+'contact/');
