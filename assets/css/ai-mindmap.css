@@ -1,4 +1,8 @@
-/* Native disclosures keep the map usable without JavaScript. */
+/* The landscape frame is a viewport: scroll its content inside, not over its edges. */
+body.page--inner.ai-labs-index[data-landscape-camera]{height:100dvh;overflow:hidden}
+body.page--inner.ai-labs-index[data-landscape-camera] .window-bar{background:#0e1410}
+body.page--inner.ai-labs-index[data-landscape-camera] .inner-main{position:fixed;top:calc(clamp(20px,3vw,48px) + 54px);bottom:clamp(20px,3vw,48px);left:0;right:0;min-height:0;overflow-y:auto;overscroll-behavior:contain;margin:0 auto}
+@media(max-width:700px){body.page--inner.ai-labs-index[data-landscape-camera] .inner-main{top:64px;bottom:10px}}
 body.page--inner .mind-page{padding-top:30px;padding-bottom:22px}
 .mind-page{--map-line:rgba(200,206,210,.3);--branch:#bec7bb}
 .mind-intro{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding-bottom:26px}
@@ -6,7 +10,10 @@ body.page--inner .mind-intro h1{font-family:var(--sans);font-size:clamp(22px,2.1
 .mind-intro p{margin:0;color:var(--muted);font-size:14px;line-height:1.5;max-width:660px}
 .mind-hint{color:var(--muted);font-size:12px;line-height:1.5;white-space:nowrap;padding-bottom:2px}
 .mind-hint>span{margin-left:8px;font-size:17px}
-.mind-map{max-width:1240px;margin:0 auto}
+.mind-map{max-width:1240px;margin:52px auto 0}
+.mind-map-intro{margin:0 0 32px;padding-bottom:22px;border-bottom:1px solid var(--map-line)}
+body.page--inner .mind-map-intro h2{font-family:var(--sans);font-size:clamp(22px,2.1vw,32px);font-weight:500;letter-spacing:-.035em;margin:0 0 8px}
+.mind-map-intro p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}
 .mind-trunk{width:340px;max-width:100%;margin:0 auto;--branch:#c8ced2}
 .mind-node{position:relative;min-width:0;border:1px solid var(--map-line);border-left:2px solid var(--branch);border-radius:5px;background:rgba(200,206,210,.035);color:var(--fg)}
 .mind-node summary{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:62px;padding:11px 16px;list-style:none;cursor:pointer;user-select:none;border-radius:4px;transition:background .18s}

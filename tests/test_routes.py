@@ -39,5 +39,12 @@ class RoutesTest(unittest.TestCase):
                     queue.append(destination)
         self.assertTrue({ROOT / section / 'index.html' for section in ('work', 'design', 'about', 'contact', 'ai-labs')}.issubset(visited))
 
+    def test_ai_labs_architecture_is_not_duplicated(self):
+        page = (ROOT / 'ai-labs' / 'index.html').read_text()
+        self.assertEqual(page.count('id="map-title"'), 1)
+        self.assertIn('aria-labelledby="map-title"', page)
+        self.assertNotIn('href="#map"><img', page)
+        self.assertIn('id="jarvis"', page)
+
 if __name__ == '__main__':
     unittest.main()
