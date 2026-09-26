@@ -2,6 +2,57 @@ import './editorial.js';
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 if(document.body?.dataset?.landscapeCamera) import('./landscape-backdrop.js');
 
+// Window-bar upgrade: OS-style titlebar with traffic dots and breadcrumb.
+(function windowBar(){
+  const bar=document.querySelector('.window-bar');
+  if(!bar)return;
+  const orientation=bar.querySelector('.window-orientation');
+  const close=bar.querySelector('[data-window-close]');
+  if(orientation&&!orientation.querySelector('.window-dots')){
+    const dots=document.createElement('span');
+    dots.className='window-dots';
+    if(close){
+      const red=document.createElement('a');
+      red.className='window-dot window-dot--close';
+      red.href=close.getAttribute('href');
+      red.setAttribute('aria-label',close.getAttribute('aria-label')||'Close window');
+      red.title='Close';
+      dots.append(red);
+    }else{
+      const red=document.createElement('i');
+      red.className='window-dot window-dot--close';
+      dots.append(red);
+    }
+    for(const kind of['min','zoom']){
+      const dot=document.createElement('i');
+      dot.className=`window-dot window-dot--${kind}`;
+      dot.setAttribute('aria-hidden','true');
+      dots.append(dot);
+    }
+    orientation.prepend(dots);
+  }
+  // Section pages have no parent link; add "Index" so the path reads like a breadcrumb.
+  if(orientation&&bar.dataset.windowLevel==='section'&&!bar.querySelector('[data-window-parent]')){
+    const context=orientation.querySelector('.window-context');
+    if(context&&close){
+      const parent=document.createElement('a');
+      parent.className='window-parent';
+      parent.dataset.windowParent='';
+      parent.href=close.getAttribute('href');
+      const arrow=document.createElement('span');
+      arrow.setAttribute('aria-hidden','true');
+      arrow.textContent='←';
+      parent.append(arrow,' Index');
+      const divider=document.createElement('span');
+      divider.className='window-divider';
+      divider.setAttribute('aria-hidden','true');
+      divider.textContent='/';
+      orientation.insertBefore(divider,context);
+      orientation.insertBefore(parent,divider);
+    }
+  }
+})();
+
 class SoundSystem {
   constructor() {
     try{this.enabled=localStorage.getItem('ass-sound')==='on';}catch{this.enabled=false;} this.context = null;

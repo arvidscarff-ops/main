@@ -26,7 +26,7 @@ if(motionAllowed){
  actions?.insertBefore(button,close||null);
  let paused=false;
  try{paused=sessionStorage.getItem('portfolio-landscape-paused')==='true';}catch{}
- function render(){button.setAttribute('aria-pressed',String(paused));button.textContent=paused?'Play background':'Pause background';}
+ function render(){button.setAttribute('aria-pressed',String(paused));button.replaceChildren();const icon=document.createElement('span');icon.className='landscape-motion__icon';icon.setAttribute('aria-hidden','true');icon.textContent=paused?'▶':'❚❚';const label=document.createElement('span');label.className='landscape-motion__label';label.textContent=paused?'Play background':'Pause background';button.append(icon,label);}
  function sync(){
   if(paused||document.hidden){video.pause();return;}
   if(!video.getAttribute('src')){video.src=source(innerWidth<=700?'mobile':'desktop');video.load();}

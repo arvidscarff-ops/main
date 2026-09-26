@@ -13,15 +13,35 @@ body.page--inner .window-bar{
  position:sticky;z-index:20;top:24px;left:auto;right:auto;width:var(--canvas);min-height:54px;margin:24px auto 0;padding:0 clamp(20px,3vw,42px);
  display:flex;align-items:center;justify-content:space-between;gap:24px;border:0;border-radius:0;color:var(--fg);background:rgba(245,243,236,.96);backdrop-filter:none;-webkit-backdrop-filter:none;
 }
-body.page--inner .window-orientation{display:flex;align-items:center;min-width:0;gap:12px}
+body.page--inner .window-orientation{display:flex;align-items:center;min-width:0;gap:14px}
+body.page--inner .window-dots{display:inline-flex;align-items:center;flex:none}
+body.page--inner .window-dot{display:grid;width:11px;height:11px;place-items:center;border-radius:50%;text-decoration:none}
+body.page--inner i.window-dot{margin:0 3.5px}
+body.page--inner .window-dot--close{background:#e0604f}
+body.page--inner .window-dot--min{background:#d9a441}
+body.page--inner .window-dot--zoom{background:#5faa56}
+body.page--inner .window-dot--min,body.page--inner .window-dot--zoom{opacity:.45}
+/* The close dot keeps a full 44px touch target; the dot itself is drawn by ::before. */
+body.page--inner a.window-dot--close{position:relative;width:44px;height:44px;margin:0 -16px;background:none;border-radius:2px;font-size:14px;transition:background-color 160ms ease}
+body.page--inner a.window-dot--close::before{content:'';width:11px;height:11px;border-radius:50%;background:#e0604f;transition:filter 160ms ease}
+body.page--inner a.window-dot--close::after{content:'×';position:absolute;inset:0;display:grid;place-items:center;color:rgba(20,16,12,.78);font:600 10px/1 var(--sans);opacity:0;transition:opacity 120ms ease}
+body.page--inner a.window-dot--close:hover::after,body.page--inner a.window-dot--close:focus-visible::after{opacity:1}
+body.page--inner a.window-dot--close:hover::before{filter:brightness(1.12)}
 body.page--inner .window-context{min-width:0;margin:0;color:var(--fg);font:500 clamp(14px,.25vw + 12px,16px)/1.2 var(--mono);letter-spacing:.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 body.page--inner .window-parent,body.page--inner .window-close,body.page--inner .landscape-motion{display:inline-flex;align-items:center;min-height:44px;color:inherit;font:500 clamp(14px,.25vw + 12px,16px)/1.2 var(--mono);letter-spacing:0;text-decoration:none;white-space:nowrap}
-body.page--inner .window-parent{gap:8px}
+body.page--inner .window-parent{gap:8px;color:var(--muted);border-radius:2px;transition:color 160ms ease}
+body.page--inner .window-parent:hover{color:var(--fg)}
 body.page--inner .window-divider{color:var(--faint);font:13px/1 var(--mono)}
-body.page--inner .window-actions{display:flex;align-items:center;justify-content:flex-end;min-width:0;gap:clamp(16px,2.4vw,36px)}
-body.page--inner .window-close{gap:12px;color:var(--fg);font-weight:600}
-body.page--inner .window-close__mark{display:grid;width:26px;height:26px;place-items:center;border:1px solid var(--line);border-radius:50%;font:20px/1 var(--sans);transition:transform 160ms ease,background-color 160ms ease}
-body.page--inner .window-close:hover .window-close__mark,body.page--inner .window-close:focus-visible .window-close__mark{transform:rotate(90deg);background:var(--surface-raised)}
+/* Actions: a single segmented control, like a window control cluster. */
+body.page--inner .window-actions{display:flex;flex:none;align-items:stretch;justify-content:flex-end;min-width:0;border:1px solid var(--line);background:color-mix(in srgb,var(--bg) 55%,transparent)}
+body.page--inner .window-actions>*{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border:0;border-left:1px solid var(--line);background:none;color:var(--fg);cursor:pointer;font:500 14px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+body.page--inner .window-actions>*:first-child{border-left:0}
+body.page--inner .window-actions>*:hover{background:var(--surface-raised)}
+body.page--inner .landscape-motion__icon{font-size:9px;letter-spacing:.1em;color:var(--muted)}
+body.page--inner .window-close{font-weight:600}
+body.page--inner .window-close:hover{background:#e0604f;color:#fff}
+body.page--inner .window-close:hover .window-close__mark{border-color:rgba(255,255,255,.4);color:#fff}
+body.page--inner .window-close__mark{display:grid;width:16px;height:16px;place-items:center;border:1px solid var(--line);font:13px/1 var(--sans);color:var(--muted);transition:color 160ms ease,border-color 160ms ease}
 body.page--inner .inner-main{
  position:relative;z-index:1;inset:auto;width:var(--canvas);min-height:calc(100dvh - 102px);margin:0 auto 24px;overflow:visible;border-radius:0;
  color:var(--fg);background:var(--bg)!important;padding:clamp(44px,7vh,84px) clamp(24px,5vw,80px) 74px;
@@ -169,9 +189,10 @@ body.page--inner .contact-compose [data-compose-email]{justify-self:end;padding:
  body.page--inner .profile-intro,body.page--inner .profile-document .about-approach,body.page--inner .contact-intro,body.page--inner .contact-workspace{grid-template-columns:1fr}
  body.page--inner .profile-intro .facts{grid-column:auto}
  body.page--inner .window-bar[data-window-level="project"] .window-context{color:var(--muted);font-size:14px}
- body.page--inner .window-actions{gap:14px}
- body.page--inner .window-close{gap:8px}
- body.page--inner .window-close__mark{width:25px;height:25px}
+ body.page--inner .window-actions>*{padding:0 11px}
+ body.page--inner .landscape-motion__label{display:none}
+ body.page--inner .window-dots{gap:6px}
+ body.page--inner .window-dot{width:10px;height:10px}
  body.page--inner .inner-main{width:100%;min-height:calc(100dvh - 56px);margin:0;padding:36px 22px 62px}
  body.page--inner .page-title{font-size:38px!important}
  body.page--inner .work-index{grid-template-columns:1fr;gap:34px;margin-top:34px}
