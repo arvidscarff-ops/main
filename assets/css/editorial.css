@@ -14,19 +14,15 @@ body.page--inner .window-bar{
  display:flex;align-items:center;justify-content:space-between;gap:24px;border:0;border-radius:0;color:var(--fg);background:rgba(245,243,236,.96);backdrop-filter:none;-webkit-backdrop-filter:none;
 }
 body.page--inner .window-orientation{display:flex;align-items:center;min-width:0;gap:14px}
-body.page--inner .window-dots{display:inline-flex;align-items:center;flex:none}
-body.page--inner .window-dot{display:grid;width:11px;height:11px;place-items:center;border-radius:50%;text-decoration:none}
-body.page--inner i.window-dot{margin:0 3.5px}
-body.page--inner .window-dot--close{background:#e0604f}
-body.page--inner .window-dot--min{background:#d9a441}
-body.page--inner .window-dot--zoom{background:#5faa56}
-body.page--inner .window-dot--min,body.page--inner .window-dot--zoom{opacity:.45}
-/* The close dot keeps a full 44px touch target; the dot itself is drawn by ::before. */
-body.page--inner a.window-dot--close{position:relative;width:44px;height:44px;margin:0 -16px;background:none;border-radius:2px;font-size:14px;transition:background-color 160ms ease}
-body.page--inner a.window-dot--close::before{content:'';width:11px;height:11px;border-radius:50%;background:#e0604f;transition:filter 160ms ease}
-body.page--inner a.window-dot--close::after{content:'×';position:absolute;inset:0;display:grid;place-items:center;color:rgba(20,16,12,.78);font:600 10px/1 var(--sans);opacity:0;transition:opacity 120ms ease}
-body.page--inner a.window-dot--close:hover::after,body.page--inner a.window-dot--close:focus-visible::after{opacity:1}
-body.page--inner a.window-dot--close:hover::before{filter:brightness(1.12)}
+body.page--inner .window-dots{display:inline-flex;align-items:center;flex:none;gap:2px}
+body.page--inner .window-dot{position:relative;display:grid;place-items:center;flex:none;width:44px;height:44px;padding:0;border:0;border-radius:6px;text-decoration:none;cursor:pointer;background:transparent}
+body.page--inner .window-dot::before{content:'';position:absolute;width:24px;height:24px;border-radius:50%;background:#db5345}
+body.page--inner .window-dot>span{position:relative;z-index:1;color:#35120d;font:600 21px/1 var(--sans)}
+body.page--inner .window-dot--close::after{content:none}
+body.page--inner .window-dot:hover{background:rgba(32,37,31,.09)}
+body.page--inner .window-dot:focus-visible{outline:2px solid var(--fg);outline-offset:1px}
+body.page--inner .window-dot--min::before{background:#edba4e}
+body.page--inner .window-dot--min>span{color:#49320b}
 body.page--inner .window-context{min-width:0;margin:0;color:var(--fg);font:500 clamp(14px,.25vw + 12px,16px)/1.2 var(--mono);letter-spacing:.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 body.page--inner .window-parent,body.page--inner .window-close,body.page--inner .landscape-motion{display:inline-flex;align-items:center;min-height:44px;color:inherit;font:500 clamp(14px,.25vw + 12px,16px)/1.2 var(--mono);letter-spacing:0;text-decoration:none;white-space:nowrap}
 body.page--inner .window-parent{gap:8px;color:var(--muted);border-radius:2px;transition:color 160ms ease}
@@ -37,7 +33,7 @@ body.page--inner .window-actions{display:flex;flex:none;align-items:stretch;just
 body.page--inner .window-actions>*{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border:0;border-left:1px solid var(--line);background:none;color:var(--fg);cursor:pointer;font:500 14px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase}
 body.page--inner .window-actions>*:first-child{border-left:0}
 body.page--inner .window-actions>*:hover{background:var(--surface-raised)}
-body.page--inner .landscape-motion__icon{font-size:9px;letter-spacing:.1em;color:var(--muted)}
+body.page--inner .landscape-motion__icon{font-size:12px;letter-spacing:.1em;color:var(--muted)}
 body.page--inner .window-close{font-weight:600}
 body.page--inner .window-close:hover{background:#e0604f;color:#fff}
 body.page--inner .window-close:hover .window-close__mark{border-color:rgba(255,255,255,.4);color:#fff}
@@ -192,7 +188,7 @@ body.page--inner .contact-compose [data-compose-email]{justify-self:end;padding:
  body.page--inner .window-actions>*{padding:0 11px}
  body.page--inner .landscape-motion__label{display:none}
  body.page--inner .window-dots{gap:6px}
- body.page--inner .window-dot{width:10px;height:10px}
+
  body.page--inner .inner-main{width:100%;min-height:calc(100dvh - 56px);margin:0;padding:36px 22px 62px}
  body.page--inner .page-title{font-size:38px!important}
  body.page--inner .work-index{grid-template-columns:1fr;gap:34px;margin-top:34px}

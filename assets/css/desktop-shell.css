@@ -1,0 +1,6 @@
+[data-desktop-window]{position:fixed;z-index:20;inset:0;overflow:auto;overscroll-behavior:contain;isolation:isolate;outline:none}
+[data-desktop-window][hidden],.desktop-restore[hidden]{display:none}
+.desktop-restore{position:fixed;z-index:30;left:50%;bottom:max(24px,env(safe-area-inset-bottom));transform:translateX(-50%);min-height:48px;max-width:calc(100vw - 32px);padding:12px 22px;border:1px solid rgba(234,227,207,.5);border-radius:6px;background:rgba(20,29,20,.94);color:#f3edde;font:500 14px/1.2 var(--mono);cursor:pointer;box-shadow:0 8px 30px #0004}
+.desktop-restore:focus-visible{outline:3px solid #edba4e;outline-offset:4px}
+body[data-desktop-loading]::after{content:'Opening window…';position:fixed;z-index:40;left:50%;bottom:24px;transform:translateX(-50%);padding:12px 20px;background:#172015;color:#f3edde;font:14px var(--mono);pointer-events:none}
+body[data-desktop-state="open"] .home-stage{pointer-events:none}

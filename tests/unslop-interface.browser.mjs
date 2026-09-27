@@ -19,11 +19,17 @@ test('Every inner route uses one square landscape window without nested blur',as
   const page=await browser.newPage({viewport:{width:1440,height:900},reducedMotion:'reduce'});
   for(const [route,camera] of Object.entries(routes)){
    await page.goto(base+route,{waitUntil:'domcontentloaded'});
-   await page.waitForSelector('.landscape-backdrop');
+   if(route==='ai-labs/'){
+    await page.locator('[data-window-minimize]').waitFor();
+    assert.equal(await page.locator('.home-stage').count(),1,'Pilot keeps the actual index underneath');
+    assert.equal(await page.locator('.landscape-backdrop').count(),0,'Pilot must not add a second background decoder');
+   }else await page.waitForSelector('.landscape-backdrop');
    const result=await page.evaluate(()=>{
-    const frame=getComputedStyle(document.querySelector('.site-frame'));
-    const bar=getComputedStyle(document.querySelector('.window-bar'));
-    return {camera:document.body.dataset.landscapeCamera,radius:frame.borderRadius,barBlur:bar.backdropFilter||bar.webkitBackdropFilter};
+    const shell=document.querySelector('[data-desktop-window]')?.shadowRoot;
+    const scope=shell||document;
+    const frame=getComputedStyle(scope.querySelector('.site-frame'));
+    const bar=getComputedStyle(scope.querySelector('.window-bar'));
+    return {camera:(shell?.querySelector('.desktop-page')||document.body).dataset.landscapeCamera,radius:frame.borderRadius,barBlur:bar.backdropFilter||bar.webkitBackdropFilter};
    });
    assert.equal(result.camera,camera,route);
    assert.equal(result.radius,'0px',route);
@@ -61,10 +67,10 @@ test('Current work is a flat desktop window without fake status or decorative nu
    const toggleStyle=getComputedStyle(el.querySelector('[data-current-work-toggle]'));
    return {radius:widgetStyle.borderRadius,shadow:widgetStyle.boxShadow,blur:widgetStyle.backdropFilter||widgetStyle.webkitBackdropFilter,toggleRadius:toggleStyle.borderRadius};
   });
-  assert.equal(style.radius,'0px');
+  assert.equal(style.radius,'8px','Approved compact Current work widget uses restrained rounded corners');
   assert.equal(style.shadow,'none');
   assert.ok(style.blur==='none'||style.blur==='');
-  assert.equal(style.toggleRadius,'3px');
+  assert.equal(style.toggleRadius,'4px','Collapse control matches the approved compact widget');
  }finally{await browser.close();}
 });
 
@@ -97,7 +103,13 @@ test('About, Contact and AI Labs use content-specific first surfaces',async()=>{
   assert.equal(await page.locator('.ai-feature__signal').count(),0);
   assert.equal(await page.locator('[data-mindmap]').count(),1);
   assert.equal(await page.locator('.mind-branch').count(),3);
-  const headingSize=await page.locator('h1').evaluate(el=>parseFloat(getComputedStyle(el).fontSize));
+  await page.locator('.mind-intro h1').waitFor({state:'visible'});
+  let headingSize;
+  for(let attempt=0;attempt<10;attempt++){
+    headingSize=await page.locator('.mind-intro h1').evaluate(el=>parseFloat(getComputedStyle(el).fontSize));
+    if(Number.isFinite(headingSize))break;
+    await page.waitForTimeout(50);
+  }
   assert.ok(headingSize<96,headingSize);
  }finally{await browser.close();}
 });

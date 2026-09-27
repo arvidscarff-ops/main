@@ -61,11 +61,11 @@ test('Inner pages provide a working background pause control',()=>withPage({},as
  await page.waitForFunction(()=>document.querySelector('[data-landscape-video]')?.paused===false);
  const button=page.locator('[data-landscape-motion]');
  assert.equal(await button.count(),1);
- assert.equal(await button.textContent(),'Pause background');
+ assert.equal(await page.getByRole('button',{name:'Pause background',exact:true}).count(),1);
  await button.click();
  assert.equal(await page.locator('[data-landscape-video]').evaluate(video=>video.paused),true);
  assert.equal(await button.getAttribute('aria-pressed'),'true');
- assert.equal(await button.textContent(),'Play background');
+ assert.equal(await page.getByRole('button',{name:'Play background',exact:true}).count(),1);
  await button.click();
  await page.waitForFunction(()=>document.querySelector('[data-landscape-video]')?.paused===false);
 }));
@@ -92,7 +92,7 @@ test('A visitor pause choice survives navigation between glass pages',()=>withPa
  await page.locator('[data-landscape-motion]').click();
  await page.goto(base+'design/');
  const button=page.locator('[data-landscape-motion]');
- assert.equal(await button.textContent(),'Play background');
+ assert.equal(await page.getByRole('button',{name:'Play background',exact:true}).count(),1);
  assert.equal(await button.getAttribute('aria-pressed'),'true');
  assert.equal(await page.locator('[data-landscape-video]').getAttribute('src'),null);
  await button.click();

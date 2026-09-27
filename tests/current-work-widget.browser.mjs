@@ -6,7 +6,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_PATH||'playwright');
 const base=process.env.TEST_URL||'http://127.0.0.1:5190/';
 async function run(fn,options={}){const browser=await chromium.launch({headless:true});try{const page=await browser.newPage({viewport:{width:1440,height:900},reducedMotion:'reduce',...options});await fn(page);}finally{await browser.close();}}
 
-test('Homepage presents three provisional current projects as a desktop widget',()=>run(async page=>{
+test('Homepage leads with the visual AI project and distinguishes current work from past experience',()=>run(async page=>{
  await page.goto(base);
  const widget=page.locator('[data-current-work]');
  assert.equal(await widget.isVisible(),true);
@@ -14,8 +14,8 @@ test('Homepage presents three provisional current projects as a desktop widget',
  assert.match(await page.locator('link[href*="orbit.css"]').getAttribute('href'),/orbit\.css\?v=3$/);
  assert.match(await page.locator('script[src*="home.js"]').getAttribute('src'),/home\.js\?v=3$/);
  assert.deepEqual(await widget.locator('[data-current-project]').evaluateAll(rows=>rows.map(row=>({title:row.querySelector('strong')?.textContent.trim(),detail:row.querySelector('strong+span')?.textContent.trim(),href:row.getAttribute('href')}))),[
+  {title:'Visual AI environment',detail:'Research & prototyping',href:'ai-labs/visual-ai-environment/'},
   {title:'Growth Marketing',detail:'Berghs',href:'work/growth-toolbox/'},
-  {title:'Ghostwriting',detail:'Consulting & mentorship',href:'work/#ghostwriting'},
   {title:'Hermes',detail:'Personal AI system',href:'ai-labs/hermes-system/'},
  ]);
 }));

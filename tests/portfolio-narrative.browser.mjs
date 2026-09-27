@@ -40,7 +40,7 @@ test('Work is a seven-entry image accordion with exclusive pointer selection',()
  assert.equal(await entries.nth(2).evaluate(n=>n.classList.contains('is-active')),false);
  assert.equal(await entries.nth(4).evaluate(n=>n.classList.contains('is-active')),true);
  await entries.nth(4).locator('a').click();await page.waitForURL('**/ghostwriting/');
- assert.match(await page.locator('main').innerText(),/\$200k\+/i);
+ assert.match(await page.locator('main').innerText(),/writing X content for three clients/i);
  assert.match(await page.locator('main').innerText(),/NDA/i);
 }));
 

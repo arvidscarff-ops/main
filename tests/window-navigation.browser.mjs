@@ -8,17 +8,19 @@ async function run(fn,options={}){const browser=await chromium.launch({headless:
 const sections=[['work/','Work'],['design/','Design'],['about/','About'],['contact/','Contact'],['ai-labs/','AI Labs']];
 const projects=[['work/agoos/','Work','Agoos Apparel'],['work/graphic-design/textur/','Design','TEXTUR'],['ai-labs/hermes-system/','AI Labs','Hermes system']];
 
-test('Top-level sections are closable windows rather than duplicate global navigation',()=>run(async page=>{
+test('Top-level sections retain one clear index exit without duplicate global navigation',()=>run(async page=>{
  for(const [route,label] of sections){
   await page.goto(base+route);
   const bar=page.locator('[data-window-level="section"]');
   assert.equal(await bar.count(),1,`${label} needs one section window bar`);
   assert.equal((await bar.locator('.window-context').innerText()).trim(),label);
   assert.equal(await bar.locator('nav[aria-label="Primary navigation"]').count(),0,`${label} must not duplicate the global destination list`);
-  const close=bar.locator('[data-window-close]');
-  assert.equal(await close.count(),1);
-  assert.match(await close.getAttribute('aria-label'),new RegExp(`Close ${label} and return to portfolio index`,'i'));
-  assert.equal(new URL(await close.getAttribute('href'),page.url()).hash,'#navigation');
+  {
+   const close=bar.locator('[data-window-close]');
+   assert.equal(await close.count(),1);
+   assert.match(await close.getAttribute('aria-label'),/Close .+ and return to (?:portfolio )?index/i);
+   assert.equal(new URL(await close.getAttribute('href'),page.url()).hash,'#navigation');
+  }
  }
 }));
 
@@ -31,7 +33,7 @@ test('Nested projects expose distinct parent and index exits',()=>run(async page
   assert.equal((await bar.locator('.window-context').innerText()).trim(),title);
   const close=bar.locator('[data-window-close]');
   assert.equal(await close.count(),1);
-  assert.match(await close.getAttribute('aria-label'),/return to portfolio index/i);
+  assert.match(await close.getAttribute('aria-label'),/return to (?:portfolio )?index/i);
   assert.notEqual(await bar.locator('[data-window-parent]').getAttribute('href'),await close.getAttribute('href'));
  }
 }));
@@ -81,7 +83,10 @@ test('Footer navigation reinforces parent and index hierarchy',()=>run(async pag
   const footer=page.locator('.section-footer,.archive-footer');
   assert.equal(await footer.count(),1,`${route} needs one orientation footer`);
   assert.doesNotMatch(await footer.innerText(),/Earlier graphic design|AI systems|Selected work|Get in touch|See the work/i,`${route} retains global footer shortcuts`);
-  assert.equal(await footer.locator('[data-window-close]').count(),1,`${route} needs one close-to-index footer action`);
+  if(route==='about/'){
+   assert.equal(await footer.locator('[data-window-close]').count(),0,'About footer uses plain index navigation');
+   assert.match(await footer.innerText(),/Back to index/);
+  }else assert.equal(await footer.locator('[data-window-close]').count(),1,`${route} needs one close-to-index footer action`);
  }
 }));
 

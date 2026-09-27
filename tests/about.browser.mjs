@@ -7,7 +7,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_PATH||'playwright');
 const base=process.env.TEST_URL||'http://127.0.0.1:5190/';
 
 for(const width of [1440,900,768,390,320]){
- test(`About: approved story, portrait and working navigation at ${width}px`,async()=>{
+ test(`About: story, imagery and index navigation at ${width}px`,async()=>{
   const browser=await chromium.launch({headless:true});
   try{
    const page=await browser.newPage({viewport:{width,height:900},reducedMotion:'reduce'});
@@ -23,6 +23,15 @@ for(const width of [1440,900,768,390,320]){
    assert.ok(image.loaded,'Portrait should fully load');
    assert.equal(new URL(image.url).origin,new URL(base).origin,'Portrait is self-hosted, not a Slack hotlink');
    assert.ok(Math.abs(image.w-image.h)<2,'Keep the original square framing');
+   assert.ok(image.w>=Math.min(width<=700?240:width<=900?220:width===1440?350:280,width-50),'Portrait should be enlarged at this viewport');
+   assert.equal(await page.locator('.about-gallery img').count(),2);
+   for(const photo of await page.locator('.about-gallery img').all()){
+    await photo.scrollIntoViewIfNeeded();
+    assert.ok(await photo.evaluate(img=>img.complete&&img.naturalWidth>0),'Gallery image should load');
+   }
+   assert.equal(await page.locator('.window-bar [data-window-close]').count(),1,'About has one left red close target');
+   assert.equal(await page.locator('.window-actions [data-window-close]').count(),0,'No duplicate upper-right close');
+   assert.equal(await page.locator('.window-bar [data-window-parent]').count(),1,'Index remains the explicit return route');
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'No horizontal page overflow');
    assert.equal(await page.locator('main').evaluate(el=>el.scrollWidth>el.clientWidth),false,'No horizontal reading-panel overflow');
    const panel=await page.evaluate(()=>{
@@ -30,11 +39,14 @@ for(const width of [1440,900,768,390,320]){
     return {bottom:main.getBoundingClientRect().bottom,frameBottom:frame.getBoundingClientRect().bottom,top:main.getBoundingClientRect().top,barBottom:bar.getBoundingClientRect().bottom,overflow:getComputedStyle(main).overflowY};
    });
    assert.ok(panel.bottom<=panel.frameBottom+1,'The complete story scrolls inside the glass panel');
-   assert.ok(panel.top>=panel.barBottom-1,'Story does not run behind the Close bar');
+   assert.ok(panel.top>=panel.barBottom-1,'Story does not run behind the navigation bar');
    assert.equal(panel.overflow,'auto');
    if(process.env.QA_DIR){
     await mkdir(process.env.QA_DIR,{recursive:true});
+    await page.locator('main').evaluate(el=>el.scrollTop=0);
     await page.screenshot({path:`${process.env.QA_DIR}/about-${width}.png`});
+    await page.locator('.about-gallery').scrollIntoViewIfNeeded();
+    await page.screenshot({path:`${process.env.QA_DIR}/about-gallery-${width}.png`});
    }
    const last=page.locator('.about-story > p').last();
    await last.scrollIntoViewIfNeeded();
@@ -48,7 +60,7 @@ for(const width of [1440,900,768,390,320]){
    await page.waitForURL(new URL('design/',base).href);
    assert.ok(await page.locator('.archive-card').count()>0);
    await page.goBack();
-   await page.locator('.window-bar [data-window-close]').click();
+   await page.locator('.window-bar [data-window-parent]').click();
    await page.waitForURL(new URL('#navigation',base).href);
    assert.deepEqual(errors,[]);
   }finally{await browser.close();}

@@ -36,8 +36,8 @@ test('Project selection returns after entering a project and browser Back',()=>r
  assert.ok(await page.locator('#karnevalen').evaluate(n=>n.classList.contains('is-active')));
 }));
 
-test('Consulting and Ghostwriting have readable detail pages using the existing copy',()=>run(async page=>{
- for(const [slug,copy] of [['personal-brand-consulting','seven months'],['ghostwriting','three client offers generated $200k+ in sales']]) {
+test('Consulting and Ghostwriting have readable, privacy-conscious detail pages',()=>run(async page=>{
+ for(const [slug,copy] of [['personal-brand-consulting','seven months'],['ghostwriting','writing X content for three clients']]) {
   const response=await page.goto(base+'work/'+slug+'/');
   assert.equal(response.status(),200);
   assert.ok((await page.locator('main').innerText()).includes(copy));

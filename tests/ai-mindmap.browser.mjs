@@ -6,6 +6,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_PATH||'playwright');
 import {mkdir} from 'node:fs/promises';
 const base=process.env.TEST_URL||'http://127.0.0.1:5191/';
 const evidence=process.env.EVIDENCE_DIR||'/tmp/ai-mindmap-qa';
+async function visit(page,url){await page.goto(url);if(/\/ai-labs\/$/.test(new URL(url).pathname))await page.locator('[data-window-minimize]').waitFor();}
 const ids=['human','jarvis','memory','knowledge','skills','researcher','builder','critic','coach','coding','gauntlet','routing'];
 async function fits(page){
  const clipped=await page.locator('.mind-node summary strong,.mind-node summary small,.mind-node[open] .mind-detail p').evaluateAll(nodes=>nodes.flatMap(n=>{
@@ -13,7 +14,7 @@ async function fits(page){
   const box=n.closest('.mind-node').getBoundingClientRect();
   return [...range.getClientRects()].some(r=>r.left<box.left-1||r.right>box.right+1)?[n.textContent]:[];
  }));
- assert.deepEqual(clipped,[],`All visible text stays within its node: ${JSON.stringify(await page.evaluate(()=>({width:innerWidth,height:innerHeight,columns:getComputedStyle(document.querySelector('.mind-branches')).gridTemplateColumns,node:document.querySelector('#knowledge').getBoundingClientRect().width,styles:[...document.styleSheets].map(s=>s.href)})))}`);
+ assert.deepEqual(clipped,[],`All visible text stays within its node: ${JSON.stringify(await page.locator('.mind-branches').evaluate(n=>({width:innerWidth,height:innerHeight,columns:getComputedStyle(n).gridTemplateColumns,node:n.querySelector('#knowledge').getBoundingClientRect().width}))) }`);
  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'No horizontal overflow');
 }
 async function run(fn,options={}){
@@ -27,11 +28,11 @@ async function run(fn,options={}){
 }
 test('Every node expands by keyboard and fits narrow, wide and short screens',()=>run(async page=>{
  await mkdir(evidence,{recursive:true});
- await page.goto(base+'ai-labs/');
+ await visit(page,base+'ai-labs/');
  assert.deepEqual(await page.locator('.mind-node').evaluateAll(nodes=>nodes.map(n=>n.id)),ids);
  for(const [width,height] of [[320,740],[390,844],[760,900],[761,900],[844,390],[1200,900],[1440,900],[2560,1440]]){
   await page.setViewportSize({width,height});
-  await page.goto(base+'ai-labs/');
+  await visit(page,base+'ai-labs/');
   await fits(page);
   for(const id of ids){
    const node=page.locator('#'+id),summary=node.locator('summary');
@@ -76,30 +77,30 @@ test('Both map URLs, assets and return links work under /main/',async()=>{
  const prefix=`http://127.0.0.1:${server.address().port}/main/`;
  try{await run(async page=>{
   const failures=[];page.on('response',r=>{if(r.url().startsWith(prefix)&&r.status()>=400)failures.push(r.url());});
-  await page.goto(prefix+'ai-labs/');
-  await page.locator('.mind-footer a').first().click();
+  await visit(page,prefix+'ai-labs/');
+  await page.locator('.mind-footer a[href$="/hermes-system/"]').click();
   await page.waitForURL(prefix+'ai-labs/hermes-system/');
   await page.locator('#gauntlet summary').click();assert.ok(await page.locator('#gauntlet').evaluate(n=>n.open));
   const sheets=await page.locator('link[rel="stylesheet"]').evaluateAll(ns=>ns.map(n=>n.href));
   for(const url of sheets){assert.ok(url.startsWith(prefix+'assets/'));assert.equal((await page.request.get(url)).status(),200);}
   await page.locator('[data-window-parent]').click();await page.waitForURL(prefix+'ai-labs/');
-  await page.locator('.window-close').click();await page.waitForURL(prefix+'#navigation');
+  await page.locator('[data-window-minimize]').waitFor();await page.locator('.window-bar [data-window-close]').click();await page.waitForURL(prefix+'#navigation');
   assert.deepEqual(failures,[],'No missing nested-path resources');
  });}finally{server.closeAllConnections();await new Promise(resolve=>server.close(resolve));}
 });
 
 test('Stale theme and normal motion preserve the glass map',()=>run(async page=>{
  await page.addInitScript(()=>localStorage.setItem('theme','light'));
- await page.goto(base+'ai-labs/');
- assert.equal(await page.locator('body').getAttribute('data-landscape-camera'),'03');
- assert.equal(await page.locator('.site-frame').evaluate(n=>getComputedStyle(n).borderRadius),'0px');
- assert.equal(await page.locator('main').evaluate(n=>getComputedStyle(n).backgroundColor),'rgba(0, 0, 0, 0)');
+ await visit(page,base+'ai-labs/');
+ assert.equal(await page.locator('.desktop-page').getAttribute('data-landscape-camera'),'03');
+ assert.equal(await page.locator('[data-desktop-window] .site-frame').evaluate(n=>getComputedStyle(n).borderRadius),'0px');
+ assert.equal(await page.locator('.inner-main').evaluate(n=>getComputedStyle(n).backgroundColor),'rgba(0, 0, 0, 0)');
  await page.locator('#coding summary').click();
  assert.equal(await page.locator('#coding').evaluate(n=>n.open),true);
  await fits(page);
 },{reducedMotion:'no-preference'}));
 test('Map branches form a connected desktop tree and stack on mobile',()=>run(async page=>{
- await page.goto(base+'ai-labs/');
+ await visit(page,base+'ai-labs/');
  const branches=page.locator('.mind-branches');
  assert.equal(await branches.evaluate(n=>getComputedStyle(n).display),'grid');
  const headers=await page.locator('.mind-branch > header').evaluateAll(nodes=>nodes.map(n=>n.getBoundingClientRect().top));
@@ -113,7 +114,7 @@ test('Map branches form a connected desktop tree and stack on mobile',()=>run(as
 test('Named tools link to their official projects on both matching maps',()=>run(async page=>{
  const maps=[];
  for(const route of ['ai-labs/','ai-labs/hermes-system/']){
-  await page.goto(base+route);
+  await visit(page,base+route);
   for(const [id,name,url] of [['memory','Hindsight','https://github.com/vectorize-io/hindsight'],['knowledge','QMD','https://github.com/tobi/qmd']]){
    await page.locator('#'+id+' summary').click();
    const link=page.locator('#'+id).getByRole('link',{name,exact:true});
@@ -122,13 +123,13 @@ test('Named tools link to their official projects on both matching maps',()=>run
    assert.equal(await link.getAttribute('target'),null,'Links work in the embedded preview too');
    assert.ok(await link.isVisible());
   }
-  maps.push(await page.locator('[data-mindmap]').innerHTML());
+  maps.push(await page.locator('[data-mindmap] > .mind-trunk, [data-mindmap] > .mind-caption, [data-mindmap] > .mind-branches').evaluateAll(nodes=>nodes.map(node=>node.outerHTML)));
  }
- assert.equal(maps[0],maps[1],'Preserved map routes must not drift');
+ assert.deepEqual(maps[0],maps[1],'Architecture content must match; the Labs introduction is route-specific');
 }));
 test('Both AI Labs URLs open the map and allow native node expansion',()=>run(async page=>{
  for(const route of ['ai-labs/','ai-labs/hermes-system/']){
-  await page.goto(base+route);
+  await visit(page,base+route);
   assert.equal(await page.locator('[data-mindmap]').count(),1,'The map must be the page, not a teaser');
   const jarvis=page.locator('#jarvis');
   await jarvis.locator('summary').click();

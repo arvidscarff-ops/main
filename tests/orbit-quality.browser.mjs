@@ -75,7 +75,7 @@ for(const viewport of [{width:390,height:844},{width:320,height:568},{width:844,
   const stars=await page.locator('[data-star]').evaluateAll(nodes=>nodes.map(n=>({name:n.textContent.trim(),href:n.getAttribute('href')})));
   assert.equal(stars.length,5);
   for(const {href} of stars) {
-   await page.goto(new URL(href,base).href);assert.equal(await page.locator('main h1').count(),1);
+   await page.goto(new URL(href,base).href);assert.equal(await page.locator('main:not([inert]) h1').count(),1);
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'No horizontal document overflow');
    await bounds(page,'.window-bar a,.window-bar button');
    assert.equal(await page.locator('.section-menu').count(),0);
@@ -115,7 +115,7 @@ test('Home and AI Labs survive blocked browser storage',()=>run({reducedMotion:'
  await context.addInitScript(()=>Object.defineProperty(window,'localStorage',{get(){throw new DOMException('Blocked','SecurityError');}}));
  await page.goto(base);await page.locator('[data-eagle]').click();assert.equal(await page.locator('[data-orbit]').getAttribute('data-state'),'open');
  await page.getByRole('link',{name:'AI labs',exact:true}).click();await page.waitForURL('**/ai-labs/');
- assert.equal(await page.getByRole('heading',{name:'AI, organised around the work.',exact:true}).count(),1);
+ assert.equal(await page.getByRole('heading',{name:'Experiments, systems, and unfinished questions.',exact:true}).count(),1);
 }));
 
 test('GitHub Pages subdirectory resolves homepage, all five destinations and logo assets',()=>run({reducedMotion:'reduce'},async(page,context)=>{
@@ -126,5 +126,5 @@ test('GitHub Pages subdirectory resolves homepage, all five destinations and log
  await page.goto('http://portfolio.test/main/');await page.locator('[data-eagle]').click();
  const urls=await page.locator('[data-star]').evaluateAll(ns=>ns.map(n=>n.href));
  assert.equal(urls.length,5);
- for(const url of urls){assert.ok(url.startsWith('http://portfolio.test/main/'));await page.goto(url);assert.equal(await page.locator('main h1').count(),1);}
+ for(const url of urls){assert.ok(url.startsWith('http://portfolio.test/main/'));await page.goto(url);assert.equal(await page.locator('main:not([inert]) h1').count(),1);}
 }));

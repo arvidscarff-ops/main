@@ -14,29 +14,30 @@
 .uth .back{display:inline-block;margin-top:3rem;font-size:.9rem;opacity:.7}
 </style></head>
 <body class="page page--inner" data-page="ai-labs"><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K2XLGKB2" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<a class="skip-link" href="#main">Skip to content</a><div class="site-frame" aria-hidden="true"></div><header class="window-bar" data-window-level="section"><div class="window-orientation"><p class="window-context">AI Labs / Under the hood</p></div><div class="window-actions" data-window-actions><a class="window-close" data-window-close href="../" aria-label="Back to AI Labs"><span>Close</span><span class="window-close__mark" aria-hidden="true">×</span></a></div></header>
+<a class="skip-link" href="#main">Skip to content</a><div class="site-frame" aria-hidden="true"></div><header class="window-bar" data-window-level="section"><div class="window-orientation"><span class="window-dots"><a class="window-dot window-dot--close" data-window-close href="../" aria-label="Close window and return to index" title="Close window"><span aria-hidden="true">×</span></a></span><p class="window-context">AI Labs / Under the hood</p></div><div class="window-actions" data-window-actions></div></header>
 <main id="main" class="inner-main" tabindex="-1">
 <article class="uth">
-<p style="font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.55;margin:0">Working prototype · AI Labs</p>
+<p style="font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.55;margin:0">Local prototype · AI Labs</p>
 <h1>Under the hood.</h1>
-<p class="lede">A live view of what my AI actually uses: the model, the memory, the tools, the helpers. Whatever it's using lights up. The rest stays dark.</p>
+<p class="lede">A visual experiment in making AI activity easier to follow, starting with the model and tool calls recorded in my own session logs.</p>
 
 <h2>The work</h2>
-<p>My setup has one model, five kinds of memory, over a hundred skills, a full set of tools, and a few helpers running in the background. When it answers me, some of that machinery is working and most of it isn't. This project shows you which is which, live. You can watch a reply travel through the system: what gets read, what gets called, what gets ignored, and what keeps costing money after the answer is already on screen.</p>
+<p>I built three visual directions around the same two recorded replies, with playback, inspection controls and dark and light themes. I chose the Organism direction: a model at the centre, surrounded by memory, context, capabilities and environment.</p>
+<p>A separate local live prototype reads session logs and updates the view with the model and tool activity it can observe. It is a first connection to real activity, not a complete account of everything the agent uses.</p>
 
-<h2>Why it needs to exist</h2>
-<p>People are being handed agents they can't see into. Every reply is a small black box of reads, lookups and side-calls, and the chat window is the entire interface. If you can't see the machinery, you can't really judge whether to trust it or what it's costing you. Right now almost nobody can see it.</p>
-<p>I learned this the expensive way. One working session of building these prototypes cost about ten dollars in model fees, and I only know that because I went digging through my own logs. Most people can't do that. They shouldn't have to.</p>
+<h2>Why I am building it</h2>
+<p>I use agents daily, but the chat window makes it difficult to tell what happened behind an answer. I want to understand what the system accessed, which tools it called and what I still cannot see—without piecing it together from logs.</p>
+<p>This is one experiment within my <a href="../visual-ai-environment/">visual AI environment</a>: a broader project about understanding and directing AI systems.</p>
 
-<h2>Why I'm serious about it</h2>
-<p>Agents are moving from novelty to infrastructure. When something becomes infrastructure, someone builds the dashboard for it. It happened with servers, with databases, with cloud spend. It'll happen with agents too, and the people who need it first are the ones already running real setups.</p>
-<p>I run one daily, so these aren't mockups of an idea. They're replays and live views of my own system, with real traces: which of my five memory systems a reply actually used (usually just one), and the 36,000-character file that got loaded without anyone asking for it.</p>
+<h2>What the view can and cannot tell you</h2>
+<p>The recorded studies let me test how a reply’s activity could be presented. The live adapter currently maps a narrower set of log events into that visual structure. A lit node does not, by itself, prove which memory influenced an answer; a dark node does not prove that nothing happened there.</p>
+<p>The prototype is not a complete cost monitor, permission system or audit trail. Those need explicit data coverage and validation. Keeping those limits visible is part of the design.</p>
 
-<figure><img src="organism-dark.png" alt="The organism view in dark mode: rings of memory, context, capabilities and environment around a central model, with active parts lit"><figcaption>The organism view in dark mode. Idle parts fade to dots; working parts light up and connect to the core.</figcaption></figure>
-<figure><img src="organism-light.png" alt="The organism view in light mode"><figcaption>The same system in light mode. Both themes got real design attention.</figcaption></figure>
-<figure><img src="live.png" alt="The live view connected to the running system"><figcaption>Live mode: connected to the real session log. This frame is the system watching itself work.</figcaption></figure>
+<figure><img src="organism-dark.png" alt="Recorded Organism design study in dark mode, with memory, context, capabilities and environment around a central model"><figcaption>Recorded design study, dark mode. Rings organise the system; activity changes their emphasis.</figcaption></figure>
+<figure><img src="organism-light.png" alt="Recorded Organism design study in light mode"><figcaption>The same recorded study in light mode.</figcaption></figure>
+<figure><img src="live.png" alt="Screenshot of the local prototype connected to session logs"><figcaption>Local live prototype connected to session logs. This screenshot is not an interactive public demo.</figcaption></figure>
 
-<div class="status"><b>Status.</b> Working prototype. I tested three visual directions, picked one, and connected live data. The look will keep changing; the point stays the same.</div>
+<div class="status"><b>Status.</b> Recorded studies and a limited local live prototype. Next: test whether the view helps someone explain a real reply, and make missing or uncertain data unmistakable.</div>
 
 <a class="back" href="../">← Back to AI Labs</a>
 </article>

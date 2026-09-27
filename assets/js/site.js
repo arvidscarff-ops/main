@@ -1,6 +1,8 @@
 import './editorial.js';
+const shellCandidate=document.querySelector('.home-stage')||(document.body?.dataset?.page==='ai-labs'&&/\/ai-labs\/(?:index\.html)?$/.test(location.pathname));
+if(shellCandidate)import('./desktop-shell.js').then(module=>module.initDesktopShell()).catch(()=>{if(document.body.dataset.landscapeCamera)import('./landscape-backdrop.js');});
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-if(document.body?.dataset?.landscapeCamera) import('./landscape-backdrop.js');
+if(!shellCandidate&&document.body?.dataset?.landscapeCamera) import('./landscape-backdrop.js');
 
 // Window-bar upgrade: OS-style titlebar with traffic dots and breadcrumb.
 (function windowBar(){
@@ -8,29 +10,6 @@ if(document.body?.dataset?.landscapeCamera) import('./landscape-backdrop.js');
   if(!bar)return;
   const orientation=bar.querySelector('.window-orientation');
   const close=bar.querySelector('[data-window-close]');
-  if(orientation&&!orientation.querySelector('.window-dots')){
-    const dots=document.createElement('span');
-    dots.className='window-dots';
-    if(close){
-      const red=document.createElement('a');
-      red.className='window-dot window-dot--close';
-      red.href=close.getAttribute('href');
-      red.setAttribute('aria-label',close.getAttribute('aria-label')||'Close window');
-      red.title='Close';
-      dots.append(red);
-    }else{
-      const red=document.createElement('i');
-      red.className='window-dot window-dot--close';
-      dots.append(red);
-    }
-    for(const kind of['min','zoom']){
-      const dot=document.createElement('i');
-      dot.className=`window-dot window-dot--${kind}`;
-      dot.setAttribute('aria-hidden','true');
-      dots.append(dot);
-    }
-    orientation.prepend(dots);
-  }
   // Section pages have no parent link; add "Index" so the path reads like a breadcrumb.
   if(orientation&&bar.dataset.windowLevel==='section'&&!bar.querySelector('[data-window-parent]')){
     const context=orientation.querySelector('.window-context');
@@ -56,7 +35,11 @@ if(document.body?.dataset?.landscapeCamera) import('./landscape-backdrop.js');
 class SoundSystem {
   constructor() {
     try{this.enabled=localStorage.getItem('ass-sound')==='on';}catch{this.enabled=false;} this.context = null;
-    this.button = document.querySelector('[data-sound-toggle]'); this.render();
+    this.bind();
+  }
+  bind(){
+    const button=document.querySelector('[data-sound-toggle]');if(button===this.button)return;
+    this.button=button;this.render();
     this.button?.addEventListener('click', () => { this.enabled=!this.enabled; try{localStorage.setItem('ass-sound',this.enabled?'on':'off');}catch{} if(this.enabled)this.tick('soft'); this.render(); });
   }
   render(){ if(!this.button)return; this.button.setAttribute('aria-pressed',String(this.enabled)); this.button.querySelector('[data-sound-label]').textContent=this.enabled?'on':'off'; this.button.querySelector('[data-sound-icon]').textContent=this.enabled?'●':'○'; }
@@ -77,11 +60,20 @@ document.addEventListener('pointerdown',event=>{keyboardNavigation=false;if(nav&
 document.addEventListener('keydown',event=>{if(event.key==='Tab')keyboardNavigation=true;if(event.key==='Escape'){setNav(false);trigger?.focus();}});
 nav?.addEventListener('focusin',()=>{if(keyboardNavigation)setNav(true);});
 nav?.addEventListener('focusout',event=>{if(!nav.contains(event.relatedTarget))setTimeout(()=>setNav(false),140);});
-const themeButton=document.querySelector('[data-theme-toggle]'),themeLabel=document.querySelector('[data-theme-label]');
-const readingPage=document.body.classList.contains('page--inner');
-const currentTheme=()=>readingPage?(document.body.dataset.readingTheme||'light'):document.documentElement.dataset.theme;
-const renderTheme=()=>{if(themeLabel)themeLabel.textContent=currentTheme()==='dark'?'Light':'Dark';}; renderTheme();
-themeButton?.addEventListener('click',()=>{const next=currentTheme()==='dark'?'light':'dark';if(readingPage)document.body.dataset.readingTheme=next;else{document.documentElement.dataset.theme=next;try{localStorage.setItem('ass-theme',next);}catch{}}sound.tick('theme');renderTheme();});
+export function bindThemeControls(){
+ const themeButton=document.querySelector('[data-theme-toggle]'),themeLabel=document.querySelector('[data-theme-label]');
+ if(!themeButton||themeButton.dataset.themeBound)return;
+ themeButton.dataset.themeBound='true';
+ const readingPage=document.body.classList.contains('page--inner');
+ if(!readingPage&&!document.documentElement.dataset.theme){
+  let saved;try{saved=localStorage.getItem('ass-theme');}catch{}
+  document.documentElement.dataset.theme=saved||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');
+ }
+ const currentTheme=()=>readingPage?(document.body.dataset.readingTheme||'light'):document.documentElement.dataset.theme;
+ const renderTheme=()=>{if(themeLabel)themeLabel.textContent=currentTheme()==='dark'?'Light':'Dark';};renderTheme();
+ themeButton.addEventListener('click',()=>{const next=currentTheme()==='dark'?'light':'dark';if(readingPage)document.body.dataset.readingTheme=next;else{document.documentElement.dataset.theme=next;try{localStorage.setItem('ass-theme',next);}catch{}}sound.tick('theme');renderTheme();});
+}
+bindThemeControls();
 const scrollKey=`portfolio-scroll:${location.pathname}${location.search}`;
 function saveScrollPosition(){try{sessionStorage.setItem(scrollKey,String(scrollY));}catch{}}
 function restoreScrollPosition(event){try{const navigation=performance.getEntriesByType('navigation')[0];if(!event.persisted&&navigation?.type!=='back_forward')return;const saved=Number(sessionStorage.getItem(scrollKey));if(Number.isFinite(saved))requestAnimationFrame(()=>scrollTo(0,saved));}catch{}}

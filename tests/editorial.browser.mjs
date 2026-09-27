@@ -276,17 +276,23 @@ test('Coursework contents reveal one assignment and honour direct hashes',()=>ru
  await page.goBack();assert.equal(await page.locator('#content').isVisible(),true);
 }));
 
-test('Inner pages load one versioned landscape canvas stylesheet last and remove ambient controls',()=>run(async page=>{
+test('Inner pages load the shared canvas before scoped layout overrides and remove ambience toggles',()=>run(async page=>{
  await page.addInitScript(()=>localStorage.setItem('ass-theme','dark'));
  for(const route of ['work/','design/','about/','contact/','ai-labs/','work/agoos/','work/growth-toolbox/']){
   await page.goto(base+route);
-  const styles=await page.locator('link[rel="stylesheet"]').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('href')));
+  // Check the static source ordering too: enhanced AI Labs adopts these sheets inside its shadow root.
+  const source=await (await page.request.get(base+route)).text();
+  const styles=await page.evaluate(html=>[...new DOMParser().parseFromString(html,'text/html').querySelectorAll('link[rel="stylesheet"]')].map(n=>n.getAttribute('href')),source);
+  if(route==='ai-labs/')await page.locator('[data-window-minimize]').waitFor();
   if(route==='work/') {
    assert.match(styles.at(-2),/editorial\.css\?v=6$/);
    assert.match(styles.at(-1),/work-gallery\.css\?v=1$/,'Work adds its scoped accordion after the shared canvas');
+  } else if(route==='about/') {
+   assert.match(styles.at(-2),/editorial\.css\?v=6$/);
+   assert.match(styles.at(-1),/about\.css\?v=2$/,'About adds its scoped reading layout after the shared canvas');
   } else assert.match(styles.at(-1),/editorial\.css\?v=6$/,'The canvas stylesheet must load after page-specific CSS');
-  assert.equal(await page.locator('[data-theme-toggle],[data-sound-toggle]').count(),0,'Inner pages have no homepage ambience controls');
-  const colors=await page.evaluate(()=>({body:getComputedStyle(document.body).backgroundColor,main:getComputedStyle(document.querySelector('main')).backgroundColor,bar:document.querySelector('.window-bar')?.textContent||''}));
+  assert.equal(await page.locator('.window-bar [data-theme-toggle],.window-bar [data-sound-toggle]').count(),0,'Inner pages have no homepage ambience controls');
+  const colors=await page.evaluate(()=>{const scope=document.querySelector('[data-desktop-window]')?.shadowRoot||document;return {body:getComputedStyle(scope.querySelector('.desktop-page')||document.body).backgroundColor,main:getComputedStyle(scope.querySelector('main')).backgroundColor,bar:scope.querySelector('.window-bar')?.textContent||''};});
   assert.doesNotMatch(colors.bar,/\bASS\b/i,'Never use the owner’s initials as a brand label');
   assert.doesNotMatch(colors.body,/rgb\((?:0|8), (?:0|9), (?:0|8)\)/);
   assert.doesNotMatch(colors.main,/rgb\((?:0|8), (?:0|9), (?:0|8)\)/);
@@ -295,7 +301,7 @@ test('Inner pages load one versioned landscape canvas stylesheet last and remove
 
 test('Large desktop uses a capped exhibition canvas and restrained scale',()=>run(async page=>{
  await page.goto(base+'work/');
- const shell=await page.evaluate(()=>{const main=document.querySelector('main').getBoundingClientRect(),title=document.querySelector('h1').getBoundingClientRect(),header=document.querySelector('.window-bar').getBoundingClientRect(),close=getComputedStyle(document.querySelector('.window-close'));return {main,title,header,globalLinks:document.querySelectorAll('.section-menu nav a').length,closeFont:parseFloat(close.fontSize)};});
+ const shell=await page.evaluate(()=>{const main=document.querySelector('main').getBoundingClientRect(),title=document.querySelector('h1').getBoundingClientRect(),header=document.querySelector('.window-bar').getBoundingClientRect(),close=getComputedStyle(document.querySelector('.window-bar [data-window-close]'));return {main,title,header,globalLinks:document.querySelectorAll('.section-menu nav a').length,closeFont:parseFloat(close.fontSize)};});
  assert.ok(shell.main.width<=1600,'Canvas content is capped on large monitors');
  assert.ok(shell.main.left>=100&&shell.main.right<=2460,'Canvas remains centred');
  assert.ok(shell.title.height<100,'Section title is restrained');
@@ -308,7 +314,8 @@ test('Desktop section navigation remains usable without JavaScript',()=>run(asyn
  await page.goto(base+'design/');
  await page.locator('.window-bar [data-window-close]').click();await page.waitForURL('**/#navigation');
  await page.locator('a[data-star][href="about/"]').click();await page.waitForURL('**/about/');
- assert.match(await page.locator('main').innerText(),/Understand the problem/);
+ assert.equal(await page.getByRole('heading',{name:'Arvid Shane Scarff',exact:true}).count(),1);
+ assert.equal(await page.locator('.about-story > p').count(),4,'The current autobiographical story is readable without JavaScript');
 },{javaScriptEnabled:false}));
 
 test('Section shell is one landscape glass window with normal document scrolling',()=>run(async page=>{
