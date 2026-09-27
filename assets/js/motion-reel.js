@@ -1,6 +1,6 @@
 // Original, dependency-free enhancement of the existing screening navigation.
-// Importing site.js reuses its initialized viewer; modules execute only once.
-import './site.js';
+// Reuse the same versioned module as the page script; a different URL runs initialization twice.
+import './site.js?v=3';
 
 const reel = document.querySelector('body.motion-reel .world-nav--screening');
 if (reel) {

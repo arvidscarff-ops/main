@@ -20,7 +20,7 @@ test('Every inner route uses one square landscape window without nested blur',as
   for(const [route,camera] of Object.entries(routes)){
    await page.goto(base+route,{waitUntil:'domcontentloaded'});
    if(route==='ai-labs/'){
-    await page.locator('[data-window-minimize]').waitFor();
+    await page.locator('[data-desktop-window] [data-window-minimize]').waitFor();
     assert.equal(await page.locator('.home-stage').count(),1,'Pilot keeps the actual index underneath');
     assert.equal(await page.locator('.landscape-backdrop').count(),0,'Pilot must not add a second background decoder');
    }else await page.waitForSelector('.landscape-backdrop');

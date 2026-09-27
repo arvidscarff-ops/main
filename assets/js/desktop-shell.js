@@ -97,8 +97,14 @@ async function open(url, push=true, prepared=null) {
     page.querySelectorAll('script,noscript').forEach(node=>node.remove());rebase(page,url);
     style.textContent=css+'\n.desktop-page{background:transparent!important;min-height:100dvh}.desktop-page .page-transition{display:none}';
     html.append(page);shadow.append(style,html);
-    const minimizeButton=document.createElement('button');minimizeButton.type='button';minimizeButton.className='window-dot window-dot--min';minimizeButton.dataset.windowMinimize='';minimizeButton.setAttribute('aria-label','Minimize window');minimizeButton.title='Minimize window';minimizeButton.innerHTML='<span aria-hidden="true">−</span>';minimizeButton.addEventListener('click',minimize);
-    page.querySelector('.window-dots').append(minimizeButton);
+    const dots=page.querySelector('.window-dots');
+    const minimizeButton=dots.querySelector('[data-window-minimize]')||document.createElement('button');
+    minimizeButton.type='button';minimizeButton.className='window-dot window-dot--min';minimizeButton.dataset.windowMinimize='';minimizeButton.setAttribute('aria-label','Minimize window');minimizeButton.title='Minimize window';minimizeButton.innerHTML='<span aria-hidden="true">−</span>';minimizeButton.addEventListener('click',minimize);
+    if(!minimizeButton.isConnected)dots.append(minimizeButton);
+    const zoomButton=dots.querySelector('[data-window-zoom]')||document.createElement('button');
+    zoomButton.type='button';zoomButton.className='window-dot window-dot--zoom';zoomButton.dataset.windowZoom='';zoomButton.setAttribute('aria-label','Expand window');zoomButton.title='Expand window';zoomButton.setAttribute('aria-pressed','false');zoomButton.innerHTML='<span aria-hidden="true">+</span>';
+    zoomButton.addEventListener('click',()=>{const expanded=page.classList.toggle('window-is-zoomed');zoomButton.setAttribute('aria-pressed',String(expanded));zoomButton.setAttribute('aria-label',expanded?'Restore window size':'Expand window');zoomButton.title=zoomButton.getAttribute('aria-label')});
+    if(!zoomButton.isConnected)dots.append(zoomButton);
     const restoreButton=document.createElement('button');restoreButton.type='button';restoreButton.dataset.windowRestore='';restoreButton.className='desktop-restore';restoreButton.textContent=`Restore ${doc.querySelector('.window-context')?.textContent||'AI Labs'}`;restoreButton.hidden=true;restoreButton.addEventListener('click',restore);
     shadow.addEventListener('click',event=>{
       const link=event.target.closest('a[href]');if(!link||modified(event)||link.target||link.hasAttribute('download'))return;

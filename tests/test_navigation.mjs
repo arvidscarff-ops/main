@@ -16,7 +16,7 @@ function harness() {
   };
   const location = new URL('https://example.test/main/work/graphic-design/textur/');
   const source = fs.readFileSync(new URL('../assets/js/site.js', import.meta.url), 'utf8')
-    .replace("import './editorial.js';",'').replace('export const sound=', 'const sound=').replace('export function bindThemeControls', 'function bindThemeControls').replace('export { reducedMotion };', '');
+    .replace(/import '\.\/editorial\.js(?:\?v=\d+)?';/,'').replace('export const sound=', 'const sound=').replace('export function bindThemeControls', 'function bindThemeControls').replace('export { reducedMotion };', '');
   vm.runInNewContext(source, {document, location, URL, matchMedia: () => ({matches: false,addEventListener:()=>{}}),
     localStorage: {getItem: () => null}, window: {addEventListener: (name, fn) => {windowListeners[name] = fn;}}, setTimeout});
   return {listeners, windowListeners, state, location};

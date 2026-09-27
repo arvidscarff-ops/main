@@ -1,6 +1,6 @@
-import './editorial.js';
+import './editorial.js?v=3';
 const shellCandidate=document.querySelector('.home-stage')||(document.body?.dataset?.page==='ai-labs'&&/\/ai-labs\/(?:index\.html)?$/.test(location.pathname));
-if(shellCandidate)import('./desktop-shell.js').then(module=>module.initDesktopShell()).catch(()=>{if(document.body.dataset.landscapeCamera)import('./landscape-backdrop.js');});
+if(shellCandidate)import('./desktop-shell.js?v=3').then(module=>module.initDesktopShell()).catch(()=>{if(document.body.dataset.landscapeCamera)import('./landscape-backdrop.js');});
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 if(!shellCandidate&&document.body?.dataset?.landscapeCamera) import('./landscape-backdrop.js');
 
@@ -29,6 +29,28 @@ if(!shellCandidate&&document.body?.dataset?.landscapeCamera) import('./landscape
       orientation.insertBefore(divider,context);
       orientation.insertBefore(parent,divider);
     }
+  }
+  const dots=bar.querySelector('.window-dots');
+  if(dots&&document.body.classList.contains('page--inner')){
+    const main=document.querySelector('main');
+    const addControl=(name,glyph,label,handler)=>{
+      const button=document.createElement('button');button.type='button';button.className=`window-dot window-dot--${name}`;
+      button.dataset[name==='min'?'windowMinimize':'windowZoom']='';button.setAttribute('aria-label',label);button.title=label;
+      const icon=document.createElement('span');icon.setAttribute('aria-hidden','true');icon.textContent=glyph;button.append(icon);
+      button.addEventListener('click',handler);dots.append(button);return button;
+    };
+    const min=addControl('min','−','Minimize window',()=>{
+      const minimized=document.body.classList.toggle('window-is-minimized');
+      min.setAttribute('aria-label',minimized?'Restore window':'Minimize window');min.title=min.getAttribute('aria-label');
+      min.setAttribute('aria-expanded',String(!minimized));if(main)main.inert=minimized;
+    });
+    min.setAttribute('aria-expanded','true');
+    const zoom=addControl('zoom','+','Expand window',()=>{
+      const expanded=document.body.classList.toggle('window-is-zoomed');
+      zoom.setAttribute('aria-label',expanded?'Restore window size':'Expand window');zoom.title=zoom.getAttribute('aria-label');
+      zoom.setAttribute('aria-pressed',String(expanded));
+    });
+    zoom.setAttribute('aria-pressed','false');
   }
 })();
 

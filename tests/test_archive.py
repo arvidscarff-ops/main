@@ -50,7 +50,7 @@ class ArchiveTests(unittest.TestCase):
             with self.subTest(project=slug):
                 p=ROOT/'work/graphic-design'/slug/'index.html'
                 self.assertTrue(p.exists()); s=p.read_text()
-                self.assertIn('src="../../../assets/js/site.js"',s)
+                self.assertRegex(s,r'src="\.\./\.\./\.\./assets/js/site\.js\?v=3"')
                 self.assertIn('class="window-bar" data-window-level="project"',s)
                 self.assertIn('data-window-parent href="../../../design/"',s)
                 self.assertIn('data-window-close href="../../../#navigation"',s)

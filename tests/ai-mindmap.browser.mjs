@@ -6,7 +6,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_PATH||'playwright');
 import {mkdir} from 'node:fs/promises';
 const base=process.env.TEST_URL||'http://127.0.0.1:5191/';
 const evidence=process.env.EVIDENCE_DIR||'/tmp/ai-mindmap-qa';
-async function visit(page,url){await page.goto(url);if(/\/ai-labs\/$/.test(new URL(url).pathname))await page.locator('[data-window-minimize]').waitFor();}
+async function visit(page,url){await page.goto(url);if(/\/ai-labs\/$/.test(new URL(url).pathname))await page.locator('[data-desktop-window] [data-window-minimize]').waitFor();}
 const ids=['human','jarvis','memory','knowledge','skills','researcher','builder','critic','coach','coding','gauntlet','routing'];
 async function fits(page){
  const clipped=await page.locator('.mind-node summary strong,.mind-node summary small,.mind-node[open] .mind-detail p').evaluateAll(nodes=>nodes.flatMap(n=>{
@@ -84,7 +84,7 @@ test('Both map URLs, assets and return links work under /main/',async()=>{
   const sheets=await page.locator('link[rel="stylesheet"]').evaluateAll(ns=>ns.map(n=>n.href));
   for(const url of sheets){assert.ok(url.startsWith(prefix+'assets/'));assert.equal((await page.request.get(url)).status(),200);}
   await page.locator('[data-window-parent]').click();await page.waitForURL(prefix+'ai-labs/');
-  await page.locator('[data-window-minimize]').waitFor();await page.locator('.window-bar [data-window-close]').click();await page.waitForURL(prefix+'#navigation');
+  await page.locator('[data-desktop-window] [data-window-minimize]').waitFor();await page.locator('.window-bar [data-window-close]').click();await page.waitForURL(prefix+'#navigation');
   assert.deepEqual(failures,[],'No missing nested-path resources');
  });}finally{server.closeAllConnections();await new Promise(resolve=>server.close(resolve));}
 });

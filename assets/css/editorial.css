@@ -3,26 +3,29 @@ html:has(body.page--inner){color-scheme:light;background:#d7d3c8}
 body.page--inner{
  --bg:#f5f3ec;--surface:#ebe9e0;--surface-raised:#fbfaf5;--fg:#20251f;--muted:#666b62;--faint:#85897f;--line:#c9c8bf;
  --canvas:min(1600px,calc(100vw - 64px));--canvas-x:max(32px,calc((100vw - 1600px)/2));
- width:100%;height:auto;min-height:100dvh;overflow-x:hidden;overflow-y:auto;padding:0;
+ width:100%;height:auto;min-height:100dvh;position:relative;display:flow-root;overflow-x:hidden;overflow-y:auto;padding:0;
  color:var(--fg)!important;background:
  radial-gradient(ellipse at 50% 112%,rgba(255,255,255,.72),transparent 55%),
  linear-gradient(145deg,#c9c5b9,#e0ddd4 60%,#c8c4b9)!important;
 }
-body.page--inner .site-frame{z-index:0;inset:24px var(--canvas-x);border:0;border-radius:0;background:var(--bg);box-shadow:0 20px 70px rgba(36,37,31,.12)}
+body.page--inner .site-frame{position:absolute;z-index:0;inset:24px var(--canvas-x);border:0;border-radius:0;background:var(--bg);box-shadow:0 20px 70px rgba(36,37,31,.12)}
 body.page--inner .window-bar{
  position:sticky;z-index:20;top:24px;left:auto;right:auto;width:var(--canvas);min-height:54px;margin:24px auto 0;padding:0 clamp(20px,3vw,42px);
  display:flex;align-items:center;justify-content:space-between;gap:24px;border:0;border-radius:0;color:var(--fg);background:rgba(245,243,236,.96);backdrop-filter:none;-webkit-backdrop-filter:none;
 }
 body.page--inner .window-orientation{display:flex;align-items:center;min-width:0;gap:14px}
-body.page--inner .window-dots{display:inline-flex;align-items:center;flex:none;gap:2px}
-body.page--inner .window-dot{position:relative;display:grid;place-items:center;flex:none;width:44px;height:44px;padding:0;border:0;border-radius:6px;text-decoration:none;cursor:pointer;background:transparent}
-body.page--inner .window-dot::before{content:'';position:absolute;width:24px;height:24px;border-radius:50%;background:#db5345}
-body.page--inner .window-dot>span{position:relative;z-index:1;color:#35120d;font:600 21px/1 var(--sans)}
-body.page--inner .window-dot--close::after{content:none}
-body.page--inner .window-dot:hover{background:rgba(32,37,31,.09)}
-body.page--inner .window-dot:focus-visible{outline:2px solid var(--fg);outline-offset:1px}
-body.page--inner .window-dot--min::before{background:#edba4e}
-body.page--inner .window-dot--min>span{color:#49320b}
+/* Small macOS-inspired lights, with full-size, accessible hit targets. Muted earth / fog / moss match the camera landscape. */
+body.page--inner .window-dots{display:inline-flex;align-items:center;flex:none;gap:0;margin-left:-10px}
+body.page--inner .window-dot{position:relative;display:grid;place-items:center;flex:none;width:44px;height:44px;padding:0;border:0;border-radius:5px;text-decoration:none;cursor:pointer;background:transparent;color:inherit}
+body.page--inner .window-dot::before{content:'';position:absolute;width:14px;height:14px;border:1px solid rgba(20,27,22,.28);border-radius:50%;background:#be7868;box-shadow:inset 0 1px 1px rgba(255,255,255,.3),0 1px 2px rgba(0,0,0,.12)}
+body.page--inner .window-dot>span{position:relative;z-index:1;color:#372722;font:600 13px/1 var(--sans);opacity:0;transition:opacity 140ms ease}
+body.page--inner .window-dots:hover .window-dot>span,body.page--inner .window-dot:focus-visible>span{opacity:1}
+body.page--inner .window-dot:hover{background:rgba(125,139,125,.12)}
+body.page--inner .window-dot:focus-visible{outline:2px solid var(--fg);outline-offset:-2px}
+body.page--inner .window-dot--min::before{background:#c2a770}
+body.page--inner .window-dot--min>span{color:#493a26}
+body.page--inner .window-dot--zoom::before{background:#83a69a}
+body.page--inner .window-dot--zoom>span{color:#244238}
 body.page--inner .window-context{min-width:0;margin:0;color:var(--fg);font:500 clamp(14px,.25vw + 12px,16px)/1.2 var(--mono);letter-spacing:.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 body.page--inner .window-parent,body.page--inner .window-close,body.page--inner .landscape-motion{display:inline-flex;align-items:center;min-height:44px;color:inherit;font:500 clamp(14px,.25vw + 12px,16px)/1.2 var(--mono);letter-spacing:0;text-decoration:none;white-space:nowrap}
 body.page--inner .window-parent{gap:8px;color:var(--muted);border-radius:2px;transition:color 160ms ease}
@@ -242,7 +245,7 @@ body.page--inner[data-landscape-camera]{
 .landscape-backdrop__video{object-fit:cover;filter:saturate(.7) brightness(.68)}
 .landscape-backdrop__wash{background:linear-gradient(180deg,rgba(15,20,14,.16),rgba(8,12,10,.3)),radial-gradient(circle at 50% 42%,transparent 10%,rgba(5,8,6,.26) 100%)}
 body.page--inner[data-landscape-camera] .site-frame{
- z-index:1;top:clamp(20px,3vw,48px);right:auto;bottom:clamp(20px,3vw,48px);left:50%;width:min(1600px,calc(100% - clamp(40px,6vw,96px)));transform:translateX(-50%);border:1px solid rgba(200,206,210,.28);border-radius:0;
+ z-index:1;position:absolute;top:clamp(20px,3vw,48px);right:auto;bottom:clamp(20px,3vw,48px);left:50%;width:min(1600px,calc(100% - clamp(40px,6vw,96px)));transform:translateX(-50%);border:1px solid rgba(200,206,210,.28);border-radius:0;
  background:rgba(14,20,16,.84);box-shadow:none;backdrop-filter:blur(22px) saturate(.7);-webkit-backdrop-filter:blur(22px) saturate(.7)
 }
 body.page--inner[data-landscape-camera] .window-bar{
@@ -257,6 +260,13 @@ body.page--inner[data-landscape-camera] .page-transition{background:#11170d}
 .landscape-motion{margin:0;padding:0;border:0;background:none;color:var(--muted)!important;cursor:pointer;pointer-events:auto}
 .landscape-motion:focus-visible{outline:2px solid var(--landscape-cloud);outline-offset:4px}
 @supports not ((backdrop-filter:blur(2px)) or (-webkit-backdrop-filter:blur(2px))){body.page--inner[data-landscape-camera] .site-frame{background:rgba(18,25,20,.94)}}
+/* Three functional traffic lights on every route. Standalone pages collapse in place;
+   the desktop shell keeps its own dock-style minimize/restore behavior. */
+body.page--inner.window-is-minimized .inner-main{display:none!important}
+body.page--inner.window-is-zoomed .site-frame,.desktop-page.page--inner.window-is-zoomed .site-frame{inset:0!important;left:0!important;width:100%!important;transform:none!important}
+body.page--inner.window-is-zoomed .window-bar,.desktop-page.page--inner.window-is-zoomed .window-bar{top:0!important;width:100%!important;margin-top:0!important}
+body.page--inner.window-is-zoomed .inner-main,.desktop-page.page--inner.window-is-zoomed .inner-main{width:100%!important;margin-bottom:0!important}
+
 @media(max-width:700px){
  body.page--inner[data-landscape-camera]{--canvas:calc(100vw - 20px);--canvas-x:10px;background:#11170d!important}
  body.page--inner[data-landscape-camera] .site-frame{top:10px;right:auto;bottom:10px;left:50%;width:calc(100% - 20px);border-radius:0;backdrop-filter:blur(14px) saturate(.72);-webkit-backdrop-filter:blur(14px) saturate(.72)}

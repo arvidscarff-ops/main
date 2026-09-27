@@ -285,12 +285,12 @@ test('Inner pages load the shared canvas before scoped layout overrides and remo
   const styles=await page.evaluate(html=>[...new DOMParser().parseFromString(html,'text/html').querySelectorAll('link[rel="stylesheet"]')].map(n=>n.getAttribute('href')),source);
   if(route==='ai-labs/')await page.locator('[data-window-minimize]').waitFor();
   if(route==='work/') {
-   assert.match(styles.at(-2),/editorial\.css\?v=6$/);
+   assert.match(styles.at(-2),/editorial\.css\?v=7$/);
    assert.match(styles.at(-1),/work-gallery\.css\?v=1$/,'Work adds its scoped accordion after the shared canvas');
   } else if(route==='about/') {
-   assert.match(styles.at(-2),/editorial\.css\?v=6$/);
+   assert.match(styles.at(-2),/editorial\.css\?v=7$/);
    assert.match(styles.at(-1),/about\.css\?v=2$/,'About adds its scoped reading layout after the shared canvas');
-  } else assert.match(styles.at(-1),/editorial\.css\?v=6$/,'The canvas stylesheet must load after page-specific CSS');
+  } else assert.match(styles.at(-1),/editorial\.css\?v=7$/,'The canvas stylesheet must load after page-specific CSS');
   assert.equal(await page.locator('.window-bar [data-theme-toggle],.window-bar [data-sound-toggle]').count(),0,'Inner pages have no homepage ambience controls');
   const colors=await page.evaluate(()=>{const scope=document.querySelector('[data-desktop-window]')?.shadowRoot||document;return {body:getComputedStyle(scope.querySelector('.desktop-page')||document.body).backgroundColor,main:getComputedStyle(scope.querySelector('main')).backgroundColor,bar:scope.querySelector('.window-bar')?.textContent||''};});
   assert.doesNotMatch(colors.bar,/\bASS\b/i,'Never use the owner’s initials as a brand label');

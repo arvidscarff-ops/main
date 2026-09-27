@@ -4,7 +4,7 @@ import { createRequire } from 'node:module';
 const require=createRequire(import.meta.url);
 const {chromium}=require(process.env.PLAYWRIGHT_PATH || '/Users/arvidscaff/.hermes/hermes-agent/node_modules/playwright');
 const base=process.env.TEST_URL || 'http://127.0.0.1:5191/';
-const visibleShell=page=>page.locator('[data-window-minimize]').waitFor({timeout:5000});
+const visibleShell=page=>page.locator('[data-desktop-window] [data-window-minimize]').waitFor({timeout:5000});
 async function openAI(page){await page.goto(base);await page.locator('[data-home-logo]').click();await page.locator('[data-star][href="ai-labs/"]').click();await visibleShell(page);}
 async function setup(options={}){const browser=await chromium.launch({headless:true});const context=await browser.newContext({reducedMotion:'reduce',...options});await context.route(/google-analytics|googletagmanager|doubleclick/,r=>r.abort());const page=await context.newPage();return {browser,page};}
 test('static red cross has a visible mark and a real nonoverlapping target on About and AI Labs',async()=>{
